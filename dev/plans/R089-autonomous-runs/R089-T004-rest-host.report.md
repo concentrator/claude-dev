@@ -45,4 +45,16 @@
   it with their forms. Result: the test pins the line the second probe
   printed, failed before the doc edit and passes after it.
 
+## Answers
+
+- Item 2: the REST CI wait polls the head sha's check runs
+  (`gh api repos/{owner}/{repo}/commits/<sha>/check-runs`) until every
+  run is completed, then exits 0 when each passed and non-zero when one
+  failed; the loop is capped, so a run never registered still reaches
+  the re-run rule of `git-workflow.md § Merge order`, whose wording on
+  polling changes to match. `gh run watch` is not used: it makes one
+  GraphQL request, the pull request lookup for its title line. The
+  implementer picks an inline declared line or a small helper script,
+  whichever keeps item 4's derived rule narrow.
+
 ## Review
