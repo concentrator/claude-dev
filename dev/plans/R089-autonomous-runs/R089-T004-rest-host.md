@@ -9,7 +9,7 @@ mode: normal
   state, merge time and head sha, no checks, the CI wait carrying them.
   Approach: probe the form under `GH_DEBUG=api` (no `/graphql` request), then
   `toolchain.md § State check`, `declarations.md § Declared commands`.
-- [ ] The REST CI wait blocks until the pull request's checks finish and keeps
+- [x] The REST CI wait blocks until the pull request's checks finish and keeps
   the exit contract: 0 when every check passes, non-zero when one fails, and
   a not-yet-registered case `git-workflow.md § Merge order` re-runs. Approach:
   probe `gh run watch --exit-status` on the head sha's run against check runs

@@ -43,11 +43,29 @@ pipeline finish. Canonical forms:
 ```
 gh pr checks <n> --watch
 # GitLab: glab ci status --branch <branch> --wait
+# GitHub, REST only:
+~/.claude/scripts/rest-ci-wait.sh <n>
 ```
 
 `glab ci status` reads a branch's pipeline rather than an MR's, so the
 GitLab form names the MR's source branch. The wait allows ship in
 `auto-permissions.template.json` beside the view allows.
+
+A project declaring the REST state check declares the REST wait beside
+it: `scripts/rest-ci-wait.sh`, which the installer ships. The line
+spells the installed path out - `.claude/scripts/rest-ci-wait.sh` for a
+project installed with `--project` - since the pre-flight's rule for a
+declared command ends at its first placeholder. The script reads the
+pull request's head sha once, then polls that sha's check runs through
+`gh api` GETs, making no GraphQL request, until every run completes. It
+prints one line per check - name, `pass` or `fail`, job URL - and an
+outcome line naming the head sha, the one `run.md § Boundary
+verification` 4 matches to the state check's `head_sha`. A check passes
+when its conclusion is `success`. The exit is the canonical forms': 0
+when every check passes, non-zero when one fails. A head sha still
+without a check run when the script's capped polls run out exits
+non-zero printing `no checks reported`, the case `git-workflow.md
+§ Merge order` re-runs.
 
 ## Push + MR/PR
 

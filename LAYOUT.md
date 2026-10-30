@@ -39,6 +39,7 @@ claude-dev/
 │   ├── install-manifest.sh       # what an install owns in its target, sourced by install-dev.sh
 │   ├── preflight-permissions.sh  # the /dev run permission pre-flight
 │   ├── provision-worker.sh       # stands up the worker host, run on the operator's machine
+│   ├── rest-ci-wait.sh           # the CI wait for a GitHub host whose CLI has REST only
 │   ├── test/                     # script tests + run-all.sh
 │   │   ├── *.test.sh             # script and hook tests, one per subject
 │   │   └── run-all.sh            # the test aggregator: every *.test.sh, fails if any fails

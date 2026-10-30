@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Tests the host command forms skills/dev/companions/toolchain.md gives, run
 # over the host's recorded responses: the REST state check is one read-only
-# `gh api` call printing the pull request's state, merge time and head sha.
+# `gh api` call printing the pull request's state, merge time and head sha;
+# the REST CI wait runs the shipped scripts/rest-ci-wait.sh on the number.
 # Run: bash scripts/test/toolchain-forms.test.sh
 set -uo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)
@@ -54,5 +55,16 @@ if [ "$got" = "$WANT" ]; then
 else
   die "the form prints state, merge time and head sha, no checks (got: ${got:-nothing})"
 fi
+
+# --- REST CI wait ----------------------------------------------------------
+wait_form=$(form "CI wait" "~/")
+if [ "$wait_form" = "~/.claude/scripts/rest-ci-wait.sh <n>" ]; then
+  pass "CI wait gives the REST script on the pull request number"
+else
+  die "CI wait gives the REST script on the pull request number (found: ${wait_form:-none})"
+fi
+[ -x "$ROOT/scripts/rest-ci-wait.sh" ] \
+  && pass "the REST form names a script the repository carries" \
+  || die "the REST form names a script the repository carries"
 
 exit $fail

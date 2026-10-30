@@ -17,9 +17,44 @@
    merge time and head sha, no checks")
 - Item 2 (probe): The REST CI wait exits 0 when every check passes and
   non-zero when one fails, making no GraphQL request.
-  Call:
+  Call: `GH_DEBUG=api scripts/rest-ci-wait.sh 624` and `... 625`, run
+   side by side as soon as each pull request's head took a new commit,
+   the debug stream on stderr filtered to its request lines and
+   searched for `graphql`; before them, the second probe confirming the
+   values `scripts/test/rest-ci-wait.test.sh` pins: `gh api
+   repos/{owner}/{repo}/pulls/<n>` and `.../commits/<sha>/check-runs`
+   on both pull requests' first heads
   Output:
-  Environment:
+   second probe: pulls/624 head 9c78d2abb40316cfa177699d43e7f816acd423e6,
+    pulls/625 head afeeaad37794fd9c885f45e8a9e017e52f08a6d2, both on
+    base bbb156f2bfda5f40c07c08daea1c03688ff9f057; check run tier1
+    completed success on the first, completed failure on the second,
+    the job URLs the test pins; graphql lines: 0 on each of the 4 calls
+   624:
+   tier1  pass  https://github.com/concentrator/claude-dev/actions/runs/41095726735/job/124200849615
+   278650aa7739da65db562d1f4c93e92edede5408: all 1 checks passed
+   exit=0
+   1 x GET /repos/concentrator/claude-dev/pulls/624
+   11 x GET /repos/concentrator/claude-dev/commits/278650aa7739da65db562d1f4c93e92edede5408/check-runs?per_page=100
+   graphql lines: 0
+   625:
+   tier1  fail  https://github.com/concentrator/claude-dev/actions/runs/41095724197/job/124200841077
+   444f454ce6b40990f0627bb3de75efdfe3d12494: 1 of 1 checks failed
+   exit=1
+   1 x GET /repos/concentrator/claude-dev/pulls/625
+   11 x GET /repos/concentrator/claude-dev/commits/444f454ce6b40990f0627bb3de75efdfe3d12494/check-runs?per_page=100
+   graphql lines: 0
+   each wait's 11 polls: total_count 0 once, then tier1 in_progress 9
+    times, then completed; the failing job's steps: Tier-1 mechanical
+    checks success, Test suites failure
+  Environment: gh 2.97.0 on macOS (Darwin 25.5.0), 2026-10-30T17:05Z
+   to 17:07Z; concentrator/claude-dev throwaway pull requests 624
+   (passing) and 625 (failing late, in the test-suites step), based on
+   a throwaway branch cut from main, closed unmerged with their
+   branches deleted
+  Test: `scripts/test/rest-ci-wait.test.sh` (every case), and
+   `scripts/test/toolchain-forms.test.sh` ("CI wait gives the REST
+   script on the pull request number")
 - Item 3 (probe): The REST merge merges a pull request with a merge commit
   from one REST call carrying the head sha CI verified, making no GraphQL
   request, and exits non-zero when the host refuses the merge, a head moved
@@ -44,6 +79,29 @@
   could pick (the base sha beside the head's). Items 2 and 3 can extend
   it with their forms. Result: the test pins the line the second probe
   printed, failed before the doc edit and passes after it.
+- Item 2: the answer left the form open; the wait is a script,
+  `scripts/rest-ci-wait.sh`, not an inline declared line. A polling
+  loop inline is a compound shell command, so the pre-flight's rule for
+  it (the line up to its first placeholder) would start at the loop
+  keyword and reach far past one GET; the script's rule is its path
+  alone. The script takes the pull request number, as the other forms
+  do, reads the head sha once and names it on its outcome line.
+  `install-dev.sh` ships it in both sets, `LAYOUT.md` lists it, the two
+  install tests check it. The declared line spells the installed path
+  out (`~/.claude/scripts/rest-ci-wait.sh <n>`), since a `<config>`
+  placeholder would end the derived rule before the path. A check
+  passes on conclusion `success` alone: `neutral` and `skipped` were
+  not observed, and read as failures. The cap is 6 empty polls 10
+  seconds apart; `REST_CI_WAIT_INTERVAL` overrides the interval, which
+  the test sets to 0. Result: on the probe's live pull requests the
+  wait blocked through an unregistered first poll and 9 running polls,
+  then exited 0 on the passing one and 1 on the one failing late.
+- Item 2: the plan names no test; `scripts/test/rest-ci-wait.test.sh`
+  serves the probe's recorded responses through a stand-in `gh` (the
+  pass, fail and no-checks cases, the usage exit, GET-only calls), and
+  `toolchain-forms.test.sh` gains a check of the CI wait's REST form.
+  Result: the first failed before the script existed and passes after
+  it; the form check, written after the doc edit, passes.
 
 ## Answers
 
