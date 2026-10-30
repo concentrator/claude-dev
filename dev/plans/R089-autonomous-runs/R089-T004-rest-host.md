@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
+- [x] A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
   declares a REST state check: one `gh api` call printing the pull request's
   state, merge time and head sha, no checks, the CI wait carrying them.
   Approach: probe the form under `GH_DEBUG=api` (no `/graphql` request), then

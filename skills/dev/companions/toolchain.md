@@ -17,13 +17,23 @@ output (`view | grep` pipelines). Canonical forms:
 ```
 gh pr view <n> --json state,mergedAt,statusCheckRollup,headRefOid
 # GitLab: glab mr view <iid> --output json
+# GitHub, REST only:
+gh api repos/{owner}/{repo}/pulls/<n> --jq '{state, merged_at, head_sha: .head.sha}'
 ```
 
-Both forms return state, merged-at, and checks/pipeline; the GitHub
-form's `headRefOid` is the head sha `run.md § Boundary verification` 4
-matches CI to, the rollup's entries carrying no commit sha. The declared
-command is the canonical form above - flag shapes like `--web` are
-outside it. The view allows ship in `auto-permissions.template.json`.
+The first two forms return state, merged-at, and checks/pipeline; the
+GitHub form's `headRefOid` is the head sha `run.md § Boundary
+verification` 4 matches CI to, the rollup's entries carrying no commit
+sha. The declared command is a canonical form above - flag shapes like
+`--web` are outside it. The view allows ship in
+`auto-permissions.template.json`.
+
+A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
+declares the REST form: one `gh api` GET, making no GraphQL request,
+that prints the pull request's state, merge time and head sha. A merged
+pull request reads `closed` with `merged_at` set. The REST form prints
+no checks: the CI wait's exit carries them (§ CI wait). `gh` fills
+`{owner}/{repo}` from the repository of the current directory.
 
 ## CI wait
 
