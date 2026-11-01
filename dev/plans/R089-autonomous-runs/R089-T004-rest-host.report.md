@@ -114,5 +114,13 @@
   GraphQL request, the pull request lookup for its title line. The
   implementer picks an inline declared line or a small helper script,
   whichever keeps item 4's derived rule narrow.
+- Item 2: a check passes on conclusion `success`, `neutral` or
+  `skipped`; any other conclusion fails the wait.
 
 ## Review
+
+- [ ] Item 2: `scripts/rest-ci-wait.sh` passes a check on `success`
+  alone, so a `neutral` or `skipped` check fails the wait; it passes on
+  `success`, `neutral` or `skipped`, each with a test case (Important) -
+  scripts/rest-ci-wait.sh
+  Evidence: observed the item 2 implementer's report, concern 1
