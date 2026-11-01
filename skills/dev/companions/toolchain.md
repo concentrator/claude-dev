@@ -29,13 +29,8 @@ sha. The declared command is a canonical form above - flag shapes like
 `auto-permissions.template.json`.
 
 A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
-declares the REST form: `scripts/rest-state-check.sh`, which takes the
-pull request number and makes one `gh api` GET of
-`repos/{owner}/{repo}/pulls/<n>`, making no GraphQL request, printing
-the pull request's state, merge time and head sha. A merged pull
-request reads `closed` with `merged_at` set. The REST form prints no
-checks: the CI wait's exit carries them (§ CI wait). `gh` fills
-`{owner}/{repo}` from the repository of the current directory.
+declares the REST form, `scripts/rest-state-check.sh`, whose header
+gives its call, output and exit.
 
 Each REST form of this file is a script the installer ships, taking its
 placeholders and nothing else, rather than a `gh api` line, so its
@@ -61,19 +56,8 @@ GitLab form names the MR's source branch. The wait allows ship in
 `auto-permissions.template.json` beside the view allows.
 
 A project declaring the REST state check declares the REST wait beside
-it: `scripts/rest-ci-wait.sh`, which takes the pull request number
-(§ State check gives why each REST form is a script). The script reads the
-pull request's head sha once, then polls that sha's check runs through
-`gh api` GETs, making no GraphQL request, until every run completes. It
-prints one line per check - name, `pass` or `fail`, job URL - and an
-outcome line naming the head sha, the one `run.md § Boundary
-verification` 4 matches to the state check's `head_sha`. A check passes
-when its conclusion is `success`, `neutral` or `skipped`, and fails on
-any other. The exit is the canonical forms': 0
-when every check passes, non-zero when one fails. A head sha still
-without a check run when the script's capped polls run out exits
-non-zero printing `no checks reported`, the case `git-workflow.md
-§ Merge order` re-runs.
+it, `scripts/rest-ci-wait.sh`, whose header gives its calls, output and
+exit.
 
 ## Merge
 
@@ -91,19 +75,8 @@ The pre-flight declares the deny `Bash(gh *--admin*)` beside the
 merge carries none.
 
 A project declaring the REST state check declares the REST merge beside
-it: `scripts/rest-merge.sh`, which takes the pull request number and a
-full head sha and makes one `gh api` PUT to
-`repos/{owner}/{repo}/pulls/<n>/merge` with `merge_method=merge`,
-making no GraphQL request. Its `sha` is the head sha `run.md § Boundary
-verification` 4 matched CI to - the one the CI wait's outcome line
-names and the state check's `head_sha` reads.
-The host merges only while the pull request's head is that commit: a
-head moved past it answers HTTP 409 "Head branch was modified",
-leaves the pull request open, and the call exits non-zero. A merge
-prints the merge commit's sha and exits 0. The fields go as `-f`, so
-the sha is sent as a string. A pull request already merged answers the
-call with its merge again, exit 0, so the state check stays the read
-of merged state (`git-workflow.md § Merge order`).
+it, `scripts/rest-merge.sh`, whose header gives its call, output and
+exit.
 
 ## Push + MR/PR
 

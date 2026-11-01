@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] `toolchain.md` § State check, § CI wait and § Merge each state their
+- [x] `toolchain.md` § State check, § CI wait and § Merge each state their
   REST form in one line naming its script, whose header gives the call,
   output and exit; the shipped-script paragraph stays, `README.md` citing
   it. Approach: a behavior only the prose states (the merge's `-f` sha, an
