@@ -16,7 +16,7 @@ mode: normal
   `autoMode` entries for `~/.claude/settings.json`. Approach: `start.md § 3`,
   `layout.md § Creation policy`, citing the templates and carve-out, not
   copying them; no rule for `context-cost.py`, which no flow step runs.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
   mark rides the batch branch.)
