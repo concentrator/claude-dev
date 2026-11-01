@@ -71,7 +71,9 @@ templates in `companions/`, `README.md`/`CLAUDE.md` per its own steps.
 ## Creation policy
 
 - **Required at scaffold**: `.claude/REQUIREMENTS.md`,
-  `.claude/DESIGN.md`, `.claude/settings.json`, `<layout>`, `<plans>`.
+  `.claude/DESIGN.md`, `<layout>`, `<plans>`.
+- **Written by the user at scaffold**: `.claude/settings.json`, from the
+  content `start.md § 4` prints.
 - **Created as workflows need them**: `.claude/skills/`,
   `.claude/rules/`, `.claude/commands/`, `.claude/agents/`,
   `.claude/MAINTENANCE.md`; `<plans>/ROADMAP.md`;

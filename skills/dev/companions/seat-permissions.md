@@ -401,3 +401,13 @@ pre-flight's `--apply` can carry the template. The user merges its
 entries into their user tier, the settings surface being no seat's
 (`run.md § Seats`, the asked-of row); nothing in the toolset reads the
 template by path.
+
+The declared merge's allow rule (`toolchain.md § Permission carve-out`
+1) keeps a merge it matches off the classifier, so the soft_deny
+entries naming a merge - a `release/` branch's, an instruction
+change's, one past a red gate - never judge it. Those merges stay with
+`run.md § Merge or ask`, which names the MR/PR's delivery class before
+any merge and asks the user outside it, and with the host's gates: a
+required check, and the `--admin` deny beside a `gh pr merge` rule
+(§ Bash prefix set). The template is unchanged by it: its entries
+judge every action no allow rule matches.

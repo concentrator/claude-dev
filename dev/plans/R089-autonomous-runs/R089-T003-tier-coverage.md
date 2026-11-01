@@ -4,19 +4,19 @@ type: mnt
 mode: normal
 ---
 
-- [ ] Under `auto` a `Supervisor: AI` runner's merge passes: the carve-out
+- [x] Under `auto` a `Supervisor: AI` runner's merge passes: the carve-out
   ships an allow rule for the declared merge command, which the AI grant
   needs, and the always-ask merges that rule hides from the classifier stay
   with `run.md § Merge or ask` and the host's gates. Approach: carve-out 1,
   `declarations.md § Supervisor bounds`, `seat-permissions.md § Auto-mode
   template`; template unchanged, the pre-flight deriving the `Merge:` rule.
-- [ ] `/dev start` writes no settings file and prints each with its content:
+- [x] `/dev start` writes no settings file and prints each with its content:
   for `.claude/settings.json` the Bash rules the pre-flight declares, carve-out
   1 included (the dogfood report's stops 3, 5, 8); under `Supervisor: AI` the
   `autoMode` entries for `~/.claude/settings.json`. Approach: `start.md § 3`,
   `layout.md § Creation policy`, citing the templates and carve-out, not
   copying them; no rule for `context-cost.py`, which no flow step runs.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
   mark rides the batch branch.)
