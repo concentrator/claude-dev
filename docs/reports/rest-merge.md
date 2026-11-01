@@ -4,7 +4,7 @@ Probe of the GitHub merge for a host CLI with REST only: one `gh api`
 PUT merges a pull request with a merge commit while its head is the sha
 sent, making no GraphQL request, and exits non-zero when the host
 refuses, a head moved past that sha included. It ran on a throwaway
-pull request whose head was two commits past its base.
+pull request, sending first a stale sha and then its head sha.
 
 ## Call
 
@@ -54,10 +54,9 @@ the one REST PUT the call sent, its body the merge method and sha the
 `-f` fields carry, and `graphql lines: 0` that no request went to the
 GraphQL endpoint.
 
-The merge commit `175eebd7ff6c1fbdb87db7d1536461e15ac40946` has two
-parents: the base tip `c4b6c694894149fe3eceb6c9281260b26532f4c3` and
-the head sha `447aadb65dae1acc93e6aac78e03c5e70c23f5da`, so the host
-made a merge commit of exactly the sha sent.
+The merge commit the head sha's call returned has two parents, the
+throwaway base's tip and the head sha sent, so the host made a merge
+commit of exactly the sha sent.
 
 An earlier run of the same calls on pull request 626 gave the same
 409-then-200 shapes, and a further merge call on 626 once merged

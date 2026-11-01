@@ -30,9 +30,10 @@ gh api repos/{owner}/{repo}/commits/<sha>/check-runs
 
 The first heads' read:
 
-- `pulls/624`: head `9c78d2abb40316cfa177699d43e7f816acd423e6`
-- `pulls/625`: head `afeeaad37794fd9c885f45e8a9e017e52f08a6d2`
-- both on base `bbb156f2bfda5f40c07c08daea1c03688ff9f057`
+- `pulls/624` and `pulls/625`: each read at its first head, before
+  the new commit its wait ran on
+- both on base `bbb156f2bfda5f40c07c08daea1c03688ff9f057`, "Merge pull
+  request #621 from concentrator/mnt/cloud-install" on `main`
 - check run `tier1`: completed `success` on the first, completed
   `failure` on the second
 - `graphql lines: 0` on each of the 4 calls

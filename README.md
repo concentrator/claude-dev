@@ -68,9 +68,11 @@ pre-flight prints the `--apply` command that closes them; a missing
 deny, or any other gap `--apply` cannot write, is closed by hand.
 Each rule the pre-flight derives from a declared state-check, CI-wait
 or merge line reaches no `gh api` write but the declared merge, and no
-merge rule admits `gh pr merge <n> --admin`: a REST host command's rule
-is its script's path, and beside a derived `Bash(gh pr merge:*)` rule
-the pre-flight requires the deny `Bash(gh *--admin*)`
+merge rule admits `gh pr merge <n> --admin`: the rule for a REST host
+command, a shipped script that a project whose host CLI has REST only
+declares by its installed path ([§ DEV artifacts](#dev-artifacts)), is
+that path, and beside a derived `Bash(gh pr merge:*)` rule the
+pre-flight requires the deny `Bash(gh *--admin*)`
 ([`preflight-permissions.sh` `toolchain_rules`](scripts/preflight-permissions.sh),
 [`preflight-permissions-toolchain.test.sh`](scripts/test/preflight-permissions-toolchain.test.sh)).
 
@@ -158,19 +160,29 @@ check passes and non-zero when one fails
 Where the host CLI has REST only, every `gh pr` subcommand fails with
 HTTP 403 "GraphQL is not available"
 ([dogfood report](docs/reports/dev-dogfood-report.md)), so the project
-declares the shipped REST scripts as its host commands
-([`toolchain.md`](skills/dev/companions/toolchain.md)):
+declares the shipped REST scripts as its host commands, each by its
+installed path: `~/.claude/scripts/<script>`, or
+`.claude/scripts/<script>` for a project installed with `--project`
+into `<path>/.claude`. That path is the script's pre-flight rule
+([`toolchain.md § State check`](skills/dev/companions/toolchain.md#state-check)).
+`rest-state-check.sh` and `rest-merge.sh` check their arguments, then
+`exec` the one `gh api` call their probe report ran, so each report's
+call is its script's
+([`rest-state-check.sh`](scripts/rest-state-check.sh),
+[`rest-merge.sh`](scripts/rest-merge.sh)); `rest-ci-wait.sh` was
+probed as the script itself:
 
-- the state check, `rest-state-check.sh <n>`, prints a pull request's
-  state, merge time and head sha from one REST call, making no GraphQL
-  request ([probe report](docs/reports/rest-state-check.md));
-- the CI wait, `rest-ci-wait.sh <n>`, exits 0 when every check passes
-  and non-zero when one fails, making no GraphQL request
-  ([probe report](docs/reports/rest-ci-wait.md));
-- the merge, `rest-merge.sh <n> <sha>`, merges a pull request with a
-  merge commit from one REST call carrying the head sha CI verified,
-  making no GraphQL request, and exits non-zero when the host refuses
-  the merge, a head moved past that sha included
+- the state check, `~/.claude/scripts/rest-state-check.sh <n>`, prints
+  a pull request's state, merge time and head sha from one REST call,
+  making no GraphQL request
+  ([probe report](docs/reports/rest-state-check.md));
+- the CI wait, `~/.claude/scripts/rest-ci-wait.sh <n>`, exits 0 when
+  every check passes and non-zero when one fails, making no GraphQL
+  request ([probe report](docs/reports/rest-ci-wait.md));
+- the merge, `~/.claude/scripts/rest-merge.sh <n> <sha>`, merges a
+  pull request with a merge commit from one REST call carrying the
+  head sha CI verified, making no GraphQL request, and exits non-zero
+  when the host refuses the merge, a head moved past that sha included
   ([probe report](docs/reports/rest-merge.md)).
 
 An explanation the user gives or a conclusion an agent reaches goes,
