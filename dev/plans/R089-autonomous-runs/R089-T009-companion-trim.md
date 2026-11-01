@@ -10,7 +10,7 @@ mode: normal
   it. Approach: a behavior only the prose states (the merge's `-f` sha, an
   already-merged exit 0) moves into its script's header first; the fenced
   forms `toolchain-forms.test.sh` reads stay unchanged.
-- [ ] `seat-permissions.md § HEAD moves and whole-tree discards` keeps one
+- [x] `seat-permissions.md § HEAD moves and whole-tree discards` keeps one
   sentence on why the guard, not a deny, holds a seat off HEAD, the four
   shapes, and a pointer to `hooks/dev-branch-guard.sh` and its test
   `dev-head-guard.test.sh` for spellings, passes and reason lines. Approach:

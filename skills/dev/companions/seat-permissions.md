@@ -132,21 +132,13 @@ or the local tier carries a blanket entry.
 ## HEAD moves and whole-tree discards
 
 What holds a seat off HEAD is a branch in `hooks/dev-branch-guard.sh`,
-not a settings deny on the HEAD-moving and work-discarding verbs
-(`git checkout`, `switch`, `reset`, `restore`, `stash`). Every shape
-below is told from the command's arguments and a settings deny reads
-none of them, so a deny wide enough to catch a shape also stops the
-flow's own moves in that verb: `Bash(git checkout:*)` stops
-`finish.md`'s discard and post-merge entries into the default branch and
-the branch `run.md § Pre-flight` and `release.md` step 3 create, along
-with a dirty-tree trunk entry; `Bash(git reset:*)` stops a seat's
-unstaging along with `reset --hard`. The guard reads those arguments and
-tells them apart, and it already fires on the `Bash` matcher of every
-`settings.json` `scripts/install-dev.sh` writes, global or project, for
-a dispatched seat's call as for the session's.
+not a settings deny on `git checkout`, `switch`, `reset`, `restore` or
+`stash`: a deny reads none of a command's arguments, so one wide enough
+to catch a shape below also stops the flow's own moves in that verb,
+where the guard reads the arguments and tells them apart.
 
-The predicate, judged per command segment against the repo that segment
-targets as the push scan's is, denies four shapes:
+Judged per command segment against the repo that segment targets, the
+guard denies four shapes:
 
 1. a `checkout` or `switch` entering that repo's default branch while
    its tracked tree is dirty;
@@ -157,68 +149,14 @@ targets as the push scan's is, denies four shapes:
    `git stash clear`, each of them dropping work no `pop` and no reflog
    brings back;
 4. a whole-tree path restore: a `checkout` or `restore` one of whose
-   pathspecs names a whole tree - `.`, `./`, `:/`, `:/.`, or a relative
-   or absolute path resolving to the repo's top level.
+   pathspecs names a whole tree - `.`, `./`, `:/`, `:/.`, or a path
+   resolving to the repo's top level - while a restore naming its
+   paths passes, which is how a seat undoes one file and how
+   `git restore --staged <paths>` unstages.
 
-The fourth is denied in every spelling that carries such a pathspec,
-with or without a `--` separator and with or without a tree-ish before
-it, so `git checkout -- .`, `git checkout .`, `git restore .`,
-`git restore -- :/` and `git checkout HEAD -- <repo root>` are all
-refused; `.` is refused whatever directory the segment runs from, a
-subtree-wide discard being the same hazard one level down and the
-segment's working directory not always readable.
-
-It passes `checkout -b` and `switch -c` on any other name; an entry into
-the default branch from a clean tree; a plain `git reset` and its
-`--soft` and `--mixed` spellings, which move HEAD and the index and take
-nothing out of the working tree; `git stash`, `git stash push` and
-`git stash save`, whose work `git stash pop` brings back, with
-`stash list`, `stash show`, `stash pop` and `stash apply` beside them;
-and a restore of explicitly named paths, `git checkout -- <paths>` and
-`git restore <paths>`, which is what a seat undoing one file uses,
-naming it - so unstaging keeps both its routes,
-`git restore --staged <paths>` and a plain `git reset`. A command whose
-pathspecs the guard cannot read passes, the file failing open here as it
-does on an unreadable repo.
-
-The one carve-out is stated where it lands: `finish.md`'s two entries
-run on a clean tree, and on the default branch the guard's own write and
-commit branches already refuse every mutation, so an entry that loses
-nothing is not the hazard.
-
-The one flow site the whole-tree deny reaches is the halt revert at
-`run.md § Question resolution`, which runs
-`git read-tree --reset -u HEAD`: its verb is `read-tree`, so no deny
-here reaches it, and it restores the index and the tracked tree to HEAD,
-taking the seat's staged edits with its unstaged ones as the halt
-intends. The Bash prefix
-set carries `Bash(git read-tree:*)` for it, so the command the halt runs
-is a declared one rather than a prompt in the one place a prompt is a
-defect.
-
-The guard is a tripwire on the moves that lose work, not a boundary -
-the character its own header comment claims for the file. Its four
-reason lines carry the predicate and the rule, one per shape. The second
-shape has a line of its own because the first line's predicate is false
-for it: a `-b|-B` or `-c|-C` naming the default branch is refused from a
-clean tree too, `-B` and `-C` re-pointing an existing local trunk at
-HEAD and `-b` and `-c` putting the seat on a name the guard's own write
-and commit branches then treat as the trunk.
-
-```
-branch-guard: refusing '<cmd>' - it enters the default branch of '<repo>' with uncommitted work; commit or discard first - work reaches the trunk through a working branch and an MR/PR, never carried onto it (git-workflow § Trunk).
-branch-guard: refusing '<cmd>' - it creates a branch named as the default branch of '<repo>'; a working branch is named '<prefix>/<slug>' (git-workflow § Trunk).
-branch-guard: refusing '<cmd>' - it discards work no 'git stash pop' and no reflog bring back; commit first, or take a spelling that keeps it: 'git reset' without '--hard', 'git stash push' (seat-permissions § HEAD moves and whole-tree discards).
-branch-guard: refusing '<cmd>' - it discards every uncommitted change under '<pathspec>'; name the paths to restore, and leave the whole-tree revert to the runner's halt (run.md § Question resolution).
-```
-
-`<cmd>`, `<repo>` and `<pathspec>` are the guard's to fill at runtime;
-`<prefix>/<slug>` prints as written, being `git-workflow.md § Trunk`'s
-own notation for a branch name rather than a value the guard holds.
-
-The guard is a host gate rather than a rule, as workspace trust below
-is, so its proof is its own test (`scripts/test/dev-head-guard.test.sh`)
-rather than a pre-flight check.
+The spellings each shape catches, the commands it passes and its reason
+line are the guard's own: `hooks/dev-branch-guard.sh` and its test
+`scripts/test/dev-head-guard.test.sh`.
 
 ## Bash prefix set
 
