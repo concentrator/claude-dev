@@ -66,6 +66,15 @@ user answers a permission prompt, and a missing allow rule halts no run
 permission prompt" row). When every gap is a missing allow rule the
 pre-flight prints the `--apply` command that closes them; a missing
 deny, or any other gap `--apply` cannot write, is closed by hand.
+Each rule the pre-flight derives from a declared state-check, CI-wait
+or merge line reaches no `gh api` write but the declared merge, and no
+merge rule admits `gh pr merge <n> --admin`: the rule for a REST host
+command, a shipped script that a project whose host CLI has REST only
+declares by its installed path ([§ DEV artifacts](#dev-artifacts)), is
+that path, and beside a derived `Bash(gh pr merge:*)` rule the
+pre-flight requires the deny `Bash(gh *--admin*)`
+([`preflight-permissions.sh` `toolchain_rules`](scripts/preflight-permissions.sh),
+[`preflight-permissions-toolchain.test.sh`](scripts/test/preflight-permissions-toolchain.test.sh)).
 
 `skills/dev/companions/auto-mode.template.json` holds the `autoMode`
 entries a DEV run needs, for the user to copy into their user settings,
@@ -109,7 +118,10 @@ recent commits and the first open item of each plan the branch touched
 ([`dev-session-brief.sh`](hooks/dev-session-brief.sh)). Other
 commands:
 
-- `/dev start` scaffolds a new project into DEV.
+- `/dev start` scaffolds a new project into DEV; in a repository whose
+  `main` already exists it delivers the scaffold through a working
+  branch and an MR/PR
+  ([`start.md` opening and `§ 5`](skills/dev/start.md#5-commit)).
 - `/dev migrate` adopts an existing project into DEV.
 - `/dev release` finalizes and tags a release.
 
@@ -144,6 +156,34 @@ check passes and non-zero when one fails
 `skills/dev/companions/declarations.md`, the path defaults in its
 `§ Declared paths`; canonical structure: `skills/dev/layout.md`; paths:
 `skills/dev/plan.md § Where things live`.
+
+Where the host CLI has REST only, every `gh pr` subcommand fails with
+HTTP 403 "GraphQL is not available"
+([dogfood report](docs/reports/dev-dogfood-report.md)), so the project
+declares the shipped REST scripts as its host commands, each by its
+installed path: `~/.claude/scripts/<script>`, or
+`.claude/scripts/<script>` for a project installed with `--project`
+into `<path>/.claude`. That path is the script's pre-flight rule
+([`toolchain.md § State check`](skills/dev/companions/toolchain.md#state-check)).
+`rest-state-check.sh` and `rest-merge.sh` check their arguments, then
+`exec` the one `gh api` call their probe report ran, so each report's
+call is its script's
+([`rest-state-check.sh`](scripts/rest-state-check.sh),
+[`rest-merge.sh`](scripts/rest-merge.sh)); `rest-ci-wait.sh` was
+probed as the script itself:
+
+- the state check, `~/.claude/scripts/rest-state-check.sh <n>`, prints
+  a pull request's state, merge time and head sha from one REST call,
+  making no GraphQL request
+  ([probe report](docs/reports/rest-state-check.md));
+- the CI wait, `~/.claude/scripts/rest-ci-wait.sh <n>`, exits 0 when
+  every check passes and non-zero when one fails, making no GraphQL
+  request ([probe report](docs/reports/rest-ci-wait.md));
+- the merge, `~/.claude/scripts/rest-merge.sh <n> <sha>`, merges a
+  pull request with a merge commit from one REST call carrying the
+  head sha CI verified, making no GraphQL request, and exits non-zero
+  when the host refuses the merge, a head moved past that sha included
+  ([probe report](docs/reports/rest-merge.md)).
 
 An explanation the user gives or a conclusion an agent reaches goes,
 on the user's approval, to the home owning its kind: `CLAUDE.md` for a
@@ -272,6 +312,10 @@ A full install ships:
     fails, exiting 1.
 - `scripts/preflight-permissions.sh`, the `/dev run` permission
   pre-flight, with its self-test.
+- `scripts/rest-state-check.sh`, `scripts/rest-ci-wait.sh` and
+  `scripts/rest-merge.sh`, without self-tests: the host commands a
+  project whose `gh pr` has no GraphQL declares
+  ([`toolchain.md`](skills/dev/companions/toolchain.md)).
 - The hooks below.
 - On a `--project` install, the maintenance hygiene section, seeded
   into the target's `MAINTENANCE.md` when that heading is absent.

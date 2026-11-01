@@ -17,11 +17,17 @@ both files and takes the first line found.
 A project declares its routine commands in an `## Agent toolchain`
 section - the VCS host (→ `gh`/`glab`) and the exact
 change-request / merge / state-check / CI wait / test / lint / build
-commands, the CI wait on a `CI wait:` line in the form `toolchain.md
-§ CI wait` gives. It is the single source the run reads:
+commands, the state check on a `State-check:` line in a form
+`toolchain.md § State check` gives - its REST form where `gh pr`
+answers HTTP 403 "GraphQL is not available" - the CI wait on a
+`CI wait:` line in the form `toolchain.md § CI wait` gives, and the
+merge on a `Merge:` line in the form `toolchain.md § Merge` gives. It
+is the single source the run reads:
 
-- `/dev run` uses it for `permissions.allow` (the pre-flight gate in
-  `toolchain.md § Permission carve-out for the checkpoint push`).
+- `/dev run` uses it for `permissions.allow`, and for the deny a
+  `gh pr merge` line takes (the pre-flight gate in `toolchain.md
+  § Permission carve-out for the checkpoint push`; `seat-permissions.md
+  § Bash prefix set`).
 - `finish` runs the declared commands instead of probing the host.
 
 The test declaration is tiered, and both tiers include lint.

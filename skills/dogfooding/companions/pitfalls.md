@@ -12,7 +12,7 @@ brief now does about it; the toolset fixes belong in `claude-dev`'s backlog.
 | Installer refused | `auto` mode refused `install-dev.sh` as external code, and a manual copy as a bypass; no hooks or skill loaded | `preparation.md` step 4 installs from the environment's setup script; `brief.md` step 1 checks the install and records what is absent |
 | Merges refused | Every merge was refused as "Merge Without Review", even after review and green CI | `brief.md` step 2 records the refusal and the run goes on as the toolset directs; the review session merges; toolset backlog: ship the merge allow rule |
 | Stacked merge landed on a branch | Merging PR 2 while its base was the scaffold branch put it there, not on `main` | `finishing.md` step 3: retarget to `main` first |
-| `gh pr` unusable | Cloud `gh` is REST only; the declared `gh pr view` and `gh pr checks` fail with 403 | `brief.md` step 2 records each failure; toolset backlog: ship REST forms in `skills/dev/companions/toolchain.md` |
+| `gh pr` unusable | Cloud `gh` is REST only; the declared `gh pr view` and `gh pr checks` fail with 403 | `brief.md` step 2 records each failure; the project declares the REST forms of `skills/dev/companions/toolchain.md` § State check, § CI wait and § Merge |
 | Tag impossible | `git push` of a tag and `gh api git/refs` both refused by the proxy | `finishing.md` step 5, by hand |
 | Branch deletion refused | `git push --delete` is classed as destructive | Leave branches; the owner cleans up |
 | Safety-net check-in failed | The `send_later` reminder fired with access denied after the session restarted | Re-arm the check-in after any worker restart, or rely on `get_session` polls from the skill |
