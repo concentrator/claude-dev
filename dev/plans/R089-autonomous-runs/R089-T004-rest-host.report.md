@@ -224,7 +224,7 @@
   scripts/test/install-dev-manifest.test.sh:26
   Evidence: observed `bash scripts/test/install-dev-manifest.test.sh`
   printing "not ok - manifest: 73 records of 72, bad=0"
-- [ ] Item 4: this repository declares `gh pr merge <n> --merge` and its
+- [x] Item 4: this repository declares `gh pr merge <n> --merge` and its
   tracked `.claude/settings.json` denies no `Bash(gh *--admin*)`, so the
   pre-flight stops a `/dev run` here until the deny is added; the
   settings surface is the user's - .claude/settings.json
