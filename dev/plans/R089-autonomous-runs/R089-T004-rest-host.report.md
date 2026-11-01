@@ -267,3 +267,21 @@
   scripts/test/install-dev-manifest.test.sh:26
   Evidence: observed `bash scripts/test/install-dev-manifest.test.sh`
   printing "not ok - manifest: 73 records of 72, bad=0"
+- [ ] Item 4: `README.md § Installing the toolset elsewhere` lists the
+  shipped scripts without `rest-ci-wait.sh`, `rest-state-check.sh` and
+  `rest-merge.sh`, which `install-dev.sh` now ships (Important) -
+  README.md:273
+  Evidence: observed `scripts/install-dev.sh:186-188`, README.md:273,
+  `MAINTENANCE.md § Doc-sync pairs`
+- [ ] Item 4: `seat-permissions.md § Bash prefix set` restates what
+  `toolchain.md` says on a rule's `*` matching spaces, why the REST
+  forms are scripts, and the `--admin` deny; one home each, the
+  derivation and deny in `seat-permissions.md`, `toolchain.md` citing it
+  (Important) - skills/dev/companions/seat-permissions.md:231
+  Evidence: observed seat-permissions.md:231-238, toolchain.md:40-46,
+  toolchain.md:93-96
+- [ ] Item 1: the dogfooding pitfalls' "`gh pr` unusable" row still
+  names shipping REST forms as toolset backlog, which this branch does
+  (Suggestion) - skills/dogfooding/companions/pitfalls.md:15
+  Evidence: observed pitfalls.md:15, toolchain.md § State check,
+  § CI wait, § Merge
