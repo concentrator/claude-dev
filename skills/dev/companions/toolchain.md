@@ -153,6 +153,6 @@ no deny.
 
 The pre-flight permission gate checks which pattern is in place and
 reports it; it never weakens a deny rule on its own. Which deny strings
-the pattern declares, and how the pattern is read off the tiers the
-session reads, are `companions/seat-permissions.md § Mode-independent
-set`.
+the pattern declares is `companions/seat-permissions.md
+§ Mode-independent set`, which points at the pre-flight's carve-out
+check for how the pattern is read off the tiers the session reads.

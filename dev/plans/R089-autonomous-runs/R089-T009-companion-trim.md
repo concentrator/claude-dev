@@ -16,7 +16,7 @@ mode: normal
   `dev-head-guard.test.sh` for spellings, passes and reason lines. Approach:
   the heading stays (the guard's reason line cites it); the `git restore`
   row of § Bash prefix set still finds its source.
-- [ ] `seat-permissions.md § Mode-independent set` points its tier read at
+- [x] `seat-permissions.md § Mode-independent set` points its tier read at
   the pre-flight's carve-out check and `preflight-permissions.test.sh`, plus
   one sentence on the two rules that test lacks: a pair split across two
   tiers satisfies pattern 1; deny entries beyond the pattern's are never a

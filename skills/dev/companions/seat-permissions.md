@@ -92,30 +92,12 @@ tiers, so its checkpoint push stays the one manual push per batch that
 pattern is, and a declared allow every pattern-2 tier denies would turn
 every pattern-2 session into a cannot-apply.
 
-The pattern is read from the tiers, never from a flag or from this text:
-off the union of the `deny` sets of every tier the session reads - user,
-project and local - because deny beats allow across all tiers
-(`toolchain.md § Permission carve-out`) and the tiers can disagree. An
-entry is satisfied by its exact string in the `deny` of any one of those
-same tiers. One content answers both questions: the tier's working-tree
-file, which is what the session's own permission check reads and so what
-binds the run. No git state enters either read, so the pattern and the
-entries that pattern declares are never read from two different contents
-of one file.
-
-- A blanket entry in any of the three makes the session pattern 2, the
-  report naming the tier that carries it and that same tier satisfying
-  pattern 2's one declared entry. A user tier's `Bash(git push:*)`
-  beside a project tier's narrow pair is pattern 2, accepted under
-  `Supervisor: human` and cannot-apply under `Supervisor: AI`, the
-  project tier's pair notwithstanding.
-- A union carrying no blanket entry is pattern 1 whatever it carries of
-  the pair - both entries, one, or neither - each entry reported on its
-  own line. A union carrying neither is the missing-deny gap.
-- The pair's two entries are satisfied from two tiers as readily as from
-  one. A pair carried by the local tier alone satisfies pattern 1, which
-  is the shape a provisioned worker arrives in.
-- Extra deny entries beyond the pattern's are never a gap.
+How the pattern is read off the tiers the session reads, and which tier
+satisfies each entry it declares, is the pre-flight's carve-out check,
+`carve_out` in `scripts/preflight-permissions.sh`, and its test
+`scripts/test/preflight-permissions.test.sh`. Two rules the test names
+no case for hold as well: the pair split across two tiers satisfies
+pattern 1, and deny entries beyond the pattern's are never a gap.
 
 A missing deny is the one gap `--apply` cannot close, the pre-flight
 writing no deny rule: the remedy is the missing string added to the
@@ -175,7 +157,8 @@ check`). A `gh pr merge` rule reaches every flag of `gh pr merge`,
 `--admin` among them, which merges past a failing required check, so
 the pre-flight declares the deny `Bash(gh *--admin*)` beside it, deny
 rules being evaluated before allow rules. The deny is checked as the
-carve-out's are (§ Mode-independent set): its exact string in a tier's
+carve-out's are (the pre-flight's carve-out check, § Mode-independent
+set): its exact string in a tier's
 `deny`, a missing one being a gap `--apply` cannot close. It binds in
 every mode, so it is checked under `autoMode.classifyAllShell` too. A
 tier deny carrying literal text after its wildcard bars only the
