@@ -95,6 +95,20 @@ entries a DEV run needs, for the user to copy into their user settings,
   - DEV Red Gate;
 - no allow entry.
 
+Under `auto`, a `Supervisor: AI` runner's merge needs an allow rule for
+the declared merge command in a settings tier the session reads, the
+rule the checkpoint-push carve-out's first pattern, "Narrow the deny",
+shows: `Bash(gh pr merge:*)` in its allow list and `Bash(gh *--admin*)`
+in its deny list, or a REST merge script's path with no deny
+([`toolchain.md § Permission carve-out for the checkpoint push`](skills/dev/companions/toolchain.md#permission-carve-out-for-the-checkpoint-push)).
+A merge that allow rule matches does not reach the classifier, so none
+of the soft_deny entries above judges it: the always-ask merges are held
+by `run.md § Merge or ask`, which names the MR/PR's delivery class
+before any merge and asks the user outside it, and by the host's
+required checks
+([`seat-permissions.md § Auto-mode template`](skills/dev/companions/seat-permissions.md#auto-mode-template),
+[`run.md § Merge or ask`](skills/dev/run.md#merge-or-ask)).
+
 At a branch's close and at a batch's, a run dispatches the code
 reviewer, the seat that reviews the change against its plan. A project
 sets that reviewer's model and effort with a `review: <model> <effort>`
@@ -122,6 +136,11 @@ commands:
   `main` already exists it delivers the scaffold through a working
   branch and an MR/PR
   ([`start.md` opening and `§ 5`](skills/dev/start.md#5-commit)).
+  It writes no settings file: it prints the permission rules for
+  `.claude/settings.json` and, under `Supervisor: AI`, the `autoMode`
+  entries for `~/.claude/settings.json`, each with its content, for the
+  user to write
+  ([`start.md § 4`](skills/dev/start.md#4-quality-infrastructure)).
 - `/dev migrate` adopts an existing project into DEV.
 - `/dev release` finalizes and tags a release.
 
