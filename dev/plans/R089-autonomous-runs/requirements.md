@@ -25,16 +25,13 @@ no human answering, at a cost in proportion to the work.
 7. The doc writer and the docs verifier hold a doc to the same bar.
 8. A mechanical review fix costs no fresh seat.
 9. Planners for dependent tasks run in dependency order.
-10. A code defect the docs step finds is fixed, its doc following, within
-    the close.
+10. A code defect the docs step finds is fixed, with its doc, in the close.
 11. The checkpoint report's cost figures come from a tool.
 12. A reference doc states each failure behavior once.
 13. Code contradicting a written design decision is a reviewable finding.
 14. One rule says whether a doc seat may run code to confirm a sentence.
-15. Approved review fixes cost one implementer dispatch per task report,
-    never one per entry.
-16. The runner's companions point to a shipped script's or hook's
-    behavior rather than restating it.
+15. Close fixes cost one implementer per task report, never one per entry.
+16. A companion points to a shipped script's behavior, never restates it.
 
 ## Constraints
 
