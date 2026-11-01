@@ -3,11 +3,11 @@
 # (skills/dev/companions/seat-permissions.md; skills/dev/run.md § Pre-flight).
 #
 # Resolves the declared permission set - the rules of
-# companions/auto-permissions.template.json plus the commands of the
-# project's CLAUDE.md § Agent toolchain - against the three settings tiers a
-# session reads, and prints one report whose every line names the tier that
-# satisfied the rule, so a report that read one tier cannot pass as a full
-# answer. Only the rules that bind in the runner's permission mode are
+# companions/auto-permissions.template.json, the commands of the project's
+# CLAUDE.md § Agent toolchain and the deny beside a `gh pr merge` one - against
+# the three settings tiers a session reads, and prints one report whose every
+# line names the tier that satisfied the rule, so a report that read one tier
+# cannot pass as a full answer. Only the rules binding in the runner's mode are
 # resolved. Every tier is read from its working-tree file, which is what the
 # session's own permission check reads; git state enters one check only, the
 # mode-key comparison, which needs a tracked value to compare against.
@@ -38,19 +38,16 @@ stop() {
   exit 1
 }
 
-# The literal prefix of a rule: its text before the first wildcard, with a
-# trailing `:` dropped so a Bash prefix compares against a longer one.
-lit() { local r="${1%%\**}"; printf '%s' "${r%:}"; }
-
-# Does the tier rule $1 reach the declared rule $2? Same tool, and $1's
-# literal prefix a prefix of $2's - so `Edit(//<root>/**)` covers a declared
-# child path and `Bash(git:*)` covers `Bash(git log:*)`, while a tier rule
-# carrying no wildcard reaches only its own exact string.
+# Does the tier rule $1 reach the declared rule $2? Its exact string does, and
+# so does a rule whose wildcards all trail and whose literal prefix - its text
+# before the first wildcard, a trailing `:` dropped - prefixes $2's: so
+# `Edit(//<root>/**)` covers a declared child path and `Bash(git:*)` covers
+# `Bash(git log:*)`, while `Bash(gh *--admin*)` reaches only its own string.
 covers() {
+  local t="${1#*\*}" a="${1%%\**}" b="${2%%\**}"
   [ "$1" = "$2" ] && return 0
-  [ "${1%%(*}" = "${2%%(*}" ] || return 1
-  case "$1" in *'*'*) ;; *) return 1 ;; esac
-  case "$(lit "$2")" in "$(lit "$1")"*) return 0 ;; esac
+  [ "${t//\*/}" = ")" ] || return 1
+  case "${b%:}" in "${a%:}"*) return 0 ;; esac
   return 1
 }
 
@@ -269,6 +266,9 @@ done
 
 # --- the carve-out pattern, its deny set, then the allow rules ------------
 carve_out
+tc_rules=$(toolchain_rules)
+# No allow glob bounds a `gh pr merge` rule's flags: a deny bars `--admin`.
+case $'\n'"$tc_rules" in *$'\n''Bash(gh pr merge'*) check_deny 'Bash(gh *--admin*)' ;; esac
 
 while IFS= read -r r; do
   [ -n "$r" ] && resolve "$r"
@@ -281,7 +281,7 @@ else
   while IFS= read -r r; do
     [ -n "$r" ] && resolve "$r"
   done <<< "$(printf '%s\n%s\n' "$(printf '%s\n' "$declared" | grep '^Bash(')" \
-              "$(toolchain_rules)" | awk 'NF && !seen[$0]++')"
+              "$tc_rules" | awk 'NF && !seen[$0]++')"
 fi
 
 # --- apply, report, verdict ----------------------------------------------

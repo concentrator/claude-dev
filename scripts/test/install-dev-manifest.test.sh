@@ -23,7 +23,7 @@ bash "$INSTALL" --project "$P" >/dev/null 2>&1 || die "install exits nonzero"
 # --- the manifest records every copied file by its blob hash ---
 bad=0; n=0
 while read -r h f; do n=$((n + 1)); [ "$h" = "$(hash "$C/$f")" ] && [ "$h" = "$(hash "$PWD/$f")" ] || bad=1; done < "$C/dev-install-manifest.txt"
-want=$(( $(find skills/dev skills/systematic-debugging skills/dispatching-parallel-agents agents -type f | wc -l) + 26 ))
+want=$(( $(find skills/dev skills/systematic-debugging skills/dispatching-parallel-agents agents -type f | wc -l) + 28 ))
 [ "$bad" = 0 ] && [ "$n" = "$want" ] && pass "manifest records each of the $want copies by its hash" || die "manifest: $n records of $want, bad=$bad"
 [ "$(record skills/dev/SKILL.md)" = 1 ] && [ "$(record CLAUDE.md)" = 0 ] && [ "$(record settings.json)" = 0 ] \
   && pass "manifest holds the copies, not the files the install edits" || die "manifest records the wrong set"

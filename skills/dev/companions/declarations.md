@@ -24,8 +24,10 @@ answers HTTP 403 "GraphQL is not available" - the CI wait on a
 merge on a `Merge:` line in the form `toolchain.md § Merge` gives. It
 is the single source the run reads:
 
-- `/dev run` uses it for `permissions.allow` (the pre-flight gate in
-  `toolchain.md § Permission carve-out for the checkpoint push`).
+- `/dev run` uses it for `permissions.allow`, and for the deny a
+  `gh pr merge` line takes (the pre-flight gate in `toolchain.md
+  § Permission carve-out for the checkpoint push`; `seat-permissions.md
+  § Bash prefix set`).
 - `finish` runs the declared commands instead of probing the host.
 
 The test declaration is tiered, and both tiers include lint.

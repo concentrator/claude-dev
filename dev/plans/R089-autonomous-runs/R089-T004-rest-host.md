@@ -21,7 +21,7 @@ mode: normal
   probe under `GH_DEBUG=api` on a throwaway pull request, with its head sha and
   a stale one, then `toolchain.md` (a § Merge after § CI wait),
   `declarations.md § Declared commands`, the sha's source in `finish.md § 3`.
-- [ ] The `/dev run` pre-flight derives each host-command rule as narrow as
+- [x] The `/dev run` pre-flight derives each host-command rule as narrow as
   its command: state-check and CI-wait rules, shipped or derived, reach no
   `gh api` write, and a merge rule, the derived `Bash(gh pr merge:*)`
   included, nothing past its merge (no `--admin`). Approach: how a rule

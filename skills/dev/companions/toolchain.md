@@ -18,7 +18,7 @@ output (`view | grep` pipelines). Canonical forms:
 gh pr view <n> --json state,mergedAt,statusCheckRollup,headRefOid
 # GitLab: glab mr view <iid> --output json
 # GitHub, REST only:
-gh api repos/{owner}/{repo}/pulls/<n> --jq '{state, merged_at, head_sha: .head.sha}'
+~/.claude/scripts/rest-state-check.sh <n>
 ```
 
 The first two forms return state, merged-at, and checks/pipeline; the
@@ -29,11 +29,24 @@ sha. The declared command is a canonical form above - flag shapes like
 `auto-permissions.template.json`.
 
 A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
-declares the REST form: one `gh api` GET, making no GraphQL request,
-that prints the pull request's state, merge time and head sha. A merged
-pull request reads `closed` with `merged_at` set. The REST form prints
-no checks: the CI wait's exit carries them (§ CI wait). `gh` fills
+declares the REST form: `scripts/rest-state-check.sh`, which takes the
+pull request number and makes one `gh api` GET of
+`repos/{owner}/{repo}/pulls/<n>`, making no GraphQL request, printing
+the pull request's state, merge time and head sha. A merged pull
+request reads `closed` with `merged_at` set. The REST form prints no
+checks: the CI wait's exit carries them (§ CI wait). `gh` fills
 `{owner}/{repo}` from the repository of the current directory.
+
+Each REST form of this file is a script the installer ships, taking its
+placeholders and nothing else, rather than a `gh api` line. The
+pre-flight's rule for a declared command is the line up to its first
+placeholder (`seat-permissions.md § Bash prefix set`), and a rule's `*`
+matches any text, spaces included: a `gh api` line's rule would reach
+every call under its endpoint, writes and other flags included, while a
+script's rule is its path alone. The line spells the installed path
+out, `.claude/scripts/<script>` for a project installed with
+`--project`, since a `<config>` placeholder would end the rule before
+the path.
 
 ## CI wait
 
@@ -52,10 +65,8 @@ GitLab form names the MR's source branch. The wait allows ship in
 `auto-permissions.template.json` beside the view allows.
 
 A project declaring the REST state check declares the REST wait beside
-it: `scripts/rest-ci-wait.sh`, which the installer ships. The line
-spells the installed path out - `.claude/scripts/rest-ci-wait.sh` for a
-project installed with `--project` - since the pre-flight's rule for a
-declared command ends at its first placeholder. The script reads the
+it: `scripts/rest-ci-wait.sh`, which takes the pull request number
+(§ State check gives why each REST form is a script). The script reads the
 pull request's head sha once, then polls that sha's check runs through
 `gh api` GETs, making no GraphQL request, until every run completes. It
 prints one line per check - name, `pass` or `fail`, job URL - and an
@@ -76,13 +87,21 @@ merge commit. Canonical forms:
 ```
 gh pr merge <n> --merge
 # GitHub, REST only:
-gh api -X PUT repos/{owner}/{repo}/pulls/<n>/merge -f merge_method=merge -f sha=<sha>
+~/.claude/scripts/rest-merge.sh <n> <sha>
 ```
 
+`gh pr merge` takes flags after `<n>` that its rule cannot bound,
+`--admin` among them, which merges past a failing required check: the
+pre-flight declares the deny `Bash(gh *--admin*)` beside the rule
+(`seat-permissions.md § Bash prefix set`).
+
 A project declaring the REST state check declares the REST merge beside
-it: one `gh api` PUT, making no GraphQL request, whose `sha` is the
-head sha `run.md § Boundary verification` 4 matched CI to - the one the
-CI wait's outcome line names and the state check's `head_sha` reads.
+it: `scripts/rest-merge.sh`, which takes the pull request number and a
+full head sha and makes one `gh api` PUT to
+`repos/{owner}/{repo}/pulls/<n>/merge` with `merge_method=merge`,
+making no GraphQL request. Its `sha` is the head sha `run.md § Boundary
+verification` 4 matched CI to - the one the CI wait's outcome line
+names and the state check's `head_sha` reads.
 The host merges only while the pull request's head is that commit: a
 head moved past it answers HTTP 409 "Head branch was modified",
 leaves the pull request open, and the call exits non-zero. A merge

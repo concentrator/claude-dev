@@ -98,7 +98,25 @@
 - Item 4 (source): Each rule the pre-flight derives from a declared
   state-check, CI-wait or merge line reaches no `gh api` write but the
   declared merge, and no merge rule admits `gh pr merge <n> --admin`.
-  Source:
+  Source: `scripts/preflight-permissions.sh` `toolchain_rules` derives a
+   declared line up to its first placeholder, and the REST forms of
+   `skills/dev/companions/toolchain.md` are
+   `~/.claude/scripts/rest-state-check.sh <n>`, `.../rest-ci-wait.sh <n>`
+   and `.../rest-merge.sh <n> <sha>`, so each derived rule is a script's
+   path; `scripts/rest-state-check.sh` makes one GET,
+   `scripts/rest-ci-wait.sh` GETs alone, `scripts/rest-merge.sh` the one
+   merge PUT, the first and last refusing every other argument before
+   calling `gh`; the template's host rules are `gh pr view`,
+   `gh pr checks`, `glab mr view` and `glab ci status`; beside a derived
+   `Bash(gh pr merge` rule the pre-flight runs `check_deny` on
+   `Bash(gh *--admin*)`, a missing one a cannot-apply, and `covers` reads
+   that deny as barring no declared allow rule
+  Test: `scripts/test/preflight-permissions-toolchain.test.sh` ("no
+   shipped Bash rule reaches gh api", "no rule derived from a REST form
+   reaches gh api", "a gh pr merge line without the --admin deny cannot
+   apply", "the --admin deny does not bar the gh pr merge rule"),
+   `scripts/test/rest-state-check.test.sh` and
+   `scripts/test/rest-merge.test.sh` (the usage cases)
 - Item 5 (source): `/dev start` in a repository whose `main` already exists
   delivers the scaffold through a working branch and an MR/PR.
   Source:
@@ -155,6 +173,31 @@
   already merged answers 200 with the same merge commit, exit 0, so
   § Merge counts it no refusal and leaves merged state to the state
   check. Result: § Merge states it beside the 409 refusal.
+- Item 4: the scripts are `scripts/rest-state-check.sh <n>` and
+  `scripts/rest-merge.sh <n> <sha>`, each `exec`ing the call its item's
+  probe made; the merge takes a full sha alone, 40 lowercase hex digits.
+  `toolchain.md § State check` states once why each REST form is a
+  script, and § CI wait's installed-path paragraph folds into it. Result:
+  `rest-state-check.test.sh` and `rest-merge.test.sh` failed before the
+  scripts existed and pass after them.
+- Item 4: `toolchain-forms.test.sh` now runs each declared REST form from
+  this checkout's `scripts/` through a stand-in `gh`, comparing the call
+  it logs, and keeps the case names items 1 and 3's claims cite. Result:
+  it failed before the doc edit and passes after it.
+- Item 4: `covers` read a tier rule as reaching every rule its text
+  before the first `*` prefixes, so the new deny `Bash(gh *--admin*)`
+  read as barring `gh pr view`, `gh pr checks` and `gh pr merge`; a rule
+  now reaches another only when its wildcards are all trailing. The
+  script stood at the code-size gate's 300 lines, so `covers`, the one
+  caller of `lit`, takes it in and drops the tool comparison the literal
+  prefix now implies, holding it at 300. Result:
+  the new toolchain cases reported those three cannot-apply before the
+  change and pass after it; `preflight-permissions.test.sh` still passes.
+- Item 4: the auto template is unchanged: its host rules reach no
+  `gh api` call, and it ships no merge rule for a deny to sit beside.
+  `declarations.md § Declared commands` names the deny beside
+  `permissions.allow`. Result: the new "no shipped Bash rule reaches gh
+  api" case passes on the template as it stands.
 
 ### Findings
 - [x] Item 3: `scripts/test/install-dev-manifest.test.sh` fails on this
@@ -166,6 +209,14 @@
   scripts/test/install-dev-manifest.test.sh:26
   Evidence: observed `bash scripts/test/install-dev-manifest.test.sh`
   printing "not ok - manifest: 73 records of 72, bad=0"
+- [ ] Item 4: this repository declares `gh pr merge <n> --merge` and its
+  tracked `.claude/settings.json` denies no `Bash(gh *--admin*)`, so the
+  pre-flight stops a `/dev run` here until the deny is added; the
+  settings surface is the user's - .claude/settings.json
+  Evidence: observed `bash scripts/preflight-permissions.sh --project
+  <this checkout> --supervisor AI --runner-mode auto` printing "missing
+  Bash(gh *--admin*)" and the remedy to add it to the deny of
+  `.claude/settings.json`, exit 1
 
 ## Answers
 
