@@ -257,6 +257,10 @@
   one REST call its item gives, so each derived rule is the script's
   path alone; the `gh pr merge` rule stays, and the pre-flight derives
   `deny: Bash(gh *--admin*)` beside it.
+- Item 4, the missing deny: the user adds `Bash(gh *--admin*)` to the
+  deny of `.claude/settings.json` in a commit on `batch/R089-B001`
+  before its MR/PR, so the pre-flight passes on `main` once the batch
+  merges.
 
 ## Review
 

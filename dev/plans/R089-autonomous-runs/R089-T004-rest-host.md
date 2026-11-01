@@ -32,7 +32,7 @@ mode: normal
   delivers it by MR/PR, as `migrate.md § 8` does, protecting `main` as before.
   Approach: the route at the head of `start.md`, then `start.md § 5` and the
   bootstrap bullet of `git-workflow.md § Trunk`.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
   mark rides the batch branch.)
