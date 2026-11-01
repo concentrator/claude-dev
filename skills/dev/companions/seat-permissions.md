@@ -95,9 +95,10 @@ every pattern-2 session into a cannot-apply.
 How the pattern is read off the tiers the session reads, and which tier
 satisfies each entry it declares, is the pre-flight's carve-out check,
 `carve_out` in `scripts/preflight-permissions.sh`, and its test
-`scripts/test/preflight-permissions.test.sh`. Two rules the test names
-no case for hold as well: the pair split across two tiers satisfies
-pattern 1, and deny entries beyond the pattern's are never a gap.
+`scripts/test/preflight-permissions.test.sh`, whose case 6b passes a
+deny entry beyond the pattern's, such an entry never being a gap. One
+rule the test names no case for holds as well: the pair split across
+two tiers satisfies pattern 1.
 
 A missing deny is the one gap `--apply` cannot close, the pre-flight
 writing no deny rule: the remedy is the missing string added to the
@@ -136,9 +137,9 @@ guard denies four shapes:
    paths passes, which is how a seat undoes one file and how
    `git restore --staged <paths>` unstages.
 
-The spellings each shape catches, the commands it passes and its reason
-line are the guard's own: `hooks/dev-branch-guard.sh` and its test
-`scripts/test/dev-head-guard.test.sh`.
+The spellings each shape catches and the commands it passes are
+asserted in `scripts/test/dev-head-guard.test.sh`; each shape's reason line lives
+in `hooks/dev-branch-guard.sh` alone.
 
 ## Bash prefix set
 
