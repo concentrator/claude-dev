@@ -1,7 +1,7 @@
 # Checkpoint push + MR/PR mechanics
 
-Read by `finish`, `run.md`, and `declarations.md`. § State check and
-§ CI wait apply everywhere. § Push and the carve-out below are the runner's
+Read by `finish`, `run.md`, and `declarations.md`. § State check,
+§ CI wait and § Merge apply everywhere. § Push and the carve-out below are the runner's
 checkpoint-**accept** mechanics (`run.md § Checkpoint`) - the runner
 pushes at no other point and never pushes the default branch. `finish`
 pushes its own branch (`finish.md § 3`). The `CLAUDE.md` keys these mechanics
@@ -67,6 +67,29 @@ when every check passes, non-zero when one fails. A head sha still
 without a check run when the script's capped polls run out exits
 non-zero printing `no checks reported`, the case `git-workflow.md
 § Merge order` re-runs.
+
+## Merge
+
+The declared merge command merges the MR/PR the CI wait passed, with a
+merge commit. Canonical forms:
+
+```
+gh pr merge <n> --merge
+# GitHub, REST only:
+gh api -X PUT repos/{owner}/{repo}/pulls/<n>/merge -f merge_method=merge -f sha=<sha>
+```
+
+A project declaring the REST state check declares the REST merge beside
+it: one `gh api` PUT, making no GraphQL request, whose `sha` is the
+head sha `run.md § Boundary verification` 4 matched CI to - the one the
+CI wait's outcome line names and the state check's `head_sha` reads.
+The host merges only while the pull request's head is that commit: a
+head moved past it answers HTTP 409 "Head branch was modified",
+leaves the pull request open, and the call exits non-zero. A merge
+prints the merge commit's sha and exits 0. The fields go as `-f`, so
+the sha is sent as a string. A pull request already merged answers the
+call with its merge again, exit 0, so the state check stays the read
+of merged state (`git-workflow.md § Merge order`).
 
 ## Push + MR/PR
 

@@ -19,9 +19,10 @@ section - the VCS host (→ `gh`/`glab`) and the exact
 change-request / merge / state-check / CI wait / test / lint / build
 commands, the state check on a `State-check:` line in a form
 `toolchain.md § State check` gives - its REST form where `gh pr`
-answers HTTP 403 "GraphQL is not available" - and the CI wait on a
-`CI wait:` line in the form `toolchain.md § CI wait` gives. It is the
-single source the run reads:
+answers HTTP 403 "GraphQL is not available" - the CI wait on a
+`CI wait:` line in the form `toolchain.md § CI wait` gives, and the
+merge on a `Merge:` line in the form `toolchain.md § Merge` gives. It
+is the single source the run reads:
 
 - `/dev run` uses it for `permissions.allow` (the pre-flight gate in
   `toolchain.md § Permission carve-out for the checkpoint push`).

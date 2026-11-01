@@ -15,7 +15,7 @@ mode: normal
   probe `gh run watch --exit-status` on the head sha's run against check runs
   by head sha, on a passing and a failing pull request, then `toolchain.md
   § CI wait`, and `git-workflow.md § Merge order` only if the signal differs.
-- [ ] The REST merge makes a merge commit in one `gh api` call sending the
+- [x] The REST merge makes a merge commit in one `gh api` call sending the
   head sha `run.md § Boundary verification` 4 matched CI to, so the host
   merges only that commit, and exits non-zero when the host refuses. Approach:
   probe under `GH_DEBUG=api` on a throwaway pull request, with its head sha and

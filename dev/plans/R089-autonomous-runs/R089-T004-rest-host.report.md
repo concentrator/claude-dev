@@ -59,9 +59,42 @@
   from one REST call carrying the head sha CI verified, making no GraphQL
   request, and exits non-zero when the host refuses the merge, a head moved
   past that sha included.
-  Call:
+  Call: `GH_DEBUG=api gh api -X PUT repos/{owner}/{repo}/pulls/627/merge
+   -f merge_method=merge -f sha=<sha>`, first with the stale sha
+   88b26fc5f28c795d3d8dd9aee0e80398300f6487 (the head's parent), then
+   with the head sha 447aadb65dae1acc93e6aac78e03c5e70c23f5da, the debug
+   stream on stderr filtered to its request lines and body and searched
+   for `graphql`; then `gh api repos/{owner}/{repo}/commits/<merge sha>`
+   for the merge commit's parents
   Output:
-  Environment:
+   stale sha:
+   {"message":"Head branch was modified. Review and try the merge again.","documentation_url":"https://docs.github.com/rest/pulls/pulls#merge-a-pull-request","status":"409"}
+   exit=1
+   > PUT /repos/concentrator/claude-dev/pulls/627/merge HTTP/1.1
+   < HTTP/2.0 409 Conflict
+   body: {"merge_method":"merge","sha":"88b26fc5f28c795d3d8dd9aee0e80398300f6487"}
+   graphql lines: 0
+   pulls/627 after it: {"merged":false,"state":"open"}
+   head sha:
+   {"sha":"175eebd7ff6c1fbdb87db7d1536461e15ac40946","merged":true,"message":"Pull Request successfully merged"}
+   exit=0
+   > PUT /repos/concentrator/claude-dev/pulls/627/merge HTTP/1.1
+   < HTTP/2.0 200 OK
+   body: {"merge_method":"merge","sha":"447aadb65dae1acc93e6aac78e03c5e70c23f5da"}
+   graphql lines: 0
+   merge commit 175eebd7ff6c1fbdb87db7d1536461e15ac40946 parents: the
+    base tip c4b6c694894149fe3eceb6c9281260b26532f4c3 and the head sha
+    447aadb65dae1acc93e6aac78e03c5e70c23f5da
+   first probe, pull request 626: the same 409-then-200 shapes, and a
+    second merge call on 626 once merged answered 200 with the same
+    merge commit, exit 0
+  Environment: gh 2.97.0 on macOS (Darwin 25.5.0), 2026-11-01T16:04Z to
+   16:06Z; concentrator/claude-dev throwaway pull requests 626 and 627,
+   based on a throwaway base branch cut from main, both merged into that
+   base only, the base branch deleted and the head branches deleted by
+   the host on merge; main unchanged
+  Test: `scripts/test/toolchain-forms.test.sh` ("the merge form PUTs a
+   merge commit carrying sha 88b26fc" and "... 447aadb")
 - Item 4 (source): Each rule the pre-flight derives from a declared
   state-check, CI-wait or merge line reaches no `gh api` write but the
   declared merge, and no merge rule admits `gh pr merge <n> --admin`.
@@ -106,6 +139,33 @@
   which stated the `success`-only pass set, states the widened one too.
   Result: `rest-ci-wait.test.sh`'s new `neutral` and `skipped` cases
   failed before the script change and pass after it.
+- Item 3: the plan names no test; `toolchain-forms.test.sh` reads the
+  REST merge form from the new `toolchain.md § Merge`, builds the
+  request `gh api` sends for it - method, endpoint, the JSON body of its
+  `-f` fields - and compares it with the two requests the second probe
+  sent on pull request 627. The form puts `-X PUT` before the endpoint,
+  so the pre-flight's rule for it, the line up to `<n>`, carries the
+  method. § Merge also lists `gh pr merge <n> --merge`, this
+  repository's declared merge, as the GraphQL form. The stale case took
+  a head two commits deep, sending the first commit's sha, rather than a
+  push after the pull request opened: the host sees the same head moved
+  past the sha, and the pre-push hook ran once. Result: the test failed
+  before the doc edit and passes after it.
+- Item 3: the first probe found that a merge call on a pull request
+  already merged answers 200 with the same merge commit, exit 0, so
+  § Merge counts it no refusal and leaves merged state to the state
+  check. Result: § Merge states it beside the 409 refusal.
+
+### Findings
+- [ ] Item 3: `scripts/test/install-dev-manifest.test.sh` fails on this
+  branch, "manifest: 73 records of 72": its count of shipped copies
+  adds 25 to the bundled files, and item 2 added
+  `scripts/rest-ci-wait.sh` to the install without raising it. The
+  fast tier is the lint alone, so only the full suite and the pre-push
+  hook show it, the hook printing it on a push from this tree -
+  scripts/test/install-dev-manifest.test.sh:26
+  Evidence: observed `bash scripts/test/install-dev-manifest.test.sh`
+  printing "not ok - manifest: 73 records of 72, bad=0"
 
 ## Answers
 
