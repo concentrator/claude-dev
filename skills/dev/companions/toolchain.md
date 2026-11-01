@@ -144,8 +144,10 @@ it. Two working patterns:
              "Bash(git push -u origin mnt/*)",
              "Bash(git push -u origin test/*)",
              "Bash(git push -u origin plan/*)",
-             "Bash(glab mr create:*)"],
-   "deny":  ["Bash(git push origin <default>:*)", "Bash(git push --force:*)"]
+             "Bash(glab mr create:*)",
+             "Bash(gh pr merge:*)"],
+   "deny":  ["Bash(git push origin <default>:*)", "Bash(git push --force:*)",
+             "Bash(gh *--admin*)"]
    ```
 
    The deny shrinks from all-push to default-branch/force push; the
@@ -159,6 +161,15 @@ it. Two working patterns:
    `release.md` step 8 pushes by hand under that file's bar on
    auto-push - and the `glab mr create` entry beside them is the
    change-request command's rule rather than a push.
+
+   The `gh pr merge` entry is the declared merge command's rule, the
+   `Merge:` line up to its first placeholder as the pre-flight derives
+   it, and the `--admin` deny goes beside it (`seat-permissions.md
+   § Bash prefix set`); a project declaring the REST merge carries its
+   script's path instead, with no deny. A `Supervisor: AI` runner's
+   merge needs this rule in a tier the session reads: under `auto` the
+   classifier refuses a merge no allow rule matches as "Merge Without
+   Review", even after an independent review and green CI.
 
 2. **Keep the blanket deny** - checkpoint asks, the user approves the
    single `git push -u origin batch/R<NNN>-B<NNN>` manually per batch.

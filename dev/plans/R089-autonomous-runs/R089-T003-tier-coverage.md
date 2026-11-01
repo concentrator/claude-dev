@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] Under `auto` a `Supervisor: AI` runner's merge passes: the carve-out
+- [x] Under `auto` a `Supervisor: AI` runner's merge passes: the carve-out
   ships an allow rule for the declared merge command, which the AI grant
   needs, and the always-ask merges that rule hides from the classifier stay
   with `run.md § Merge or ask` and the host's gates. Approach: carve-out 1,
