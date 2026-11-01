@@ -65,3 +65,37 @@
   `context-cost.py`. Result: the fast tier passes.
 
 ## Review
+
+- [ ] Item 1: the carve-out's pattern-1 block carries `Bash(gh pr merge:*)`
+  and `Bash(gh *--admin*)`, though the pre-flight requires both under
+  either pattern; the deny then contradicts "the pair" of
+  `seat-permissions.md § Mode-independent set` and the push-only
+  sentence after it, and pattern 2 still reads "Zero config" while a
+  `gh pr merge` Merge line fails its pre-flight on a deny `--apply`
+  cannot write (Critical) - skills/dev/companions/toolchain.md:149
+  Evidence: observed `preflight-permissions.sh:138-141`, `:268-271`,
+  `:296`; `seat-permissions.md:81-83`; toolchain.md:153, toolchain.md:176;
+  a second verifier confirmed
+- [ ] Item 2: the carve-out JSON pairs GitLab's `glab mr create` with
+  GitHub's `gh pr merge` and deny, and `start.md § 4` prints carve-out 1
+  as written beside the declared commands' rules, so a project gets the
+  other host's rule and a GitHub one the merge rule twice (Important) -
+  skills/dev/start.md:86
+  Evidence: observed toolchain.md:147-150, start.md:85-88
+- [ ] Item 1: the dogfooding pitfalls' "Merges refused" row still names
+  the merge allow rule as toolset backlog, which this branch ships
+  (Important) - skills/dogfooding/companions/pitfalls.md:13
+  Evidence: observed pitfalls.md:13, toolchain.md § Permission carve-out
+- [ ] Item 1: `seat-permissions.md § Auto-mode template` counts the
+  `--admin` deny among "the host's gates", while it is a settings-tier
+  rule (Important) - skills/dev/companions/seat-permissions.md:411
+  Evidence: observed seat-permissions.md:411-413, seat-permissions.md:236-242
+- [ ] Item 1: `toolchain.md` states the `--admin` deny beside the
+  `gh pr merge` rule twice, in § Merge and the carve-out (Suggestion) -
+  skills/dev/companions/toolchain.md:166
+  Evidence: observed toolchain.md:89-90, toolchain.md:166-168
+- [ ] Item 1: `seat-permissions.md` and `README.md` paraphrase what
+  `run.md § Merge or ask` does, which it warns a partial copy misleads
+  (Suggestion) - skills/dev/companions/seat-permissions.md:409
+  Evidence: observed seat-permissions.md:409-410, README.md:106-108,
+  `run.md § Merge or ask`
