@@ -180,6 +180,17 @@
   whichever keeps item 4's derived rule narrow.
 - Item 2: a check passes on conclusion `success`, `neutral` or
   `skipped`; any other conclusion fails the wait.
+- Item 4: per the Claude Code permissions page
+  (code.claude.com/docs/en/permissions), `Bash(x:*)` matches as
+  `Bash(x *)`, a space required after `x`; a `*` anywhere in a rule
+  matches any text, spaces included; deny rules are evaluated before
+  allow rules, and an allow cannot carve an exception out of a deny. No
+  allow glob therefore bounds the flags after `<n>`. The REST state
+  check and the REST merge become shipped scripts, as the REST CI wait
+  is, each checking its arguments (`<n>`; `<n> <sha>`) and making the
+  one REST call its item gives, so each derived rule is the script's
+  path alone; the `gh pr merge` rule stays, and the pre-flight derives
+  `deny: Bash(gh *--admin*)` beside it.
 
 ## Review
 
