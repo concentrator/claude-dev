@@ -28,7 +28,8 @@
     ],
     "deny": [
       "Bash(git push origin main:*)",
-      "Bash(git push --force:*)"
+      "Bash(git push --force:*)",
+      "Bash(gh *--admin*)"
     ]
   }
 }
