@@ -16,12 +16,12 @@ mode: normal
   `dev-head-guard.test.sh` for spellings, passes and reason lines. Approach:
   the heading stays (the guard's reason line cites it); the `git restore`
   row of § Bash prefix set still finds its source.
-- [ ] `seat-permissions.md § Mode-independent set` leaves how the carve-out
-  pattern is read off the tiers to the pre-flight's carve-out check and
-  `preflight-permissions.test.sh`, the paragraph and its bullets becoming a
-  pointer; each pattern's deny strings, the missing-deny remedy and this
-  repository's pair stay. Approach: that section, then the pointers in
-  § Bash prefix set and `toolchain.md § Permission carve-out`'s last line.
+- [ ] `seat-permissions.md § Mode-independent set` points its tier read at
+  the pre-flight's carve-out check and `preflight-permissions.test.sh`, plus
+  one sentence on the two rules that test lacks: a pair split across two
+  tiers satisfies pattern 1; deny entries beyond the pattern's are never a
+  gap. The deny strings, missing-deny remedy and repo's pair stay. Approach:
+  that section, then the pointers in § Bash prefix set and `toolchain.md`.
 - [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
