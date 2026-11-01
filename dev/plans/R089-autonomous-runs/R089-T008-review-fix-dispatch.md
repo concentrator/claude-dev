@@ -10,7 +10,7 @@ mode: normal
   batch order; a halt keeps the committed fixes and the next dispatch names the
   rest (requirement outcome 15). Approach: `run.md` § Close 2, § Batch close 2,
   § Dispatch per item 1 (a redo still names one entry), then the § Seats row.
-- [ ] The implementer's contract and the task report rules name the same
+- [x] The implementer's contract and the task report rules name the same
   dispatch: a close-fix dispatch names every approved entry of one report and
   commits each with its `[x]` (`branch-plan.md § Commit cadence` per entry); a
   redo names one. Approach: `agents/dev-implementer.md` description, § Inputs,

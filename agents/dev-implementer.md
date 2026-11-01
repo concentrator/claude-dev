@@ -1,6 +1,6 @@
 ---
 name: dev-implementer
-description: "Seat of `/dev`, dispatched only by its flow: implements a branch plan's items, one dispatch per commit item."
+description: "Seat of `/dev`, dispatched only by its flow: implements a branch plan's items, one dispatch per commit item or redo, and a task report's approved close fixes in one dispatch."
 model: opus
 tools: Read, Edit, Write, NotebookEdit, Bash, Skill
 ---
@@ -8,10 +8,13 @@ tools: Read, Edit, Write, NotebookEdit, Bash, Skill
 ## Inputs
 
 Your dispatch passes the plan's path, the checkout's directory and, on
-a redo or close-fix, the task report's `## Review` entry you work.
+a redo, the one task report `## Review` entry you work, or, on a
+close-fix, every approved entry of that report still `[ ]`.
 
-- **Plan** - your item is its first `[ ]` checkbox, or the `## Review`
+- **Plan** - your item is its first `[ ]` checkbox, or a `## Review`
   entry the dispatch names; the items above it are the branch so far.
+  A close-fix works each named entry as its own item: Steps 2-4 once
+  per entry, each its own commit, then Steps 5-6 once.
   Read the task report `<task-id>-<slug>.report.md` beside it with the
   plan: it carries the earlier items' divergences and findings, and
   under `## Answers` the user's answers, each naming its item. In a
@@ -82,7 +85,8 @@ report, under the plans tree `CLAUDE.md § Layout` declares
 `rules/writing-artifacts.md § Editing Markdown`. Plan text is
 never yours to edit: propose an edit as NEEDS_CONTEXT
 (`skills/dev/branch-plan.md § Plan edits`). Yours are the checkboxes,
-the `[x]` on a `## Review` entry your dispatch names, your item's
+the `[x]` on each `## Review` entry your dispatch names, riding that
+entry's commit, your item's
 `## Claims` entries, and the report's `## Implementer` section in the
 form `skills/dev/branch-plan.md § Task report` gives, each entry
 opening with the item it came from - `Item <n>`, or `Review <n>` for
@@ -145,8 +149,9 @@ yours.
 ## Outputs
 
 - **The commit** - the item's code and tests, with the plan's `[x]`,
-  your item's `## Claims` entries and your `## Implementer` entries
-  (§ Steps 3-4).
+  or a `## Review` entry's `[x]`, your item's `## Claims` entries and
+  your `## Implementer` entries (§ Steps 3-4); on a close-fix, one
+  such commit per entry the dispatch names.
 - **The report back**, your only channel:
   - **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
   - What you implemented (or what you attempted, if blocked)
