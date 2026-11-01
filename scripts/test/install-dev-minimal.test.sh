@@ -30,10 +30,10 @@ M2=$(mktemp -d); bash "$INSTALL" --project "$M2" --minimal >/dev/null 2>&1 || di
   && pass "minimal ships no seat definitions or cited rules" || die "minimal ships: $(ls "$M2/.claude/agents" "$M2/.claude/rules" 2>/dev/null | tr '\n' ' ')"
 miss=
 for f in hooks/dev-branch-guard.sh hooks/dev-secrets-guard.sh hooks/dev-branch-state.sh hooks/dev-session-brief.sh \
-         scripts/ci/check-plan-text.sh scripts/ci/check-archival.sh scripts/ci/branch-diff.sh scripts/preflight-permissions.sh writing.md dev-instructions.md rules/writing-artifacts.md MAINTENANCE.md; do
+         scripts/ci/check-plan-text.sh scripts/ci/check-archival.sh scripts/ci/branch-diff.sh scripts/preflight-permissions.sh scripts/rest-ci-wait.sh scripts/rest-state-check.sh scripts/rest-merge.sh writing.md dev-instructions.md rules/writing-artifacts.md MAINTENANCE.md; do
   [ -f "$M2/.claude/$f" ] || miss="$miss $f"
 done
-[ -z "$miss" ] && pass "minimal keeps hooks, checks, pre-flight, writing, instructions and maintenance" || die "minimal missing:$miss"
+[ -z "$miss" ] && pass "minimal keeps hooks, checks, pre-flight, REST host scripts, writing, instructions and maintenance" || die "minimal missing:$miss"
 out=$(bash "$M2/.claude/scripts/test/preflight-permissions.test.sh" 2>&1); rc=$?
 [ $rc -eq 0 ] && pass "vendored pre-flight self-test passes from a minimal install" \
   || die "vendored pre-flight self-test failed under minimal: $(grep -m2 'not ok' <<<"$out")"

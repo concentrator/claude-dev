@@ -228,6 +228,22 @@ trimmed. No Bash allow rule is derived per seat under either supervisor
 mode: an allow rule lives in a settings tier the whole session reads,
 and a definition carries `tools:` and no permission key.
 
+A host command's rule is as narrow as the command. A rule's `*`
+matches any text, spaces included, so no allow rule bounds the flags
+after `<n>`: a REST host command, whose `gh api` rule would reach every
+write under its endpoint, is declared as a shipped script taking its
+placeholders alone, its rule the script's path (`toolchain.md § State
+check`). A `gh pr merge` rule reaches every flag of `gh pr merge`,
+`--admin` among them, which merges past a failing required check, so
+the pre-flight declares the deny `Bash(gh *--admin*)` beside it, deny
+rules being evaluated before allow rules. The deny is checked as the
+carve-out's are (§ Mode-independent set): its exact string in a tier's
+`deny`, a missing one being a gap `--apply` cannot close. It binds in
+every mode, so it is checked under `autoMode.classifyAllShell` too. A
+tier deny carrying literal text after its wildcard bars only the
+commands carrying that text, so the pre-flight reads it as reaching no
+declared allow rule but its own string.
+
 | Rule | Source |
 | --- | --- |
 | `Bash(git status:*)`, `Bash(git diff:*)`, `Bash(git log:*)`, `Bash(git show:*)`, `Bash(git branch:*)`, `Bash(git rev-parse:*)` | the seat definitions: every seat holds `Bash`, the read-only seat holds `Read, Bash` alone (`agents/dev-cold-reader.md`), and `agents/code-reviewer.md` reads state with `git diff`/`log`/`show` |
@@ -247,6 +263,7 @@ and a definition carries `tools:` and no permission key.
 | `Bash(gh pr view:*)`, `Bash(glab mr view:*)` | `CLAUDE.md § Agent toolchain`'s State-check line |
 | `Bash(gh pr checks:*)`, `Bash(glab ci status:*)` | `CLAUDE.md § Agent toolchain`'s CI wait line |
 | the project's declared commands | `CLAUDE.md § Agent toolchain` |
+| `Bash(gh *--admin*)`, a deny | `CLAUDE.md § Agent toolchain`'s Merge line, where its rule is `Bash(gh pr merge:*)` (`toolchain.md § Merge`) |
 
 An entry one conduct section bars in one context and a definition needs
 in another stays, traced to the need, the bar standing where it is
@@ -384,3 +401,12 @@ pre-flight's `--apply` can carry the template. The user merges its
 entries into their user tier, the settings surface being no seat's
 (`run.md § Seats`, the asked-of row); nothing in the toolset reads the
 template by path.
+
+The declared merge's allow rule (`toolchain.md § Permission carve-out`)
+keeps a merge it matches off the classifier, so the soft_deny
+entries naming a merge - a `release/` branch's, an instruction
+change's, one past a red gate - never judge it. Those merges stay with
+`run.md § Merge or ask` and with the host's required check, which the
+`--admin` deny beside a `gh pr merge` rule, a settings-tier rule
+(§ Bash prefix set), keeps binding. The template is unchanged by it:
+its entries judge every action no allow rule matches.

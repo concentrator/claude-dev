@@ -1,7 +1,7 @@
 # Checkpoint push + MR/PR mechanics
 
-Read by `finish`, `run.md`, and `declarations.md`. § State check and
-§ CI wait apply everywhere. § Push and the carve-out below are the runner's
+Read by `finish`, `run.md`, and `declarations.md`. § State check,
+§ CI wait and § Merge apply everywhere. § Push and the carve-out below are the runner's
 checkpoint-**accept** mechanics (`run.md § Checkpoint`) - the runner
 pushes at no other point and never pushes the default branch. `finish`
 pushes its own branch (`finish.md § 3`). The `CLAUDE.md` keys these mechanics
@@ -17,13 +17,32 @@ output (`view | grep` pipelines). Canonical forms:
 ```
 gh pr view <n> --json state,mergedAt,statusCheckRollup,headRefOid
 # GitLab: glab mr view <iid> --output json
+# GitHub, REST only:
+~/.claude/scripts/rest-state-check.sh <n>
 ```
 
-Both forms return state, merged-at, and checks/pipeline; the GitHub
-form's `headRefOid` is the head sha `run.md § Boundary verification` 4
-matches CI to, the rollup's entries carrying no commit sha. The declared
-command is the canonical form above - flag shapes like `--web` are
-outside it. The view allows ship in `auto-permissions.template.json`.
+The first two forms return state, merged-at, and checks/pipeline; the
+GitHub form's `headRefOid` is the head sha `run.md § Boundary
+verification` 4 matches CI to, the rollup's entries carrying no commit
+sha. The declared command is a canonical form above - flag shapes like
+`--web` are outside it. The view allows ship in
+`auto-permissions.template.json`.
+
+A project whose `gh pr` answers HTTP 403 "GraphQL is not available"
+declares the REST form: `scripts/rest-state-check.sh`, which takes the
+pull request number and makes one `gh api` GET of
+`repos/{owner}/{repo}/pulls/<n>`, making no GraphQL request, printing
+the pull request's state, merge time and head sha. A merged pull
+request reads `closed` with `merged_at` set. The REST form prints no
+checks: the CI wait's exit carries them (§ CI wait). `gh` fills
+`{owner}/{repo}` from the repository of the current directory.
+
+Each REST form of this file is a script the installer ships, taking its
+placeholders and nothing else, rather than a `gh api` line, so its
+pre-flight rule is the script's path alone (`seat-permissions.md § Bash
+prefix set`). The line spells the installed path out,
+`.claude/scripts/<script>` for a project installed with `--project`,
+since a `<config>` placeholder would end the rule before the path.
 
 ## CI wait
 
@@ -33,11 +52,58 @@ pipeline finish. Canonical forms:
 ```
 gh pr checks <n> --watch
 # GitLab: glab ci status --branch <branch> --wait
+# GitHub, REST only:
+~/.claude/scripts/rest-ci-wait.sh <n>
 ```
 
 `glab ci status` reads a branch's pipeline rather than an MR's, so the
 GitLab form names the MR's source branch. The wait allows ship in
 `auto-permissions.template.json` beside the view allows.
+
+A project declaring the REST state check declares the REST wait beside
+it: `scripts/rest-ci-wait.sh`, which takes the pull request number
+(§ State check gives why each REST form is a script). The script reads the
+pull request's head sha once, then polls that sha's check runs through
+`gh api` GETs, making no GraphQL request, until every run completes. It
+prints one line per check - name, `pass` or `fail`, job URL - and an
+outcome line naming the head sha, the one `run.md § Boundary
+verification` 4 matches to the state check's `head_sha`. A check passes
+when its conclusion is `success`, `neutral` or `skipped`, and fails on
+any other. The exit is the canonical forms': 0
+when every check passes, non-zero when one fails. A head sha still
+without a check run when the script's capped polls run out exits
+non-zero printing `no checks reported`, the case `git-workflow.md
+§ Merge order` re-runs.
+
+## Merge
+
+The declared merge command merges the MR/PR the CI wait passed, with a
+merge commit. Canonical forms:
+
+```
+gh pr merge <n> --merge
+# GitHub, REST only:
+~/.claude/scripts/rest-merge.sh <n> <sha>
+```
+
+The pre-flight declares the deny `Bash(gh *--admin*)` beside the
+`gh pr merge` rule (`seat-permissions.md § Bash prefix set`); the REST
+merge carries none.
+
+A project declaring the REST state check declares the REST merge beside
+it: `scripts/rest-merge.sh`, which takes the pull request number and a
+full head sha and makes one `gh api` PUT to
+`repos/{owner}/{repo}/pulls/<n>/merge` with `merge_method=merge`,
+making no GraphQL request. Its `sha` is the head sha `run.md § Boundary
+verification` 4 matched CI to - the one the CI wait's outcome line
+names and the state check's `head_sha` reads.
+The host merges only while the pull request's head is that commit: a
+head moved past it answers HTTP 409 "Head branch was modified",
+leaves the pull request open, and the call exits non-zero. A merge
+prints the merge commit's sha and exits 0. The fields go as `-f`, so
+the sha is sent as a string. A pull request already merged answers the
+call with its merge again, exit 0, so the state check stays the read
+of merged state (`git-workflow.md § Merge order`).
 
 ## Push + MR/PR
 
@@ -79,7 +145,7 @@ it. Two working patterns:
              "Bash(git push -u origin mnt/*)",
              "Bash(git push -u origin test/*)",
              "Bash(git push -u origin plan/*)",
-             "Bash(glab mr create:*)"],
+             "Bash(gh pr create:*)"],
    "deny":  ["Bash(git push origin <default>:*)", "Bash(git push --force:*)"]
    ```
 
@@ -92,14 +158,25 @@ it. Two working patterns:
    what`). The push strings above are a run's own prefixes - one per
    prefix of `git-workflow.md § Trunk` except `release`, whose branch
    `release.md` step 8 pushes by hand under that file's bar on
-   auto-push - and the `glab mr create` entry beside them is the
+   auto-push - and the `gh pr create` entry beside them is the
    change-request command's rule rather than a push.
 
 2. **Keep the blanket deny** - checkpoint asks, the user approves the
    single `git push -u origin batch/R<NNN>-B<NNN>` manually per batch.
-   Zero config; one prompt per batch by design under
-   `Supervisor: human`. Under `Supervisor: AI` nobody can answer that
-   prompt, so the pre-flight reports it cannot apply.
+   Zero push config - the merge's rules below still apply; one prompt
+   per batch by design under `Supervisor: human`. Under
+   `Supervisor: AI` nobody can answer that prompt, so the pre-flight
+   reports it cannot apply.
+
+**The merge, under either pattern.** The declared merge command's rule
+comes from the `Merge:` line, up to its first placeholder as the
+pre-flight derives it: `Bash(gh pr merge:*)` for the `gh` form, the
+script's path for the REST merge. A `Supervisor: AI` runner's merge
+needs it in a tier the session reads: under `auto` the classifier
+refuses a merge no allow rule matches as "Merge Without Review", even
+after an independent review and green CI. A `gh pr merge` project adds
+§ Merge's `--admin` deny by hand under either pattern, `--apply` writing
+no deny.
 
 The pre-flight permission gate checks which pattern is in place and
 reports it; it never weakens a deny rule on its own. Which deny strings

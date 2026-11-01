@@ -95,5 +95,66 @@ runp --supervisor AI --runner-mode auto
   || die "an absent toolchain prefix passed under auto"
 want "missing Bash(bash t.sh:*)" "the absent toolchain prefix is reported missing"
 
+# --- host-command rules as narrow as their commands ------------------------
+# A rule's `*` matches any text, spaces included, so a rule ending at a `gh api`
+# endpoint reaches every call under it, writes included: no host-command rule,
+# shipped or derived from a toolchain.md form, starts at `gh api` or before it.
+reaches_gh_api() { local r="${1%%\**}"; r="${r%:}"; case "Bash(gh api" in "$r"*) return 0 ;; esac; return 1; }
+wide=$(jq -r '.permissions.allow[] | select(startswith("Bash("))' "$TPL" \
+  | while IFS= read -r r; do reaches_gh_api "$r" && printf '%s ' "$r"; done)
+[ -z "$wide" ] && pass "no shipped Bash rule reaches gh api" || die "shipped rules reach gh api: $wide"
+
+DOC="$ROOT/skills/dev/companions/toolchain.md"
+[ -f "$DOC" ] || die "$DOC not found"
+# The REST form of the toolchain.md section headed $1: its fenced line naming
+# the installed scripts.
+rest_form() {
+  awk -v h="## $1" '/^## / { on = ($0 == h); next } on && /^```/ { f = !f; next }
+    on && f && index($0, "~/.claude/scripts/") == 1' "$DOC"
+}
+newfix
+{ printf '## Agent toolchain\n\n'
+  printf -- '- State-check: `%s`\n' "$(rest_form "State check")"
+  printf -- '- CI wait: `%s`\n' "$(rest_form "CI wait")"
+  printf -- '- Merge: `%s`\n' "$(rest_form "Merge")"; } > "$PROJ/CLAUDE.md"
+sat "$PT" "$PAIR"
+runp --supervisor human --runner-mode default
+for s in rest-state-check rest-ci-wait rest-merge; do
+  want "missing Bash(~/.claude/scripts/$s.sh:*)" "the REST $s line derives the script's path alone"
+done
+derived=$(printf '%s\n' "$OUT" | tr -s ' ' | sed -n 's/^missing \(Bash(.*)\)$/\1/p')
+wide=$(printf '%s\n' "$derived" | while IFS= read -r r; do [ -n "$r" ] && reaches_gh_api "$r" && printf '%s ' "$r"; done)
+[ -n "$derived" ] && [ -z "$wide" ] && pass "no rule derived from a REST form reaches gh api" \
+  || die "rules derived from the REST forms reach gh api: ${wide:-none derived}"
+nowant "Bash(gh *--admin*)" "a toolchain with no gh pr merge line declares no --admin deny"
+
+# `gh pr merge` takes `--admin` after `<n>`, which no allow glob bounds, so its
+# rule declares the deny beside it - checked in every mode, written never.
+ADMIN='Bash(gh *--admin*)'
+merge_fix() {
+  newfix; printf '## Agent toolchain\n\n- Merge: `gh pr merge <n> --merge`\n' > "$PROJ/CLAUDE.md"
+  sat "$PT" "$1"
+  jq '.permissions.allow += ["Bash(gh pr merge:*)"]' "$PT" > "$PT.new" && mv "$PT.new" "$PT"
+}
+merge_fix "$PAIR"
+runp --supervisor human --runner-mode default
+[ "$RC" -ne 0 ] && pass "a gh pr merge line without the --admin deny cannot apply" \
+  || die "a gh pr merge line without the --admin deny passed"
+want "missing $ADMIN" "the absent --admin deny is reported missing"
+want "add \"$ADMIN\" to the deny of" "the absent --admin deny's remedy is the user's deny edit"
+runp --supervisor human --runner-mode default --apply
+! grep -qsF -- '--admin' "$PROJ/.claude/settings.local.json" \
+  && pass "--apply writes no --admin deny" || die "--apply wrote the --admin deny"
+
+merge_fix "$(jq -c --arg r "$ADMIN" '. + [$r]' <<< "$PAIR")"
+runp --supervisor human --runner-mode default
+rc0 "a gh pr merge line beside the --admin deny exits zero"
+want "present (project) $ADMIN" "the --admin deny is found in the tier"
+want "present (project) Bash(gh pr merge:*)" "the --admin deny does not bar the gh pr merge rule"
+nowant "deny reaches it" "the --admin deny swallows no declared allow rule"
+printf '{"autoMode":{"classifyAllShell":true}}\n' > "$FIX/user.json"
+runp --supervisor AI --runner-mode auto
+want "present (project) $ADMIN" "the --admin deny is checked when auto drops the Bash allow rules"
+
 (( fail == 0 )) && echo "preflight-permissions-toolchain.test: ALL OK"
 exit $fail

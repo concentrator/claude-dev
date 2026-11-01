@@ -12,11 +12,11 @@ Why: a cloud session under `auto` with no human answering stalls or pays twice w
   documented step the classifier admits, and every gate, check and rule
   the text cites exists after install (`dev-dogfood-report.md`).
 
-- [ ] **R089-T003 [mnt]**: shipped tiers cover the declared merge command
+- [x] **R089-T003 [mnt]**: shipped tiers cover the declared merge command
   and the denials the report's stops table names; `start.md` hands the
   user each file the session may not write, with its content.
 
-- [ ] **R089-T004 [mnt]**: the declared state-check, CI-wait and merge
+- [x] **R089-T004 [mnt]**: the declared state-check, CI-wait and merge
   commands have REST forms, the merge pinned to the CI-verified head and
   every rule for them as narrow as its command; `/dev start` adopts an existing `main`.
 

@@ -172,7 +172,10 @@ edit_settings 'def retired: (.command // "") as $c | any($names | split(" ")[]; 
 #    when absent, and a tuned check is the adopter's, left in place and
 #    listed (install-manifest.sh). The permission pre-flight ships beside
 #    them because skills/dev/run.md § Pre-flight names it: an adopter's runner
-#    would otherwise cite a script its checkout lacks.
+#    would otherwise cite a script its checkout lacks. The REST state check,
+#    CI wait and merge ship for the same reason: skills/dev/companions/
+#    toolchain.md gives them as the declared commands of a host whose CLI has
+#    REST only.
 mkdir -p "$target/scripts/ci"
 for f in check-code-size.sh check-no-em-dash.sh check-accretion.sh check-batch-tags.sh check-plan-text.sh \
          check-archival.sh; do
@@ -180,6 +183,9 @@ for f in check-code-size.sh check-no-em-dash.sh check-accretion.sh check-batch-t
 done
 ship scripts/ci/branch-diff.sh
 ship scripts/preflight-permissions.sh x
+ship scripts/rest-ci-wait.sh x
+ship scripts/rest-state-check.sh x
+ship scripts/rest-merge.sh x
 for f in check-accretion.test.sh check-batch-tags.test.sh check-plan-text.test.sh check-archival.test.sh \
          preflight-permissions.test.sh preflight-permissions-toolchain.test.sh; do
   ship "scripts/test/$f"

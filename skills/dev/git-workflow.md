@@ -21,7 +21,8 @@ commands`).
 - **Bootstrap exception:** the single initial commit that *creates* `main`
   in a new repo, before protection is set, is the one permitted direct
   commit (`start.md`); every commit after it goes via a branch + CI-gated
-  MR/PR.
+  MR/PR. A repository whose `main` already exists has no such commit:
+  `start.md` delivers its scaffold on a branch.
 - Branch name `<prefix>/<slug>`, kebab-case, slug ≤ 20 chars. Prefix ∈
   {feat, fix, refactor, release, doc, test, mnt, plan, batch}:
   - `feat` / `fix` / `refactor` / `release` - code, matching the change
@@ -69,12 +70,13 @@ commands`).
   (`companions/toolchain.md § CI wait`) once, in the background (the
   Bash tool's `run_in_background`), and merge on the pass its exit
   notification carries: exit zero when every check passes, non-zero
-  when one fails. Nothing polls, and a merge called before the pass
-  fails (GitLab answers 405). A wait that exits printing `no checks
-  reported` is neither pass nor fail, the checks not yet registered: it
-  runs again in the background after a short delay, `sleep 30 && <CI
-  wait>`, at most 3 times, and a third re-run still printing it goes to
-  the user. The declared state
+  when one fails. Nothing outside the wait polls (the REST form polls
+  inside it, capped), and a merge called before the pass fails (GitLab
+  answers 405). A wait that exits printing `no checks reported` is
+  neither pass nor fail, the checks not yet registered: it runs again
+  in the background after a short delay, `sleep 30 && <CI wait>`, at
+  most 3 times, and a third re-run still printing it goes to the user.
+  The declared state
   check (`companions/toolchain.md § State check`) stays the read of
   merged state: an MR/PR it already reports merged is reported as
   merged, never merged again.

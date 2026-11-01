@@ -1,7 +1,9 @@
 # Starting a Project
 
 One-time setup for a new project (existing codebase → `migrate`).
-Bootstrap and protection mechanics live in § 5 Commit.
+A repository whose `main` already exists, one created on the host,
+say, cuts `mnt/dev-scaffold` from `main` before § 1's first write.
+Bootstrap, delivery and protection mechanics live in § 5 Commit.
 
 ## 1. Requirements
 
@@ -26,6 +28,8 @@ Baseline files (`layout.md § Baseline files`):
   files; contents per `layout.md § Baseline files`; the `.env` rule and
   the guard that enforces it: `companions/secrets.md`.
 - `<plans>` with `ROADMAP.md`.
+- `.claude/settings.json` - the user's to write, never the session's:
+  § 4 ends by printing its content.
 - Toolset for no-global contributors: per `migrate.md § 5`.
 
 Full config + artifacts layout and baseline set: `layout.md`.
@@ -72,11 +76,32 @@ install's printed line shows, or re-run the install to append them. A
 global install into `~/.claude` or a non-git project gets no append and
 no notice.
 
+Last, with `§ Agent toolchain` settled, print each settings file the
+session may not write, with its content, for the user to write before
+§ 5's commit; `/dev start` writes no settings file, `auto`'s classifier
+refusing the write as Self-Modification. For `.claude/settings.json`,
+the Bash rules the pre-flight declares (`companions/seat-permissions.md
+§ Bash prefix set`): the `Bash(` entries of
+`companions/auto-permissions.template.json`, a rule per command
+`§ Agent toolchain` declares - the merge's printed there once, with the
+`--admin` deny beside a `gh pr merge` rule (`companions/toolchain.md
+§ Merge`) - and carve-out 1's push strings and deny pair alone, with
+this repository's default branch (`companions/toolchain.md
+§ Permission carve-out`). Under
+`Supervisor: AI` (`companions/declarations.md § Supervisor bounds`),
+also the `autoMode` block of `companions/auto-mode.template.json` for
+the user to merge into `~/.claude/settings.json`, Claude Code reading
+`autoMode` from no project tier (`companions/seat-permissions.md
+§ Auto-mode template`).
+
 ## 5. Commit
 
 The initial commit (requirements + design + scaffold + quality config)
 creates `main` - the bootstrap exception (`git-workflow.md § Trunk`;
-untracked mode deltas: `companions/untracked-claude.md`). Then
+untracked mode deltas: `companions/untracked-claude.md`). Where `main`
+already exists, the same commit lands on `mnt/dev-scaffold` instead,
+delivered by MR/PR as `migrate.md § 8` does, with no bootstrap
+exception. Once the scaffold is on `main`, by either route,
 protect `main` on the host - require MR/PR + passing checks, restrict
 direct push (`gh`/`glab`; `git-workflow.md § Trunk`, `§ Enforcement`),
 TBD-shaped from commit one; thereafter all work lands via a branch + MR/PR.
