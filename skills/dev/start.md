@@ -28,6 +28,8 @@ Baseline files (`layout.md § Baseline files`):
   files; contents per `layout.md § Baseline files`; the `.env` rule and
   the guard that enforces it: `companions/secrets.md`.
 - `<plans>` with `ROADMAP.md`.
+- `.claude/settings.json` - the user's to write, never the session's:
+  § 4 ends by printing its content.
 - Toolset for no-global contributors: per `migrate.md § 5`.
 
 Full config + artifacts layout and baseline set: `layout.md`.
@@ -73,6 +75,22 @@ here, after the install, lacks the gates: end it with them as the
 install's printed line shows, or re-run the install to append them. A
 global install into `~/.claude` or a non-git project gets no append and
 no notice.
+
+Last, with `§ Agent toolchain` settled, print each settings file the
+session may not write, with its content, for the user to write before
+§ 5's commit; `/dev start` writes no settings file, `auto`'s classifier
+refusing the write as Self-Modification. For `.claude/settings.json`,
+the Bash rules the pre-flight declares (`companions/seat-permissions.md
+§ Bash prefix set`): the `Bash(` entries of
+`companions/auto-permissions.template.json`, a rule per command
+`§ Agent toolchain` declares with the `--admin` deny beside a
+`gh pr merge` rule, and carve-out 1 with this repository's default
+branch (`companions/toolchain.md § Permission carve-out`). Under
+`Supervisor: AI` (`companions/declarations.md § Supervisor bounds`),
+also the `autoMode` block of `companions/auto-mode.template.json` for
+the user to merge into `~/.claude/settings.json`, Claude Code reading
+`autoMode` from no project tier (`companions/seat-permissions.md
+§ Auto-mode template`).
 
 ## 5. Commit
 

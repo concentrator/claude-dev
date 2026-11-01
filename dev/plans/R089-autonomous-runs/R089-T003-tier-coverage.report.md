@@ -30,7 +30,15 @@
   permission rules for `.claude/settings.json` and, under `Supervisor: AI`,
   the `autoMode` entries for `~/.claude/settings.json`, each with its
   content, for the user to write.
-  Source:
+  Source: `skills/dev/start.md § 4`, its closing paragraph (no settings
+   file written; `.claude/settings.json`'s Bash rules and, under
+   `Supervisor: AI`, the `autoMode` block printed for the user) and
+   § 3's `.claude/settings.json` bullet; `skills/dev/layout.md
+   § Creation policy`, the file written by the user at scaffold;
+   `docs/reports/dev-dogfood-report.md § Permission stops`, row 5 (the
+   "Self-Modification" refusal); `skills/dev/companions/seat-permissions.md
+   § Bash prefix set` and `§ Auto-mode template` (Claude Code reads
+   `autoMode` from no project tier)
 
 ## Implementer
 ### Divergences
@@ -46,5 +54,14 @@
   pre-flight and its tests are unchanged: the pre-flight already
   derives the `Merge:` rule and its deny. Result: the fast tier
   passes.
+- Item 2: the print sits at the end of `start.md § 4` rather than in
+  § 3, § 3 carrying a `.claude/settings.json` bullet pointing to it:
+  the rules derive from `§ Agent toolchain`, whose CI wait line and the
+  `Test (fast):` line's gates (stop 8's `check-plan-text.sh`) § 4
+  settles, so a print in § 3 would miss them. Stop 3's `wc` and `ls`
+  are the template's `Bash(` entries the print cites. `layout.md
+  § Creation policy` moves `.claude/settings.json` from required at
+  scaffold to a line of its own, written by the user. No rule for
+  `context-cost.py`. Result: the fast tier passes.
 
 ## Review

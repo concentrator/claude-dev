@@ -10,7 +10,7 @@ mode: normal
   with `run.md § Merge or ask` and the host's gates. Approach: carve-out 1,
   `declarations.md § Supervisor bounds`, `seat-permissions.md § Auto-mode
   template`; template unchanged, the pre-flight deriving the `Merge:` rule.
-- [ ] `/dev start` writes no settings file and prints each with its content:
+- [x] `/dev start` writes no settings file and prints each with its content:
   for `.claude/settings.json` the Bash rules the pre-flight declares, carve-out
   1 included (the dogfood report's stops 3, 5, 8); under `Supervisor: AI` the
   `autoMode` entries for `~/.claude/settings.json`. Approach: `start.md § 3`,
