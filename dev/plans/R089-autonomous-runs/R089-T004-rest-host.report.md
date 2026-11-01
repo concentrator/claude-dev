@@ -188,3 +188,9 @@
   `success`, `neutral` or `skipped`, each with a test case (Important) -
   scripts/rest-ci-wait.sh
   Evidence: observed the item 2 implementer's report, concern 1
+- [ ] Item 2: `install-dev-manifest.test.sh` counts the shipped copies
+  without `scripts/rest-ci-wait.sh`, so the full suite fails "manifest:
+  73 records of 72"; its count takes the new file (Important) -
+  scripts/test/install-dev-manifest.test.sh:26
+  Evidence: observed `bash scripts/test/install-dev-manifest.test.sh`
+  printing "not ok - manifest: 73 records of 72, bad=0"
