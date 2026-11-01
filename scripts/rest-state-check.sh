@@ -3,7 +3,8 @@
 # only (skills/dev/companions/toolchain.md § State check). One `gh api` GET of
 # the pull request, which fills {owner}/{repo} from the repository of the
 # current directory, printing its state, merge time and head sha as one JSON
-# object; a merged pull request reads `closed` with `merged_at` set.
+# object; a merged pull request reads `closed` with `merged_at` set. It prints
+# no checks: the CI wait's exit carries them.
 # It takes the number alone, so the pre-flight's rule for the declared line -
 # this script's path - reaches this one read and no other `gh api` call.
 # Exit gh's status; 2 a usage error.
