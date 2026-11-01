@@ -102,6 +102,10 @@
   `toolchain-forms.test.sh` gains a check of the CI wait's REST form.
   Result: the first failed before the script existed and passes after
   it; the form check, written after the doc edit, passes.
+- Review 1: the entry names the script alone; `toolchain.md § CI wait`,
+  which stated the `success`-only pass set, states the widened one too.
+  Result: `rest-ci-wait.test.sh`'s new `neutral` and `skipped` cases
+  failed before the script change and pass after it.
 
 ## Answers
 
@@ -119,7 +123,7 @@
 
 ## Review
 
-- [ ] Item 2: `scripts/rest-ci-wait.sh` passes a check on `success`
+- [x] Item 2: `scripts/rest-ci-wait.sh` passes a check on `success`
   alone, so a `neutral` or `skipped` check fails the wait; it passes on
   `success`, `neutral` or `skipped`, each with a test case (Important) -
   scripts/rest-ci-wait.sh

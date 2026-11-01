@@ -5,7 +5,8 @@
 # only GET requests through `gh api`, which fills {owner}/{repo} from the
 # repository of the current directory.
 # Prints one line per check run - name, pass or fail, job URL - then an outcome
-# line naming the head sha. A run passes when its conclusion is `success`.
+# line naming the head sha. A run passes when its conclusion is `success`,
+# `neutral` or `skipped`; any other conclusion fails it.
 # Exit 0 every check passed; 1 a check failed, or no check registered within
 # EMPTY_POLLS polls, printing `no checks reported`; 2 a usage or host error.
 # REST_CI_WAIT_INTERVAL sets the seconds between polls (default 10).
@@ -14,6 +15,7 @@ set -uo pipefail
 
 INTERVAL=${REST_CI_WAIT_INTERVAL:-10}
 EMPTY_POLLS=6
+PASSED='^(success|neutral|skipped)$'
 
 n=${1:-}
 case "$n" in
@@ -37,9 +39,9 @@ while :; do
   sleep "$INTERVAL"
 done
 
-printf '%s\n' "$runs" | awk -F '\t' -v OFS='\t' '{ print $1, ($3 == "success" ? "pass" : "fail"), $4 }'
+printf '%s\n' "$runs" | awk -F '\t' -v OFS='\t' -v passed="$PASSED" '{ print $1, ($3 ~ passed ? "pass" : "fail"), $4 }'
 total=$(printf '%s\n' "$runs" | wc -l | tr -d ' ')
-failed=$(printf '%s\n' "$runs" | awk -F '\t' '$3 != "success"' | wc -l | tr -d ' ')
+failed=$(printf '%s\n' "$runs" | awk -F '\t' -v passed="$PASSED" '$3 !~ passed' | wc -l | tr -d ' ')
 if [ "$failed" -eq 0 ]; then
   echo "$sha: all $total checks passed"
   exit 0

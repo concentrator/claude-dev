@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Tests scripts/rest-ci-wait.sh, the REST CI wait, over the host's recorded
 # responses served by a stand-in `gh`: it blocks until every check run on the
-# pull request's head sha completes, exits 0 when each passed and non-zero when
-# one failed, gives up printing `no checks reported` after a capped number of
+# pull request's head sha completes, exits 0 when each passed - concluded
+# `success`, `neutral` or `skipped` - and non-zero when one failed, gives up printing `no checks reported` after a capped number of
 # empty polls, and makes only GET requests.
 # Run: bash scripts/test/rest-ci-wait.test.sh
 set -uo pipefail
@@ -77,6 +77,16 @@ run fail 625
 [ "$rc" -ne 0 ] && pass "a check failed: non-zero exit" || die "a check failed: non-zero exit (got 0: $out)"
 [ "$polls" -eq 2 ] && pass "a failing check is waited for until it completes" || die "a failing check is waited for until it completes ($polls polls)"
 case "$out" in *tier1*"$FAIL_URL"*) pass "the failed check is named with its job" ;; *) die "the failed check is named with its job (got: $out)" ;; esac
+
+# A check concluding `neutral` or `skipped` passes, as `success` does.
+for c in neutral skipped; do
+  mkdir -p "$W/$c"
+  pull 624 "$PASS_SHA" > "$W/$c/pull.json"
+  runs "$PASS_SHA" completed "\"$c\"" "$PASS_URL" > "$W/$c/runs.json"
+  run "$c" 624
+  [ "$rc" -eq 0 ] && pass "a $c check passes: exit 0" || die "a $c check passes: exit 0 (got $rc: $out)"
+  case "$out" in *"tier1	pass	$PASS_URL"*) pass "a $c check is listed as pass" ;; *) die "a $c check is listed as pass (got: $out)" ;; esac
+done
 
 run empty 626
 [ "$rc" -ne 0 ] && pass "no check registered: non-zero exit" || die "no check registered: non-zero exit (got 0)"

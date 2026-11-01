@@ -61,7 +61,8 @@ pull request's head sha once, then polls that sha's check runs through
 prints one line per check - name, `pass` or `fail`, job URL - and an
 outcome line naming the head sha, the one `run.md § Boundary
 verification` 4 matches to the state check's `head_sha`. A check passes
-when its conclusion is `success`. The exit is the canonical forms': 0
+when its conclusion is `success`, `neutral` or `skipped`, and fails on
+any other. The exit is the canonical forms': 0
 when every check passes, non-zero when one fails. A head sha still
 without a check run when the script's capped polls run out exits
 non-zero printing `no checks reported`, the case `git-workflow.md
