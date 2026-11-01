@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] Approved close fixes take one fresh implementer per task report, dispatched
+- [x] Approved close fixes take one fresh implementer per task report, dispatched
   naming its plan and every approved `## Review` entry still `[ ]`, each fix its
   own commit with its entry's `[x]`; in a batch, one per member with entries, in
   batch order; a halt keeps the committed fixes and the next dispatch names the

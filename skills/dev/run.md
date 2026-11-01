@@ -26,7 +26,7 @@ file owns, never restating it.
 | --- | --- | --- |
 | Planner | at the detail round, and to fix a strict plan's cold-read gaps once (`write-plan.md` step 6) | `agents/dev-planner.md` |
 | Cold reader | once over a new strict plan before it is approved (`write-plan.md` step 6) | `agents/dev-cold-reader.md`; `companions/verification-policy.md § Comprehension check` |
-| Implementer | per commit item (§ Dispatch per item), and to commit the close fixes (§ Close 2, § Batch close 2) | `agents/dev-implementer.md` |
+| Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, § Batch close 2) | `agents/dev-implementer.md` |
 | Doc writer | once per branch whose plan's `## Claims` lists a claim, or, for a plan without `## Claims`, whose diff changes user-facing behavior (§ Close 3) | `agents/dev-doc-writer.md` |
 | Docs verifier | over every doc the writer touched (§ Close 3) | `agents/dev-docs-verifier.md`; `companions/documentation.md § Verification gate` |
 | Code reviewer | at branch close and at batch close (§ Close 1, § Batch close 1) | `agents/code-reviewer.md`; the steps at left, no companion |
@@ -103,8 +103,9 @@ skipped, noted for the checkpoint, never re-implemented; else its
 branch per plan - and per commit checkbox:
 
 1. Dispatch a fresh implementer naming the plan file - the item it
-   works is the first `[ ]`, or the task report's `## Review` entry the
-   dispatch names (2, § Close 2, § Batch close 2). Its loop is the plan's
+   works is the first `[ ]`, the one `## Review` entry of the task report
+   a redo's dispatch names (2), or every entry a close-fix dispatch names
+   (§ Close 2, § Batch close 2). Its loop is the plan's
    `type:` mode file
    (`feat.md`, `fix.md`, `refactor.md`); `doc`/`test`/`mnt` run
    `branch-plan.md § Commit cadence` alone.
@@ -175,9 +176,12 @@ Per branch, when its last non-final item is `[x]`:
    judgment calls queued, each written as it arises as a `## Review`
    entry of the task report; approval of the applied set is the **user**'s
    under `Supervisor: human` (§ Seats). The approved fixes are the
-   `## Review` entries the runner wrote (`branch-plan.md § Task report`);
-   a fresh implementer, dispatched naming them, commits them. The fixes
-   are not reviewed again.
+   `## Review` entries the runner wrote (`branch-plan.md § Task report`).
+   One fresh implementer per task report, dispatched naming its plan and
+   every approved entry still `[ ]`, commits each fix on its own, the
+   entry's `[x]` riding that commit. A halt keeps the fixes committed,
+   and the next dispatch names the entries still `[ ]`. The fixes are
+   not reviewed again.
 3. Docs, only when the plan's `## Claims` lists a claim, or, for a plan
    without `## Claims`, when the diff changes user-facing behavior:
    dispatch the doc writer (§ Seats) naming the plan file and, for a
@@ -211,8 +215,8 @@ Rails hold throughout (`branch-plan.md § Rails`).
 2. Fixes land as batch-branch commits; queue judgment calls. The runner
    writes each fix as a `## Review` entry of the task report of the member
    whose code it changes, the last in batch order when it changes
-   several, and a fresh implementer, dispatched naming that member's plan
-   and the entry, commits it, as § Close 2 does.
+   several. Each member with entries then takes one fresh implementer,
+   in batch order, which commits them as § Close 2 does.
 3. Run `Test (full)` - the batch's one full local run; red → halt.
 4. Mark member-task checkboxes; commit on `batch/R<NNN>-B<NNN>`
    (`branch-plan.md § Batches`).
