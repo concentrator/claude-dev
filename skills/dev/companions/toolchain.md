@@ -38,15 +38,11 @@ checks: the CI wait's exit carries them (§ CI wait). `gh` fills
 `{owner}/{repo}` from the repository of the current directory.
 
 Each REST form of this file is a script the installer ships, taking its
-placeholders and nothing else, rather than a `gh api` line. The
-pre-flight's rule for a declared command is the line up to its first
-placeholder (`seat-permissions.md § Bash prefix set`), and a rule's `*`
-matches any text, spaces included: a `gh api` line's rule would reach
-every call under its endpoint, writes and other flags included, while a
-script's rule is its path alone. The line spells the installed path
-out, `.claude/scripts/<script>` for a project installed with
-`--project`, since a `<config>` placeholder would end the rule before
-the path.
+placeholders and nothing else, rather than a `gh api` line, so its
+pre-flight rule is the script's path alone (`seat-permissions.md § Bash
+prefix set`). The line spells the installed path out,
+`.claude/scripts/<script>` for a project installed with `--project`,
+since a `<config>` placeholder would end the rule before the path.
 
 ## CI wait
 
@@ -90,9 +86,7 @@ gh pr merge <n> --merge
 ~/.claude/scripts/rest-merge.sh <n> <sha>
 ```
 
-`gh pr merge` takes flags after `<n>` that its rule cannot bound,
-`--admin` among them, which merges past a failing required check: the
-pre-flight declares the deny `Bash(gh *--admin*)` beside the rule
+The pre-flight declares a deny beside the `gh pr merge` rule
 (`seat-permissions.md § Bash prefix set`).
 
 A project declaring the REST state check declares the REST merge beside

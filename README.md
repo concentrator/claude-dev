@@ -272,6 +272,10 @@ A full install ships:
     fails, exiting 1.
 - `scripts/preflight-permissions.sh`, the `/dev run` permission
   pre-flight, with its self-test.
+- `scripts/rest-state-check.sh`, `scripts/rest-ci-wait.sh` and
+  `scripts/rest-merge.sh`, without self-tests: the host commands a
+  project whose `gh pr` has no GraphQL declares
+  ([`toolchain.md`](skills/dev/companions/toolchain.md)).
 - The hooks below.
 - On a `--project` install, the maintenance hygiene section, seeded
   into the target's `MAINTENANCE.md` when that heading is absent.

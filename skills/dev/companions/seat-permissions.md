@@ -233,7 +233,8 @@ matches any text, spaces included, so no allow rule bounds the flags
 after `<n>`: a REST host command, whose `gh api` rule would reach every
 write under its endpoint, is declared as a shipped script taking its
 placeholders alone, its rule the script's path (`toolchain.md § State
-check`). A `gh pr merge` rule reaches every flag of `gh pr merge`, so
+check`). A `gh pr merge` rule reaches every flag of `gh pr merge`,
+`--admin` among them, which merges past a failing required check, so
 the pre-flight declares the deny `Bash(gh *--admin*)` beside it, deny
 rules being evaluated before allow rules. The deny is checked as the
 carve-out's are (§ Mode-independent set): its exact string in a tier's
