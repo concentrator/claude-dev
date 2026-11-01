@@ -1,6 +1,7 @@
 ---
 task: R089-T006
 type: mnt
+depends-on: R089-T008
 mode: normal
 ---
 
