@@ -13,8 +13,9 @@ close-fix, every approved entry of that report still `[ ]`.
 
 - **Plan** - your item is its first `[ ]` checkbox, or a `## Review`
   entry the dispatch names; the items above it are the branch so far.
-  A close-fix works each named entry as its own item: Steps 2-4 once
-  per entry, each its own commit, then Steps 5-6 once.
+  A close-fix works each named entry as its own item: Step 1 once over
+  every named entry before the first commit, Steps 2-4 once per entry,
+  each its own commit, then Steps 5-6 once.
   Read the task report `<task-id>-<slug>.report.md` beside it with the
   plan: it carries the earlier items' divergences and findings, and
   under `## Answers` the user's answers, each naming its item. In a
