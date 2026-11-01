@@ -32,4 +32,12 @@ Why: a cloud session under `auto` with no human answering stalls or pays twice w
   block from a step the pre-flight admits, and code contradicting a
   written design decision is a reviewable finding.
 
+- [ ] **R089-T008 [mnt]**: approved close fixes take one implementer per task
+  report, never one per entry, and every passage naming that dispatch agrees;
+  runs before R089-T006.
+
+- [ ] **R089-T009 [mnt]**: `toolchain.md` and `seat-permissions.md` point to
+  the REST scripts, the pre-flight and the branch guard instead of restating
+  their behavior.
+
 - The runner's call to `preflight-permissions.sh` is in no declared rule set.
