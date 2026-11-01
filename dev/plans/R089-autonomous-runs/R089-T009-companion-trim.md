@@ -22,7 +22,7 @@ mode: normal
   tiers satisfies pattern 1; deny entries beyond the pattern's are never a
   gap. The deny strings, missing-deny remedy and repo's pair stay. Approach:
   that section, then the pointers in § Bash prefix set and `toolchain.md`.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
   mark rides the batch branch.)
