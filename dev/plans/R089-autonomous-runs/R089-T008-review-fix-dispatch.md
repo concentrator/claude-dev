@@ -16,7 +16,7 @@ mode: normal
   redo names one. Approach: `agents/dev-implementer.md` description, § Inputs,
   the plan paragraph and § Outputs; then `branch-plan.md` § Task report and
   § Rails, the file kept within its 350-line cap.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included. (Batch members: the task
   mark rides the batch branch.)
