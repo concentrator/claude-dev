@@ -97,14 +97,12 @@ entries a DEV run needs, for the user to copy into their user settings,
 
 Under `auto`, a `Supervisor: AI` runner's merge needs an allow rule for
 the declared merge command in a settings tier the session reads, the
-rule the checkpoint-push carve-out's first pattern, "Narrow the deny",
-shows: the merge rule, and the deny beside it, the pre-flight derives above
+rule the checkpoint-push carve-out shows under either of its patterns:
+the merge rule, and the deny beside it, the pre-flight derives above
 ([`toolchain.md § Permission carve-out for the checkpoint push`](skills/dev/companions/toolchain.md#permission-carve-out-for-the-checkpoint-push)).
 A merge that allow rule matches does not reach the classifier, so none
 of the soft_deny entries above judges it: the always-ask merges are held
-by `run.md § Merge or ask`, which names the MR/PR's delivery class
-before any merge and asks the user outside it, and by the host's
-required checks
+by `run.md § Merge or ask` and by the host's required checks
 ([`seat-permissions.md § Auto-mode template`](skills/dev/companions/seat-permissions.md#auto-mode-template),
 [`run.md § Merge or ask`](skills/dev/run.md#merge-or-ask)).
 

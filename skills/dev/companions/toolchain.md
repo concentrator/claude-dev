@@ -86,8 +86,9 @@ gh pr merge <n> --merge
 ~/.claude/scripts/rest-merge.sh <n> <sha>
 ```
 
-The pre-flight declares a deny beside the `gh pr merge` rule
-(`seat-permissions.md § Bash prefix set`).
+The pre-flight declares the deny `Bash(gh *--admin*)` beside the
+`gh pr merge` rule (`seat-permissions.md § Bash prefix set`); the REST
+merge carries none.
 
 A project declaring the REST state check declares the REST merge beside
 it: `scripts/rest-merge.sh`, which takes the pull request number and a
@@ -144,10 +145,8 @@ it. Two working patterns:
              "Bash(git push -u origin mnt/*)",
              "Bash(git push -u origin test/*)",
              "Bash(git push -u origin plan/*)",
-             "Bash(glab mr create:*)",
-             "Bash(gh pr merge:*)"],
-   "deny":  ["Bash(git push origin <default>:*)", "Bash(git push --force:*)",
-             "Bash(gh *--admin*)"]
+             "Bash(gh pr create:*)"],
+   "deny":  ["Bash(git push origin <default>:*)", "Bash(git push --force:*)"]
    ```
 
    The deny shrinks from all-push to default-branch/force push; the
@@ -159,23 +158,25 @@ it. Two working patterns:
    what`). The push strings above are a run's own prefixes - one per
    prefix of `git-workflow.md § Trunk` except `release`, whose branch
    `release.md` step 8 pushes by hand under that file's bar on
-   auto-push - and the `glab mr create` entry beside them is the
+   auto-push - and the `gh pr create` entry beside them is the
    change-request command's rule rather than a push.
-
-   The `gh pr merge` entry is the declared merge command's rule, the
-   `Merge:` line up to its first placeholder as the pre-flight derives
-   it, and the `--admin` deny goes beside it (`seat-permissions.md
-   § Bash prefix set`); a project declaring the REST merge carries its
-   script's path instead, with no deny. A `Supervisor: AI` runner's
-   merge needs this rule in a tier the session reads: under `auto` the
-   classifier refuses a merge no allow rule matches as "Merge Without
-   Review", even after an independent review and green CI.
 
 2. **Keep the blanket deny** - checkpoint asks, the user approves the
    single `git push -u origin batch/R<NNN>-B<NNN>` manually per batch.
-   Zero config; one prompt per batch by design under
-   `Supervisor: human`. Under `Supervisor: AI` nobody can answer that
-   prompt, so the pre-flight reports it cannot apply.
+   Zero push config - the merge's rules below still apply; one prompt
+   per batch by design under `Supervisor: human`. Under
+   `Supervisor: AI` nobody can answer that prompt, so the pre-flight
+   reports it cannot apply.
+
+**The merge, under either pattern.** The declared merge command's rule
+comes from the `Merge:` line, up to its first placeholder as the
+pre-flight derives it: `Bash(gh pr merge:*)` for the `gh` form, the
+script's path for the REST merge. A `Supervisor: AI` runner's merge
+needs it in a tier the session reads: under `auto` the classifier
+refuses a merge no allow rule matches as "Merge Without Review", even
+after an independent review and green CI. A `gh pr merge` project adds
+§ Merge's `--admin` deny by hand under either pattern, `--apply` writing
+no deny.
 
 The pre-flight permission gate checks which pattern is in place and
 reports it; it never weakens a deny rule on its own. Which deny strings

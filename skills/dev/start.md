@@ -83,9 +83,11 @@ refusing the write as Self-Modification. For `.claude/settings.json`,
 the Bash rules the pre-flight declares (`companions/seat-permissions.md
 § Bash prefix set`): the `Bash(` entries of
 `companions/auto-permissions.template.json`, a rule per command
-`§ Agent toolchain` declares with the `--admin` deny beside a
-`gh pr merge` rule, and carve-out 1 with this repository's default
-branch (`companions/toolchain.md § Permission carve-out`). Under
+`§ Agent toolchain` declares - the merge's printed there once, with the
+`--admin` deny beside a `gh pr merge` rule (`companions/toolchain.md
+§ Merge`) - and carve-out 1's push strings and deny pair alone, with
+this repository's default branch (`companions/toolchain.md
+§ Permission carve-out`). Under
 `Supervisor: AI` (`companions/declarations.md § Supervisor bounds`),
 also the `autoMode` block of `companions/auto-mode.template.json` for
 the user to merge into `~/.claude/settings.json`, Claude Code reading

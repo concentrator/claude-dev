@@ -83,7 +83,7 @@ supervisor on a green in-class MR/PR, its merge carrying the
 supervision signature below; everything outside the bound - and
 everything on the always-ask list - goes to the user. Under `auto`
 the supervisor's merge needs an allow rule for the declared merge
-command (`toolchain.md § Permission carve-out` 1), which keeps the
+command (`toolchain.md § Permission carve-out`), which keeps the
 merge off the classifier (`seat-permissions.md § Auto-mode template`).
 The
 implementer/supervisor seam stays: the doer never verifies its own
