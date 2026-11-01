@@ -157,7 +157,7 @@
   check. Result: § Merge states it beside the 409 refusal.
 
 ### Findings
-- [ ] Item 3: `scripts/test/install-dev-manifest.test.sh` fails on this
+- [x] Item 3: `scripts/test/install-dev-manifest.test.sh` fails on this
   branch, "manifest: 73 records of 72": its count of shipped copies
   adds 25 to the bundled files, and item 2 added
   `scripts/rest-ci-wait.sh` to the install without raising it. The
@@ -188,7 +188,7 @@
   `success`, `neutral` or `skipped`, each with a test case (Important) -
   scripts/rest-ci-wait.sh
   Evidence: observed the item 2 implementer's report, concern 1
-- [ ] Item 2: `install-dev-manifest.test.sh` counts the shipped copies
+- [x] Item 2: `install-dev-manifest.test.sh` counts the shipped copies
   without `scripts/rest-ci-wait.sh`, so the full suite fails "manifest:
   73 records of 72"; its count takes the new file (Important) -
   scripts/test/install-dev-manifest.test.sh:26
