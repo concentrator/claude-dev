@@ -27,7 +27,7 @@ mode: normal
   included, nothing past its merge (no `--admin`). Approach: how a rule
   matches `pulls/<n>` and a flag after `<n>`, then `preflight-permissions.sh`,
   its toolchain test, `seat-permissions.md § Bash prefix set`, auto template.
-- [ ] `/dev start` adopts a repository whose `main` already exists: it cuts
+- [x] `/dev start` adopts a repository whose `main` already exists: it cuts
   `mnt/dev-scaffold` before § 1's first write, commits the scaffold there and
   delivers it by MR/PR, as `migrate.md § 8` does, protecting `main` as before.
   Approach: the route at the head of `start.md`, then `start.md § 5` and the

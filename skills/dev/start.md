@@ -1,7 +1,9 @@
 # Starting a Project
 
 One-time setup for a new project (existing codebase → `migrate`).
-Bootstrap and protection mechanics live in § 5 Commit.
+A repository whose `main` already exists, one created on the host,
+say, cuts `mnt/dev-scaffold` from `main` before § 1's first write.
+Bootstrap, delivery and protection mechanics live in § 5 Commit.
 
 ## 1. Requirements
 
@@ -76,7 +78,10 @@ no notice.
 
 The initial commit (requirements + design + scaffold + quality config)
 creates `main` - the bootstrap exception (`git-workflow.md § Trunk`;
-untracked mode deltas: `companions/untracked-claude.md`). Then
+untracked mode deltas: `companions/untracked-claude.md`). Where `main`
+already exists, the same commit lands on `mnt/dev-scaffold` instead,
+delivered by MR/PR as `migrate.md § 8` does, with no bootstrap
+exception. Once the scaffold is on `main`, by either route,
 protect `main` on the host - require MR/PR + passing checks, restrict
 direct push (`gh`/`glab`; `git-workflow.md § Trunk`, `§ Enforcement`),
 TBD-shaped from commit one; thereafter all work lands via a branch + MR/PR.

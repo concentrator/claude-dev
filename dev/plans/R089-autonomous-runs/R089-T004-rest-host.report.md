@@ -119,7 +119,13 @@
    `scripts/test/rest-merge.test.sh` (the usage cases)
 - Item 5 (source): `/dev start` in a repository whose `main` already exists
   delivers the scaffold through a working branch and an MR/PR.
-  Source:
+  Source: `skills/dev/start.md`, its opening route (a repository whose
+   `main` already exists cuts `mnt/dev-scaffold` from `main` before
+   § 1's first write) and § 5 Commit (that commit lands on the branch,
+   delivered by MR/PR as `migrate.md § 8` does, no bootstrap exception,
+   `main` protected once the scaffold is on it);
+   `skills/dev/git-workflow.md § Trunk`, the bootstrap exception's
+   bullet
 
 ## Implementer
 ### Divergences
@@ -198,6 +204,11 @@
   `declarations.md § Declared commands` names the deny beside
   `permissions.allow`. Result: the new "no shipped Bash rule reaches gh
   api" case passes on the template as it stands.
+- Item 5: § 5 protected `main` right after the commit creating it; on
+  the branch route the scaffold reaches `main` only when its MR/PR
+  merges, so protection now follows the scaffold landing on `main`,
+  by either route, rather than a commit. The plan names no test and
+  no test reads these skill files. Result: the fast tier passes.
 
 ### Findings
 - [x] Item 3: `scripts/test/install-dev-manifest.test.sh` fails on this
