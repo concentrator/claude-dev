@@ -31,6 +31,10 @@ no human answering, at a cost in proportion to the work.
 12. A reference doc states each failure behavior once.
 13. Code contradicting a written design decision is a reviewable finding.
 14. One rule says whether a doc seat may run code to confirm a sentence.
+15. Approved review fixes cost one implementer dispatch per task report,
+    never one per entry.
+16. The runner's companions point to a shipped script's or hook's
+    behavior rather than restating it.
 
 ## Constraints
 
