@@ -239,3 +239,6 @@ Initiative index. Items: `R-001: description`; each entry owns
 - [ ] R089: Autonomous adopter runs - a new project runs DEV end to end in
       a cloud session under `auto` with `Supervisor: AI`, no human
       answering, at a cost in proportion to the work.
+- [ ] R090: Dogfood benchmark - the framework equips each implementer with
+      plan, style guide, spec and references, and fixture runs measure its
+      time, quality and cost per configuration.
