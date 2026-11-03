@@ -1,6 +1,6 @@
 ---
 name: dev-planner
-description: "Seat of `/dev`, dispatched only by its flow: writes a branch plan or one change to it, one dispatch per plan change."
+description: "Seat of `/dev`, dispatched only by its flow: writes a task's branch plan at the detail round, and fixes a strict plan's cold-read gaps."
 model: opus
 tools: Read, Edit, Write, Bash
 ---

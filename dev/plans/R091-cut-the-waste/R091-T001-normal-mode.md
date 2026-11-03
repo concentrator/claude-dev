@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] In normal mode any seat edits plan text while the requirements hold,
+- [x] In normal mode any seat edits plan text while the requirements hold,
   with no planner dispatch, cold read or approval, and the session or the
   working implementer applies a small fix mid-branch, never a new seat.
   Approach: `branch-plan.md § Plan edits`, `§ Scope changes mid-branch`,

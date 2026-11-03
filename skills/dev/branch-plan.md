@@ -66,14 +66,13 @@ planner's claims rather than trusting them. A strict plan needs
 
 ## Plan edits
 
-No seat edits plan text on its own decision. An implementer taking a
-different route to the same outcome follows it in the code and reports
-the divergence and its reason; the plan is a temporary file and need
-not track the code. A change to plan text is proposed to the user and
-applied only on approval; during a run plan text is unchanged, and the
-approved change is an answer in the task report's `## Answers`
-(`run.md § Question resolution`). Checkbox marks are bookkeeping, not
-plan edits.
+The plan is temporary. In normal mode any seat edits it while the
+requirements hold - no planner, cold read or approval, minimal text; a
+requirement change goes to the user (`run.md § Question resolution`).
+In strict mode a change is proposed to the user and applied only on
+approval, during a run as an answer in the task report's `## Answers`;
+a different route to the same outcome is followed in the code and
+reported. Checkbox marks are bookkeeping, not plan edits.
 
 ## Commit cadence (all types)
 
@@ -115,13 +114,12 @@ Noticed mid-execution, not in the plan.
 **Blocker** - proceeding would produce wrong, unsafe, or contradictory
 code, the task's premise is invalidated, an item's acceptance is
 ambiguous, or verification keeps failing after repeated fixes:
-- **Stop.** A blocker the plan can absorb - an item whose acceptance is
-  ambiguous, a missing step - halts the item: the runner reverts its
-  uncommitted edits and asks the user with the blocker's text
-  (`run.md § Question resolution`), and the fresh implementer starts
-  from the commit that records the answer. An invalidated premise halts
-  the branch instead, for the user to route to a new task, a new R, or
-  an abort.
+- **Stop.** In normal mode a missing step is the seat's to add
+  (§ Plan edits). A blocker the plan can absorb - an ambiguous
+  acceptance, a strict plan's missing step - halts the item: the runner
+  reverts its uncommitted edits and asks the user (`run.md § Question
+  resolution`); the next implementer starts from the answer's commit. An
+  invalidated premise halts the branch for the user to route.
   A route question - files, order - is no blocker: decide it in the
   code and report the divergence (§ Plan edits). Never inline-fix
   beyond a true typo in code you're writing.
@@ -182,11 +180,13 @@ are read as reports; a branch adding one fails the same gate.
 
 ## Scope changes mid-branch
 
-Changes needed after the final commit are proposed to the user
-(§ Plan edits). On approval during a run, each change becomes a
-`## Review` entry of the task report (`run.md § Dispatch per item` 2);
-outside a run, the plan gains new checkboxes plus a new final commit.
-Each new item gets a fresh implementer.
+In normal mode a small fix mid-branch is applied by the session, or by
+the implementer still working, as a commit with its plan item added; no
+new seat starts for it. In strict mode changes needed after the final
+commit are proposed to the user (§ Plan edits): on approval during a
+run, each becomes a `## Review` entry of the task report (`run.md
+§ Dispatch per item` 2), outside a run new checkboxes plus a new final
+commit, each new item a fresh implementer.
 
 ## Closing routine
 
@@ -315,8 +315,8 @@ regardless of size; the full suite runs at batch close (`run.md
 
 ### Rails
 
-- Plan text is unchanged during a run; an answer goes to the task
-  report (§ Plan edits). No seat makes the closing decisions. The
+- Plan text changes during a run only as § Plan edits allows. No seat
+  makes the closing decisions. The
   implementer keeps the code, the plan checkboxes, the task report's
   implementer section and claim entries, and its `## Review` entries' marks.
 - Pre-flight creates `batch/R<NNN>-B<NNN>` off latest `main` and sets the

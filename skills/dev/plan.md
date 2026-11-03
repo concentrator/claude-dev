@@ -155,9 +155,9 @@ After the rounds, adjust in place:
 
 - **Initiative requirements** (`<plans>/R<NNN>-<slug>/requirements.md`):
   `/dev plan R<NNN>` to extend.
-- **Branch plan (`<slug>`)**: `/dev plan <slug>` edits the plan as the
-  user asks, and only with their approval (`branch-plan.md § Plan
-  edits`). An edit is not cold-read again.
+- **Branch plan (`<slug>`)**: `/dev plan <slug>` edits the plan in the
+  session as the user asks, no planner dispatched (`branch-plan.md
+  § Plan edits`). An edit is not cold-read again.
 - **Roadmap items, tasks** (single-line entries): direct file edit.
 - Never rewrite history retroactively.
 

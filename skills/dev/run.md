@@ -26,7 +26,7 @@ file owns, never restating it.
 | --- | --- | --- |
 | Planner | at the detail round, and to fix a strict plan's cold-read gaps once (`write-plan.md` step 6) | `agents/dev-planner.md` |
 | Cold reader | once over a new strict plan before it is approved (`write-plan.md` step 6) | `agents/dev-cold-reader.md`; `companions/verification-policy.md § Comprehension check` |
-| Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, § Batch close 2) | `agents/dev-implementer.md` |
+| Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, § Batch close 2); in normal mode a small fix takes no fresh one (`branch-plan.md § Scope changes mid-branch`) | `agents/dev-implementer.md` |
 | Doc writer | once per branch whose plan's `## Claims` lists a claim, or, for a plan without `## Claims`, whose diff changes user-facing behavior (§ Close 3) | `agents/dev-doc-writer.md` |
 | Docs verifier | over every doc the writer touched (§ Close 3) | `agents/dev-docs-verifier.md`; `companions/documentation.md § Verification gate` |
 | Code reviewer | at branch close and at batch close (§ Close 1, § Batch close 1) | `agents/code-reviewer.md`; the steps at left, no companion |
@@ -43,15 +43,15 @@ table below leaves unassigned halts and reports, never improvises.
 
 | Duty | `Supervisor: human` | `Supervisor: AI` |
 | --- | --- | --- |
-| Writing a plan | planner, at the detail round; plan text is unchanged during a run (§ Question resolution) | the same |
+| Writing a plan | planner, at the detail round | the same |
 | Dispatching | user | supervisor |
 | Taking a different route to an item's outcome | implementer, in the code, reporting the divergence | the same |
-| Changing plan text | user approves (`branch-plan.md § Plan edits`) | the same |
+| Changing plan text | normal: any seat, requirements kept; strict: user approves (`branch-plan.md § Plan edits`) | the same |
 | Writing the docs | doc writer | the same |
 | Clearing a permission prompt | user: answers the prompt, so a missing allow rule halts no run; a classifier denial reaches the user as the seat's BLOCKED report (§ Dispatch per item) | nobody: a pre-flight defect halts the item; a classifier denial reaches the user as the seat's BLOCKED report (§ Dispatch per item) |
 | Verifying the boundary | user | supervisor |
 | Merging | user | supervisor within the declared bounds, else user |
-| Being asked | user: pre-flight permission proposals, plan edits, the always-ask escalations | the same |
+| Being asked | user: pre-flight permission proposals, strict plan edits, requirement changes, the always-ask escalations | the same |
 
 ## Resolve
 
@@ -135,7 +135,7 @@ classifier-readable.
 ## Question resolution
 
 A question the plan cannot answer - an implementer's blocker, a concern
-whose answer changes what an item delivers, a proposed plan edit
+whose answer changes what an item delivers, a proposed strict plan edit
 (`branch-plan.md § Plan edits`) - halts the item. A question a home
 already settles is answered by citing it (`dev-instructions.md § Scope`); any
 other goes to the **user** as
@@ -147,9 +147,9 @@ untracked files the seat created - so the branch stands at its last commit.
 The runner writes the answer - the user's, or the citation of the home
 that settles it - to the task report's `## Answers`,
 naming the item it answers (`branch-plan.md § Task report`), in a
-bookkeeping commit on the item's branch; plan text is unchanged during a
-run, an approved plan edit included. A fresh implementer then starts
-from that commit. A seat never resumes.
+bookkeeping commit on the item's branch; in a strict run plan text is
+unchanged, an approved plan edit included. A fresh implementer then
+starts from that commit. A seat never resumes.
 
 A route question - which files, which order, toward the same outcome -
 costs no seat and no approval: the implementer decides it in the code and
@@ -177,7 +177,8 @@ Per branch, when its last non-final item is `[x]`:
    entry of the task report; approval of the applied set is the **user**'s
    under `Supervisor: human` (§ Seats). The approved fixes are the
    `## Review` entries the runner wrote (`branch-plan.md § Task report`).
-   One fresh implementer per task report, dispatched naming its plan and
+   In normal mode the runner commits a small fix itself. Otherwise one
+   fresh implementer per task report, dispatched naming its plan and
    every approved entry still `[ ]`, commits each fix on its own, the
    entry's `[x]` riding that commit. A halt keeps the fixes committed,
    and the next dispatch names the entries still `[ ]`. The fixes are

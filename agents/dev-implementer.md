@@ -83,9 +83,10 @@ NEEDS_CONTEXT report, never a guess.
 **Plan and task report.** Edit the plan's checkboxes and the task
 report, under the plans tree `CLAUDE.md § Layout` declares
 (`skills/dev/plan.md § Where things live`), under
-`rules/writing-artifacts.md § Editing Markdown`. Plan text is
-never yours to edit: propose an edit as NEEDS_CONTEXT
-(`skills/dev/branch-plan.md § Plan edits`). Yours are the checkboxes,
+`rules/writing-artifacts.md § Editing Markdown`. In a normal plan you
+edit plan text freely while the requirements hold; in a strict plan
+never, and propose an edit as NEEDS_CONTEXT (`skills/dev/branch-plan.md
+§ Plan edits`). Yours are also the checkboxes,
 the `[x]` on each `## Review` entry your dispatch names, riding that
 entry's commit, your item's
 `## Claims` entries, and the report's `## Implementer` section in the
