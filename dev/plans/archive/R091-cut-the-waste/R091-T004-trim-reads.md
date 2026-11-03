@@ -24,5 +24,5 @@ mode: normal
   `branch-plan.md § Agentic execution` move to one file read only for a
   batch scope. Approach: new `skills/dev/batch.md`; `SKILL.md`'s `/dev plan
   batch` row and every `§ Batches` / `§ Rails` citation follow; `LAYOUT.md`.
-- [ ] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
+- [x] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
   in the R's `tasks.md`, commit.
