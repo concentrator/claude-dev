@@ -18,5 +18,5 @@ mode: normal
 - [x] No gate pairs code files with docs: `check-doc-sync.sh` and its
   `run-all.sh` entry go; the pairs stay as Tier-2 review targets.
   Approach: those, then README and DESIGN.md.
-- [ ] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
+- [x] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
   in the R's `tasks.md`, commit.
