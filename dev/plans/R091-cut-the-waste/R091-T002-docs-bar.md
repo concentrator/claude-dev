@@ -9,7 +9,7 @@ mode: normal
   narration of the code and no inline source or test citations, paragraphs
   short; `check-caps.sh` fails a doc over 300 lines. Approach:
   `documentation.md` (top rule, § Detail bar, § Sources), the caps check.
-- [ ] `/dev start` sets the docs structure up front: `index.md` plus one
+- [x] `/dev start` sets the docs structure up front: `index.md` plus one
   file per component or topic, linked from the index. Approach: `start.md`,
   `layout.md § Docs`.
 - [ ] Docs are written once, at close; normal mode dispatches no docs

@@ -50,8 +50,11 @@ Write `## Layout` after `## Agent toolchain` with the defaults
 (`companions/declarations.md § Declared paths`) and seed `<layout>`
 from `layout.md § Layout file`.
 
-If the project will keep `<docs>` feature docs (`layout.md § Docs`),
-record a one-line pointer to `<docs>/index.md` in `§ Conventions`.
+Decide the docs structure now, with the user, before any doc exists:
+`<docs>/index.md` plus one typed doc per component or topic
+(`companions/documentation.md`), each listed in the index. Record the
+granularity and a one-line pointer to the index in `§ Conventions`
+(`layout.md § Docs`).
 
 ## 4. Quality infrastructure
 
