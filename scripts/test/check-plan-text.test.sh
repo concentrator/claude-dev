@@ -275,5 +275,14 @@ printf '      one\n      two\n      three\n' >> "$d/dev/plans/ROADMAP.md"
 out=$(run_in "$d"); case "$out" in *"entry over 3 lines"*) pass "long roadmap entry caught" ;; *) die "long roadmap entry: $out" ;; esac
 rm -rf "$d"
 
+normal_plan() { printf -- '---\ntask: %s-T001\nmode: normal\n---\n\n- [x] an item\n' "$OWN" > "$1/dev/plans/$OWN-x/$OWN-T001-x.md"; }
+d=$(mkrepo); normal_plan "$d"
+out=$(run_in "$d") && pass "normal plan without report, claims or proven passes" || die "normal plan: $out"
+printf -- '# report\n\n## Review\n- [ ] Item 1: a finding - a.sh:3\n' > "$d/dev/plans/$OWN-x/$OWN-T001-x.report.md"
+out=$(run_in "$d") && pass "normal report box without evidence passes" || die "normal report box: $out"
+printf -- '- [ ] Item 1: a finding\n  wrapped onto a second line\n' >> "$d/dev/plans/$OWN-x/$OWN-T001-x.report.md"
+out=$(run_in "$d"); case "$out" in *"report.md:5: report entry over 1 line"*) pass "normal report entry over one line caught" ;; *) die "normal wrapped entry: $out" ;; esac
+rm -rf "$d"
+
 [ "$fail" -eq 0 ] && echo "check-plan-text.test: OK"
 exit "$fail"

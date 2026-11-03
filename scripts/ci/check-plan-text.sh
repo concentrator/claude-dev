@@ -3,11 +3,12 @@
 # ROADMAP entries, requirements.md, tasks.md and branch plans stay short and
 # stable (skills/dev/templates.md). Fails on links, ISO dates, #NNN refs,
 # commit hashes, ids of another initiative in requirements.md (ROADMAP and
-# tasks.md cite them by id), oversize entries, a task report
-# checkbox without an Evidence: line, an added *.findings.md, a branch plan
-# without its task report, an added plan without ## Claims or ## Proven, a
-# plan's claim its task report's ## Claims does not repeat, and a done item's
-# claim entry with an empty field.
+# tasks.md cite them by id), oversize entries, an added *.findings.md, and a
+# normal plan's report entry over one line. A plan whose header lacks
+# `mode: normal` also takes the strict checks: a report checkbox without an
+# Evidence: line, a plan without its task report, an added plan without
+# ## Claims or ## Proven, a plan's claim its task report's ## Claims does not
+# repeat, and a done item's claim entry with an empty field.
 set -uo pipefail
 h="$(dirname "${BASH_SOURCE[0]}")/branch-diff.sh"
 { [ -r "$h" ] && . "$h"; } \
@@ -79,6 +80,15 @@ report() {
     box && !/^  / { close_box() }
     END { close_box() }' "$1"
 }
+
+oneline() {
+  awk -v f="$2" '
+    /^- / { at = NR; first = $0; told = 0; next }
+    at && /^  +[^ ]/ && !told { printf "PLAN-TEXT: %s:%d: report entry over 1 line\toneline\t%s\n", f, at, first; told = 1; next }
+    !/^  / { at = 0 }' "$1"
+}
+
+normal() { awk 'NR == 1 && /^---$/ { h = 1; next } h && /^---$/ { exit } h && /^mode: *normal *$/ { n = 1 } END { exit !n }' "$1" 2>/dev/null; }
 
 backlog() {
   awk -v f="$2" '
@@ -175,9 +185,10 @@ while IFS=$'\t' read -r st f from; do
   case ${BASH_REMATCH[2]} in
     requirements.md) judge scan "$f" "$from" "$id" req ;;
     tasks.md) judge scan "$f" "$from" "$id" tasks; judge backlog "$f" "$from" ;;
-    *.report.md) judge report "$f" "$from"
+    *.report.md) if normal "${f%.report.md}.md"; then judge oneline "$f" "$from"; else judge report "$f" "$from"; fi
       pairs+="${f%.report.md}.md"$'\t'"${from%.report.md}"${from:+.md}$'\n' ;;
     *.md) judge scan "$f" "$from" "$id" plan
+      normal "$f" && continue
       pairs+="$f"$'\t'"$from"$'\n'
       [ -f "${f%.md}.report.md" ] || [ -f "${f%.md}.findings.md" ] \
         || { [ -n "$from" ] && ! had "${from%.md}.report.md" && ! had "${from%.md}.findings.md"; } \

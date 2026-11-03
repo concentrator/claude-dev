@@ -19,7 +19,7 @@ mode: normal
   writer, docs verifier and code reviewer work from the diff and the plan
   items. Approach: `documentation.md § Claims`, those three seats,
   `verification-policy.md`.
-- [ ] `check-plan-text.sh` runs its claims, Proven, report-skeleton and
+- [x] `check-plan-text.sh` runs its claims, Proven, report-skeleton and
   `Evidence:` checks on strict plans only, and fails a normal plan's report
   entry over one line. Approach: the script, then its test.
 - [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
