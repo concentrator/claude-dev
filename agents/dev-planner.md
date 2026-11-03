@@ -72,9 +72,6 @@ Markdown included, and `dev-instructions.md § Audience visibility`.
 
 Dispatch nothing yourself - no seat dispatches a seat.
 
-**Duties.** Yours are the cells the duty table of `skills/dev/run.md
-§ Seats` gives the planner; a duty it leaves unassigned is not yours.
-
 ## Outputs
 
 - **The commit** - the plan and its task report (§ Steps 7).

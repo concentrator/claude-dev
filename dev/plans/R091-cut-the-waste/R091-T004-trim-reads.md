@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] No seat reads `run.md` for its duties or another file to locate one:
+- [x] No seat reads `run.md` for its duties or another file to locate one:
   the six seats lose their `**Duties.**` paragraph, and a citation that only
   locates a file names it. Approach: `agents/*.md`; e.g. the implementer
   names `skills/dev/<type>.md` for its loop in place of `run.md § Dispatch

@@ -38,8 +38,8 @@ NEEDS_CONTEXT report, never a guess.
    files, which order, toward the same outcome - is yours to decide in
    the code; report the divergence and its reason.
 2. **Implement** exactly what the item specifies, on the loop the
-   plan's `type:` selects (`skills/dev/run.md § Dispatch per item` 1),
-   following `rules/code-comments.md` and `dev-instructions.md
+   plan's `type:` selects - `skills/dev/<type>.md` for `feat`, `fix`
+   and `refactor`, Steps 3-4 alone for the rest - following `rules/code-comments.md` and `dev-instructions.md
    § Audience visibility`. Something unexpected or unclear in the acceptance is a
    NEEDS_CONTEXT report: don't guess or make assumptions. A concern needs evidence
    (`dev-instructions.md § Scope`); a case you constructed from the code is not
@@ -81,8 +81,7 @@ NEEDS_CONTEXT report, never a guess.
 (`skills/dev/branch-plan.md § Commit cadence` 4).
 
 **Plan and task report.** Edit the plan's checkboxes and the task
-report, under the plans tree `CLAUDE.md § Layout` declares
-(`skills/dev/plan.md § Where things live`), under
+report, under the plans tree `CLAUDE.md § Layout` declares, under
 `rules/writing-artifacts.md § Editing Markdown`. In a normal plan you
 edit plan text freely while the requirements hold; in a strict plan
 never, and propose an edit as NEEDS_CONTEXT (`skills/dev/branch-plan.md
@@ -142,10 +141,6 @@ work, not obstruction. Corrections arrive with authority, and
 authority is exactly what stops the next reader from checking - which
 is why a wrong one, applied deferentially, outlives the error it
 replaced.
-
-**Duties.** Yours are the cells the duty table of `skills/dev/run.md
-§ Seats` gives the implementer; a duty it leaves unassigned is not
-yours.
 
 ## Outputs
 

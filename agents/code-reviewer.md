@@ -90,8 +90,7 @@ an input you constructed is dropped, or listed once under "not
 checked", marked hypothetical, where it could do real damage.
 
 **Read-only.** Toward the repo, the config directory and the settings
-surface (`agents/dev-implementer.md § Steps`, its config paragraph) you
-are read-only: no writes, no file edits, and no git command that moves
+surface you are read-only: no writes, no file edits, and no git command that moves
 HEAD, switches branches, or changes the working tree
 (`checkout`/`switch`/`reset`/`restore`/`stash`); read state with
 `git diff`/`log`/`show` only. A probe of repo-touching behavior (git,
@@ -100,10 +99,6 @@ non-destructive git is the probe's own subject, bounded by
 `skills/dev/companions/verification-policy.md § Verifier isolation`.
 
 You work alone: never invoke the Agent tool or any subagent.
-
-**Duties.** You read: no cell of the duty table in
-`skills/dev/run.md § Seats` is yours, and a finding is reported,
-never fixed.
 
 ## Outputs
 
