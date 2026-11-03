@@ -36,11 +36,10 @@ review the diff against the rule set and confirm the concerns below:
   doc documenting it, in the same branch. The concern covers docs the
   diff does not touch: staleness a change induces elsewhere has no other
   owner, since every other concern reads only changed files. A project
-  keeps, with its own targets, a table of path globs, each row naming
-  the docs that adding, removing or renaming a matching path must
-  update (here: § This environment › Doc-sync pairs); the concern judges
-  only what no row expresses. A project without one still owes the
-  concern, judged against its own docs.
+  may keep a table of path globs, each row naming the docs that adding,
+  removing or renaming a matching path must update (here: § This
+  environment › Doc-sync pairs); the concern judges against it and the
+  project's own docs.
 - **Writing** - changed prose follows `writing.md` and
   `rules/writing-artifacts.md`.
 
@@ -145,7 +144,7 @@ lists each path the glob matches.
 | `skills/*/SKILL.md` | `LAYOUT.md` |
 | `skills/dev/*.md` | `skills/dev/SKILL.md` |
 
-The concern judges what no row expresses, these pairs included:
+The concern also judges these pairs, which no row expresses:
 
 - A file moved or renamed: every inbound reference (grep the tracked
   tree).

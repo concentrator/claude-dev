@@ -220,13 +220,6 @@ their defaults: the DEV artifacts
 sit beside the root files under `dev/` - see `DESIGN.md § Self-hosting
 layout`.
 
-`MAINTENANCE.md § Doc-sync pairs` maps each path glob to the files that
-an added, removed or renamed path it matches must update
-([`§ Doc-sync pairs`](MAINTENANCE.md#doc-sync-pairs)).
-`scripts/ci/check-doc-sync.sh` fails a branch that adds, removes or
-renames a path a doc-sync row matches without changing every file the
-row names ([`check-doc-sync.sh` `hits`](scripts/ci/check-doc-sync.sh)).
-
 ## Setup on a new machine
 
 1. Clone the repository to a directory that neither is nor contains

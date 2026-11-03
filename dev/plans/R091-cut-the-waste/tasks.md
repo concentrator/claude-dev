@@ -7,7 +7,7 @@ cut it, make the docs readable, and keep context across `/clear`.
 
 - [x] **R091-T001 [mnt]**: normal mode - any seat edits the plan, a small fix
   takes no new seat, the report keeps one line per entry, claims only in strict.
-- [ ] **R091-T002 [mnt]**: docs - structure set at start, written once at
+- [x] **R091-T002 [mnt]**: docs - structure set at start, written once at
   close, a 300-line cap, no doc-sync pairing, no docs verifier in normal mode.
 - [ ] **R091-T003 [mnt]**: handoff - written after a merge, injected after
   `/clear`.

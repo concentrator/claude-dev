@@ -119,9 +119,9 @@ Two subdirectories hold the docs tree's other types
 for probe and test reports, `<docs>/references/` for adapted
 external or codebase material.
 
-The granularity model - a doc per feature, page, section, or block - is a
-per-project choice. Pick the one that fits the project, record it in
-`CLAUDE.md § Conventions`, and apply it consistently.
+The granularity model - a doc per component, feature or topic - is a
+per-project choice made once, at `start.md` § 3 or `migrate.md`, recorded
+in `CLAUDE.md § Conventions` and applied consistently.
 
 `<docs>/index.md` catalogs the docs - one line per doc, its path and
 what it covers - consulted before coding to find the feature's doc, and

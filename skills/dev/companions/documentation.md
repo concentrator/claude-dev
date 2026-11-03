@@ -6,6 +6,12 @@ entries. Grounded in Diataxis (diataxis.fr). Prose style is `writing.md`
 docs (`<docs>`) are its Reference application
 (`layout.md § Docs`).
 
+**Write less, but better.** A doc exists so a reader finds a fact fast.
+It states its type under its title (`Type: Reference`), covers one
+subject, keeps paragraphs to a few lines and stays within 300 lines
+(`scripts/ci/check-caps.sh`); a subject that outgrows that splits into
+sub-subject docs listed in the index. It never retells the code in prose.
+
 ## Diataxis typing
 
 Every doc is exactly one of these types; never mix them in one file. A
@@ -68,20 +74,16 @@ an Element.
 
 ## Detail bar
 
-- Enumerate **every element of the subject** - parameter, input, field,
-  option, endpoint, file - and define each: name, type/default, meaning.
-  A feature doc's elements are those of the code it explains
-  (`layout.md § Docs`): an external system's element that code neither
-  takes nor sends is not one.
-- For each component, cover both its inputs (configuration, parameters)
-  and its outputs (results, logs, errors).
+- **Spec tables are complete.** Parameters, and fields or endpoints in
+  Reference data, list every entry the code takes or sends: name, type,
+  default, meaning. An external system's element the code neither takes
+  nor sends is not one.
+- **Behavior is the rules, not the code.** State the rules, precedence
+  and outcomes a reader cannot see at a glance - defaults people break,
+  edge cases, surprising interactions - never a branch-by-branch
+  retelling of the implementation.
 - Never paste an artifact (config dump, schema, sample output) without
   explaining it.
-- Include verbatim the defaults consumers commonly break, with a note on
-  what depends on them.
-- "Autodiscoverable" detail is not optional. Only genuinely hidden
-  internals may be deferred to a subject-matter expert, and that deferral
-  is stated in the doc.
 
 ## Diagrams
 
@@ -135,7 +137,8 @@ an Element.
 
 ## Verification gate
 
-No new or touched doc is complete until an **independent agent** - never
+Under a strict plan, no new or touched doc is complete until an
+**independent agent** - never
 the author, for `<docs>`, `README.md` and the CHANGELOG the doc-writer
 seat (`run.md § Seats`) - has run the three checks below over it and
 every mismatch they list is fixed. The verifier is the docs-verifier
@@ -192,14 +195,11 @@ What a doc's claim is confirmed against:
 
 A citation of a citation is no source, and an inferred claim has none.
 
-Where the plan's `## Claims` lists claims (§ Claims), each claim the
-doc writer writes ends in a link: to the file its task report entry's
-`Source:` or `Test:` names, the symbol or test named in the link text,
-or, for a `probe` claim, to the `<docs>/reports/` report written from
-its entry (§ Diataxis typing). A CHANGELOG line ends in no link. For
-a plan without `## Claims`, the doc writer's report names the source
-per section (`agents/dev-doc-writer.md`), and the doc carries no
-source cell, column or mark.
+A doc carries no inline source or test citation: a section may end in
+one `Source:` line naming the files, or the `<docs>/reports/` report,
+behind it. The evidence itself stays where it was gathered - the task
+report entry under a strict plan (§ Claims), the doc writer's report
+otherwise (`agents/dev-doc-writer.md`).
 
 - Prefer a report over a read source.
 - A version- or environment-specific fact says which version or
