@@ -28,7 +28,7 @@ file owns, never restating it.
 | Cold reader | once over a new strict plan before it is approved (`write-plan.md` step 6) | `agents/dev-cold-reader.md`; `companions/verification-policy.md § Comprehension check` |
 | Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, § Batch close 2); in normal mode a small fix takes no fresh one (`branch-plan.md § Scope changes mid-branch`) | `agents/dev-implementer.md` |
 | Doc writer | once per branch whose plan's `## Claims` lists a claim, or, for a plan without `## Claims`, whose diff changes user-facing behavior (§ Close 3) | `agents/dev-doc-writer.md` |
-| Docs verifier | over every doc the writer touched (§ Close 3) | `agents/dev-docs-verifier.md`; `companions/documentation.md § Verification gate` |
+| Docs verifier | over every doc the writer touched, strict plans only (§ Close 3) | `agents/dev-docs-verifier.md`; `companions/documentation.md § Verification gate` |
 | Code reviewer | at branch close and at batch close (§ Close 1, § Batch close 1) | `agents/code-reviewer.md`; the steps at left, no companion |
 
 **Loop bound.** Every review - the close review, the docs gate - runs
@@ -186,12 +186,12 @@ Per branch, when its last non-final item is `[x]`:
 3. Docs, only when the plan's `## Claims` lists a claim, or, for a plan
    without `## Claims`, when the diff changes user-facing behavior:
    dispatch the doc writer (§ Seats) naming the plan file and, for a
-   plan without `## Claims`, the commit the branch was cut from, then
-   the gate's verifier over every doc it touched (§ Seats), passing it
-   the commit the branch was cut from and the plan file where its
-   `## Claims` lists claims, else the writer's report. A non-empty
-   mismatch list re-dispatches one fresh doc writer with the list; its
-   result goes to the user with the list, not to a second verification.
+   plan without `## Claims`, the commit the branch was cut from. A
+   strict plan then runs the gate's verifier over every doc it touched
+   (§ Seats), passing it the commit the branch was cut from and the plan
+   file; a normal plan runs none. A non-empty mismatch list
+   re-dispatches one fresh doc writer with the list; its result goes to
+   the user with the list, not to a second verification.
    A BLOCKED halts (`branch-plan.md § Stop conditions`); folding never
    skips it (§ Seats).
 4. The runner makes the mandatory final commit (cleanup, plan complete,

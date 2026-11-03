@@ -137,7 +137,8 @@ an Element.
 
 ## Verification gate
 
-No new or touched doc is complete until an **independent agent** - never
+Under a strict plan, no new or touched doc is complete until an
+**independent agent** - never
 the author, for `<docs>`, `README.md` and the CHANGELOG the doc-writer
 seat (`run.md § Seats`) - has run the three checks below over it and
 every mismatch they list is fixed. The verifier is the docs-verifier

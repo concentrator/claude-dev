@@ -12,7 +12,7 @@ mode: normal
 - [x] `/dev start` sets the docs structure up front: `index.md` plus one
   file per component or topic, linked from the index. Approach: `start.md`,
   `layout.md § Docs`.
-- [ ] Docs are written once, at close; normal mode dispatches no docs
+- [x] Docs are written once, at close; normal mode dispatches no docs
   verifier. Approach: `run.md § Seats`, `§ Close` 3, `branch-plan.md
   § Closing routine` 7.
 - [ ] No gate pairs code files with docs: `check-doc-sync.sh`, its test,

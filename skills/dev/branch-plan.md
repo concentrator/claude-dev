@@ -218,7 +218,7 @@ commit and the hand-off (`finish`).
    - Discard (mark `[x]` with reason: "won't fix")
 7. **Docs** - the doc-writer pass (`run.md § Close` 3): the seat brings
    the docs to the plan's claims or, for a plan without `## Claims`, to
-   the shipped code, commits them, and the gate's verifier clears them
+   the shipped code and commits them; a strict plan's verifier clears them
    (`companions/documentation.md § Verification gate`; `run.md § Seats`).
    Then the **mandatory final item** of every plan:
 
