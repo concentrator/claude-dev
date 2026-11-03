@@ -14,5 +14,5 @@ mode: normal
   stays silent, and `compact|resume` starts keep today's brief. Approach:
   the hook, its test, the installer's matcher, README's hook table and
   passage.
-- [ ] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
+- [x] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
   in the R's `tasks.md`, commit.
