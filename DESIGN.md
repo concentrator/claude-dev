@@ -52,7 +52,7 @@ its scope's state from the plans, the task reports, git and the MR/PR
 state (`skills/dev/run.md § Monitor`). Each change is reviewed once, at its
 branch close, or, for a small branch folded into its batch, at the
 batch close, which also covers cross-branch concerns (`skills/dev/run.md
-§ Close` 1, `§ Batch close` 1). Releases tag the trunk
+§ Close` 1, `skills/dev/batch.md § Batch close` 1). Releases tag the trunk
 (`skills/dev/git-workflow.md § Releases`) and run no code review.
 
 Any seat edits a normal plan while the requirements hold; its report

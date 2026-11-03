@@ -45,4 +45,4 @@ Generic release flow. Projects override via
   release MR/PR.
 - Never auto-tag, push, or amend published commits.
 - No code review: each change was reviewed once, at its branch or batch
-  close (`run.md § Close` 1, `§ Batch close` 1).
+  close (`run.md § Close` 1, `batch.md § Batch close` 1).

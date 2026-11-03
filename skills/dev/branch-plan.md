@@ -185,7 +185,7 @@ commit and the hand-off (`finish`).
    > Complete the branch: cleanup (stale/temp data), mark plan
    > complete, mark the task `[x]` in the R's `tasks.md` plus any
    > release-plan entry, commit. (Batch members: the task mark rides
-   > the batch branch, § Batches.)
+   > the batch branch, `batch.md § Batch close`.)
 
    The task mark comes last because the cleanup ahead of it can still
    find work: a `[x]` written before it asserts a completion the branch
@@ -232,44 +232,14 @@ The **batch** - one or more coupled tasks shipped as one CI-gated
 MR/PR - is the unit of delivery to `main` at either scope; a lone task
 is a batch of one, its branch the MR/PR. A batch-scoped run
 (`run.md`) runs members on a `batch/R<NNN>-B<NNN>` branch and closes
-through the checkpoint below; a task-scoped run closes through
+through `batch.md § Batch close`; a task-scoped run closes through
 § Closing routine + `finish`.
 
 A plan is admitted to a run once merged over approved requirements, a
 small change's unmerged by its `approved: yes` (§ Header), a strict plan
 also needing its `cold-read: passed` record (`run.md § Resolve`).
 
-### Batches
-
-`<plans>/R<NNN>-<slug>/batches/R<NNN>-B<NNN>.md` - ordered member list:
-
-    # R062-B001
-    - R062-T001 (<slug>)
-    - R062-T002 (<slug>)
-
-Composition only (members, order, mode), never status - task state's
-home is the R's `tasks.md`. Open iff a member is `[ ]` there and no
-`R<NNN>-B<NNN>.report.md` exists. Composition is a planning write
-(`plan.md § Where plans live in git`).
-
-Delivery grouping, not a planning level: a batch is scoped to the R
-whose dir holds it - its open, coupled tasks (not independently
-shippable). `depends-on` resolves within batch order or merged work; a
-cross-initiative need becomes its own R. The checkpoint validates that
-R's acceptance criteria. The § Size cap governor bounds the batch.
-
-Batch-close bookkeeping: the close phase marks member-task
-checkboxes as commits on `batch/R<NNN>-B<NNN>` before the MR/PR -
-marks land per § Closing routine, refs per § Rails. The R-closure
-check and release marking ride a close-out plan MR/PR
-(`plan/r<NNN>-close`) after the batch MR/PR merges.
-
-Per-branch close in a batch-scoped run: the close review runs only above the
-close-folding threshold (`verification-policy.md § Close folding`).
-The doc-writer pass (`run.md § Close` 3), the mandatory final commit
-and a green fast tier before merging into the batch branch hold
-regardless of size; the full suite runs at batch close (`run.md
-§ Batch close`).
+A batch's composition, close and refs are `batch.md`.
 
 ### Rails
 
@@ -277,20 +247,10 @@ regardless of size; the full suite runs at batch close (`run.md
   makes the closing decisions. The
   implementer keeps the code, the plan checkboxes, the task report's
   implementer section and claim entries, and its `## Review` entries' marks.
-- Pre-flight creates `batch/R<NNN>-B<NNN>` off latest `main` and sets the
-  `pre-R<NNN>-B<NNN>` tag (rollback anchor). Member branches merge into the
-  batch branch only; `main` is untouched until the batch MR/PR merges.
 - Seats never push; the only delivery is the checkpoint-accept
-  **CI-gated MR/PR** of the batch branch to origin (`run.md
-  § Checkpoint`).
+  **CI-gated MR/PR** to origin (`run.md § Checkpoint`).
 - No commit on a red fast tier - no exceptions.
 - Findings triage defers to the checkpoint.
-- Branch refs stay until the batch MR/PR's decision (`run.md § Merge
-  or ask`). Merge = delete the `pre-R<NNN>-B<NNN>` tag and member refs;
-  post-merge cleanup deletes the local batch branch, the host the
-  origin one (`finish.md § 4` step 4).
-  Discard = delete the batch branch (`finish.md § 3`); tag and member
-  refs stay for salvage.
 
 ### Stop conditions
 
@@ -303,6 +263,4 @@ regardless of size; the full suite runs at batch close (`run.md
 | Doc writer reports BLOCKED | Halt, report |
 | A review's fix round leaves findings open (`run.md § Seats`, loop bound) | Report to the user |
 | Tests/lint not green after the implementer's fix attempt | Halt, report |
-| Batch-close review finds a folded-branch defect beyond batch-branch fixup | Halt, report |
 | Non-blocker discovery | task report (§ Task report), continue |
-| Batch complete | Close phase on `batch/R<NNN>-B<NNN>`, then checkpoint: its accept opens the MR/PR unasked and `run.md § Merge or ask` decides it |

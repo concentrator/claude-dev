@@ -48,7 +48,7 @@ judgment:
 **Consequence:** a small branch skips the per-branch `code-reviewer` pass.
 Its one review is the batch full-diff review at batch close. The runner
 passes the list of folded branches into the batch full-diff review
-dispatch (`run.md § Batch close` 1).
+dispatch (`batch.md § Batch close` 1).
 
 **Invariants** - unaffected, per `branch-plan.md § Agentic execution`:
 the doc-writer pass and its gate (`run.md § Close` 3), the final commit
@@ -133,7 +133,7 @@ infers `(judgment-heavy)`; only the tag in the plan-item text does.
 **Review cost.** The project sets it with a `review: <model> <effort>`
 line in `CLAUDE.md § Conventions` - `review: opus high`, say - and the
 runner sets both on every `code-reviewer` dispatch (`run.md § Close` 1,
-`§ Batch close` 1). With no `review:` line the dispatch sets neither,
+`batch.md § Batch close` 1). With no `review:` line the dispatch sets neither,
 and `agents/code-reviewer.md`'s pins hold.
 
 **Capacity fallback.** A pinned model can be rate-limited, which is not

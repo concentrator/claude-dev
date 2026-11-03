@@ -26,10 +26,10 @@ file owns, never restating it.
 | --- | --- | --- |
 | Planner | at the detail round, and to fix a strict plan's cold-read gaps once (`write-plan.md` step 6) | `agents/dev-planner.md` |
 | Cold reader | once over a new strict plan before it is approved (`write-plan.md` step 6) | `agents/dev-cold-reader.md`; `companions/verification-policy.md § Comprehension check` |
-| Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, § Batch close 2); in normal mode a small fix takes no fresh one (`branch-plan.md § Scope changes mid-branch`) | `agents/dev-implementer.md` |
+| Implementer | per commit item or redo (§ Dispatch per item), and once per task report to commit its approved close fixes (§ Close 2, `batch.md § Batch close` 2); in normal mode a small fix takes no fresh one (`branch-plan.md § Scope changes mid-branch`) | `agents/dev-implementer.md` |
 | Doc writer | once per branch whose plan's `## Claims` lists a claim, or, for a plan without `## Claims`, whose diff changes user-facing behavior (§ Close 3) | `agents/dev-doc-writer.md` |
 | Docs verifier | over every doc the writer touched, strict plans only (§ Close 3) | `agents/dev-docs-verifier.md`; `companions/documentation.md § Verification gate` |
-| Code reviewer | at branch close and at batch close (§ Close 1, § Batch close 1) | `agents/code-reviewer.md`; the steps at left, no companion |
+| Code reviewer | at branch close and at batch close (§ Close 1, `batch.md § Batch close` 1) | `agents/code-reviewer.md`; the steps at left, no companion |
 
 **Loop bound.** Every review - the close review, the docs gate - runs
 one pass and one fix round. What the fix round leaves open goes to the
@@ -56,10 +56,11 @@ table below leaves unassigned halts and reports, never improvises.
 ## Resolve
 
 1. **Scope** - an explicit `R<NNN>-B<NNN>`, task id or slug, or `R<NNN>`;
-   bare = the project's open batch (`branch-plan.md § Batches`: a member
-   task `[ ]` in `tasks.md`, no report), else the next open task whose plan
-   is read. An initiative runs its open batch, else its open tasks in
-   `tasks.md` order, each a task-scoped run. Scope selects pre-approved work:
+   bare = the project's open batch (a `batches/R<NNN>-B<NNN>.md` with a
+   member task `[ ]` in `tasks.md` and no report), else the next open
+   task whose plan is read. A batch scope also reads `batch.md`. An
+   initiative runs its open batch, else its open tasks in `tasks.md`
+   order, each a task-scoped run. Scope selects pre-approved work:
    anything lacking approved requirements or a merged plan (a small
    change's plan, marked by `approved: yes` in its header, is read on
    its task's branch, where that committed mark stands in for the
@@ -91,9 +92,8 @@ table below leaves unassigned halts and reports, never improvises.
 - Default branch (for a small change, its task's branch, which carries
   its plan), clean tree, fast tier green (`companions/declarations.md
   § Declared commands`).
-- Batch scope: tag `pre-R<NNN>-B<NNN>` (e.g. `pre-R062-B001`); create
-  `batch/R<NNN>-B<NNN>` off default. Task scope: the task's branch off
-  default, prefix from `type:`, no tag; a small change's code joins its
+- Batch scope: `batch.md § Pre-flight`. Task scope: the task's branch
+  off default, prefix from `type:`, no tag; a small change's code joins its
   existing branch, so one MR/PR ships its requirements, plan and code.
 
 ## Dispatch per item
@@ -105,7 +105,7 @@ branch per plan - and per commit checkbox:
 1. Dispatch a fresh implementer naming the plan file - the item it
    works is the first `[ ]`, the one `## Review` entry of the task report
    a redo's dispatch names (2), or every entry a close-fix dispatch names
-   (§ Close 2, § Batch close 2). Its loop is the plan's
+   (§ Close 2, `batch.md § Batch close` 2). Its loop is the plan's
    `type:` mode file
    (`feat.md`, `fix.md`, `refactor.md`); `doc`/`test`/`mnt` run
    `branch-plan.md § Commit cadence` alone.
@@ -167,11 +167,9 @@ Per branch, when its last non-final item is `[x]`:
    (`companions/verification-policy.md § Models`), on the branch diff
    vs plan, and the spec review of the task report's `## Claims`
    against the plan (`agents/code-reviewer.md § Steps` 2), before the
-   docs (3). In a batch-scoped run a small branch skips it, a branch
-   with a `probe`
-   claim never being small (`companions/verification-policy.md § Close
-   folding`); a task-scoped run closes in full (`branch-plan.md § Closing
-   routine`).
+   docs (3). A task-scoped run closes in full (`branch-plan.md § Closing
+   routine`); a batch-scoped run folds small branches (`batch.md
+   § Per-branch close`).
 2. Fixes, one round (§ Seats, loop bound): mechanical ones applied,
    judgment calls queued, each written as it arises as a `## Review`
    entry of the task report; approval of the applied set is the **user**'s
@@ -201,28 +199,14 @@ Per branch, when its last non-final item is `[x]`:
    **user**, and on confirmation the ROADMAP `[x]` and the archive move
    ride this commit; `check-archival` fails a delivery that leaves
    every task closed and the initiative open.
-5. Fast tier green → batch scope: merge into `batch/R<NNN>-B<NNN>`;
-   task scope: `finish.md § 1-2`, then § Checkpoint, whose accept,
-   § Boundary verification and § Merge or ask run its § 3. Red → halt.
+5. Fast tier green → `finish.md § 1-2`, then § Checkpoint, whose
+   accept, § Boundary verification and § Merge or ask run its § 3; a
+   batch member merges into its batch branch instead (`batch.md
+   § Per-branch close`). Red → halt.
 
 Rails hold throughout (`branch-plan.md § Rails`).
 
-## Batch close
-
-1. Full-diff review vs default (`code-reviewer`, at the review's cost):
-   each folded small branch vs its plan, as its one review, then
-   cross-branch interactions, duplicated helpers, convention drift; a
-   branch § Close 1 reviewed is not checked against its plan again.
-2. Fixes land as batch-branch commits; queue judgment calls. The runner
-   writes each fix as a `## Review` entry of the task report of the member
-   whose code it changes, the last in batch order when it changes
-   several. Each member with entries then takes one fresh implementer,
-   in batch order, which commits them as § Close 2 does.
-3. Run `Test (full)` - the batch's one full local run; red → halt.
-4. Mark member-task checkboxes; commit on `batch/R<NNN>-B<NNN>`
-   (`branch-plan.md § Batches`).
-
-Models and close folding: `companions/verification-policy.md`.
+Models: `companions/verification-policy.md`.
 
 ## Checkpoint
 
@@ -236,9 +220,8 @@ more mergeable than a batch missing its report. Then:
   → push the branch to origin + open the CI-gated MR/PR per
   `companions/toolchain.md`, description from the report; then
   § Boundary verification and § Merge or ask, whose discard is the one
-  way a branch is turned down. Findings triage; ref cleanup per
-  `branch-plan.md § Rails` - after the MR/PR merges, post-merge cleanup
-  deletes the local batch branch, the host the origin one.
+  way a branch is turned down. Findings triage; a batch's ref cleanup
+  per `batch.md § Refs`.
 - **Halt** → failed item reported. A question halt - an implementer's
   acceptance-changing concern, NEEDS_CONTEXT or an absorbable blocker
   (`branch-plan.md § Scope discoveries`; § Seats) - takes § Question resolution,
@@ -253,23 +236,13 @@ Existing gates only, before the MR/PR is merged or asked of the user:
 1. The report exists (task scope: the `finish.md § 1` set) - no
    report, no accept.
 2. The report verifies each member's acceptance criteria.
-3. Batch scope: `batch/R<NNN>-B<NNN>` has moved off
-   `pre-R<NNN>-B<NNN>` (one `git log -1` on each): equal refs mean no
-   member branch merged in, so the work took another route, with
-   every gate on that route unrun. Check it before the gates below.
-4. CI on the MR/PR is green - the pass the declared CI wait's exit
+3. CI on the MR/PR is green - the pass the declared CI wait's exit
    carries (`git-workflow.md § Merge order`) - matched to the head sha
    (declared state-check command), never a local re-run of gates the
    seats ran and CI re-ran. Plan boxes, diff confinement, and the committer
    signature complete the check.
-5. A batch closing an R does **not** carry the closure and archival
-   marks - they ride a close-out plan MR/PR (`plan/r<NNN>-close`)
-   opened after the batch MR/PR merges (`branch-plan.md § Batches`).
-   Verify that the batch left them alone and that the close-out is
-   queued; a batch marking the R `[x]` in ROADMAP has closed on an
-   unverified criterion, since CI-green criteria are only verifiable
-   on the MR/PR the batch itself creates (`plan.md § Approval and
-   closure`, `§ Archival`).
+
+A batch adds its own checks (`batch.md § Boundary verification`).
 
 The report's queued judgment calls follow § Question resolution.
 
@@ -293,7 +266,8 @@ always-ask list per that same section, and anything the grant does not name
 (§ Seats). Under `Supervisor: human` every decision is the **user**'s
 (§ Seats): the run presents the MR/PR and its evidence and asks merge or
 discard through the AskUserQuestion tool. A discard handles refs per
-`branch-plan.md § Rails`; no answer leaves the MR/PR open, reported as such.
+`finish.md § 3`, a batch's per `batch.md § Refs`; no answer leaves the
+MR/PR open, reported as such.
 
 Branch protection is not the runner's to satisfy by other means: a
 red gate escalates rather than being worked around. Escalations are

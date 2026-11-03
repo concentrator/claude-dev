@@ -9,7 +9,7 @@ P=${P:-dev/plans}
 P=${P%/}
 
 # The anchor tag is never pushed and the batch branch reaches origin
-# only at accept (§ Rails), so a CI runner or shallow clone sees at
+# only at accept (batch.md § Refs), so a CI runner or shallow clone sees at
 # most a slice of the refs - report the blindness rather than a hollow
 # OK. CI must be truthy: a workstation exporting CI=false still
 # enforces.
@@ -44,7 +44,7 @@ judge() {
     nnn="${BASH_REMATCH[1]}"; mmm="${BASH_REMATCH[2]}"
     rep="$(grep -E -m1 "(^|/)R-?$nnn-[^/]+/batches/(B-$mmm|R$nnn-B$mmm)\.report\.md$" <<<"$tree" || true)"
     if [ -n "$rep" ]; then
-      report "$ref outlived its batch - $trunk carries $rep; § Rails retires the ref$hint"
+      report "$ref outlived its batch - $trunk carries $rep; batch.md § Refs retires the ref$hint"
     elif ! grep -qE "(^|/)R-?$nnn-" <<<"$tree"; then
       report "$ref names no initiative R$nnn on $trunk - unresolvable"
     fi

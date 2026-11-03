@@ -52,7 +52,7 @@ naming that condition.
    decision is asked through the AskUserQuestion tool:
    - **Merge** via the declared merge command, then §4. Its REST form
      takes `<sha>`, the head sha the CI wait's outcome line named and
-     the state check matched (`run.md § Boundary verification` 4).
+     the state check matched (`run.md § Boundary verification` 3).
    - **Discard** - list branch, commits, plan state; a user's discard
      is confirmed by typing `discard`. Close the MR/PR, checkout
      default, delete the branch local and origin. The task stays `[ ]`;
