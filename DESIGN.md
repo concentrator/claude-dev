@@ -55,11 +55,10 @@ batch close, which also covers cross-branch concerns (`skills/dev/run.md
 § Close` 1, `§ Batch close` 1). Releases tag the trunk
 (`skills/dev/git-workflow.md § Releases`) and run no code review.
 
-A plan lists the claims its docs make or drop, the implementer records
-each claim's evidence in the task report, and the doc writer and the
-docs verifier work from those two (`skills/dev/companions/documentation.md
-§ Claims`). A claim about an external system is therefore probed in the
-task that relies on it, by the implementer writing the code that calls it.
+Any seat edits a normal plan while the requirements hold; its report
+keeps one line per entry and its docs come from the diff. A strict plan
+lists its docs' claims, with evidence in the task report
+(`skills/dev/companions/documentation.md § Claims`).
 
 Standard: Trunk-Based Development / GitHub Flow (trunkbaseddevelopment.com,
 dora.dev); tag-on-trunk releases (Pro Git, git-scm.com).

@@ -22,7 +22,7 @@ mode: normal
 - [x] `check-plan-text.sh` runs its claims, Proven, report-skeleton and
   `Evidence:` checks on strict plans only, and fails a normal plan's report
   entry over one line. Approach: the script, then its test.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included.
 
