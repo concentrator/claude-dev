@@ -9,7 +9,7 @@ P=${P:-dev/plans}
 P=${P%/}
 
 # The anchor tag is never pushed and the batch branch reaches origin
-# only at accept (batch.md § Refs), so a CI runner or shallow clone sees at
+# only at accept (branch-plan.md § Rails), so a CI runner or shallow clone sees at
 # most a slice of the refs - report the blindness rather than a hollow
 # OK. CI must be truthy: a workstation exporting CI=false still
 # enforces.

@@ -50,7 +50,7 @@ Its one review is the batch full-diff review at batch close. The runner
 passes the list of folded branches into the batch full-diff review
 dispatch (`batch.md § Batch close` 1).
 
-**Invariants** - unaffected, per `branch-plan.md § Agentic execution`:
+**Invariants** - unaffected, per `batch.md § Per-branch close`:
 the doc-writer pass and its gate (`run.md § Close` 3), the final commit
 and the green gate hold for every branch; branches above the threshold
 keep the full per-branch review.
