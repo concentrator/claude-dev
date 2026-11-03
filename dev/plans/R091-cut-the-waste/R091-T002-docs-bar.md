@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] Write less, but better: a doc declares its type and one subject, a
+- [x] Write less, but better: a doc declares its type and one subject, a
   reference keeps the skeleton with a full parameter spec table, no
   narration of the code and no inline source or test citations, paragraphs
   short; `check-caps.sh` fails a doc over 300 lines. Approach:

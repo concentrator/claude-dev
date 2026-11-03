@@ -6,7 +6,8 @@
 # body). Mode files are measured in lines and line length, never words:
 # a word count does not measure a document (R040-T025).
 # Skill class lists below mirror skills.md § Size; new skills default to
-# the general 300-word cap.
+# the general 300-word cap. A doc under the docs path CLAUDE.md § Layout
+# declares holds to 300 lines (skills/dev/companions/documentation.md).
 set -euo pipefail
 export LC_ALL=C.UTF-8   # ${#line} counts characters, not bytes
 h="$(dirname "${BASH_SOURCE[0]}")/branch-diff.sh"
@@ -19,6 +20,9 @@ report() { echo "CAP: $1"; fail=1; }
 
 orchestrators=" dev "
 reference=" dispatching-parallel-agents systematic-debugging "
+
+D=$(sed -n 's/^- Docs: *//p' CLAUDE.md .claude/CLAUDE.md 2>/dev/null | head -1 || true)
+D=${D:-docs}; D=${D%/}
 
 base=$(branch_base) || base=
 old=$(mktemp); trap 'rm -f "$old"' EXIT
@@ -64,6 +68,9 @@ while IFS=$'\t' read -r _ f from; do
     # R-021: skills/dev/ mode files (read on demand by the dev router) - 350
     # lines, 80 characters a line; a table row cannot wrap, so it is exempt from
     # the length ceiling. SKILL.md handled above; companions/ are exempt.
+    "$D"/archive/*) ;;
+    "$D"/*.md)
+      n=$(over "$f" "$from" 300 lines_of); [ -z "$n" ] || report "$f $n lines > 300" ;;
     skills/dev/*/*) ;;
     skills/dev/*.md)
       n=$(over "$f" "$from" 350 mode_lines); [ -z "$n" ] || report "$f $n lines > 350"

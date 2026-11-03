@@ -29,6 +29,11 @@ d=$(mkrepo); lines 351 > "$d/skills/dev/x.md"; git -C "$d" add -A
 report_in "$d" | grep -q 'skills/dev/x.md 351 lines > 350' && pass "351 lines caught with the count" || die "351 lines not caught: $(report_in "$d")"
 rm -rf "$d"
 
+# 1b. a doc under the declared docs path over 300 lines -> caught; 300 passes
+d=$(mkrepo); mkdir -p "$d/docs/sub"; lines 301 > "$d/docs/sub/x.md"; lines 300 > "$d/docs/y.md"; git -C "$d" add -A
+out=$(report_in "$d"); [[ $out == *'docs/sub/x.md 301 lines > 300'* && $out != *'docs/y.md'* ]] && pass "doc over 300 lines caught, 300 passes" || die "doc cap: $out"
+rm -rf "$d"
+
 # 2. an 81-character prose line -> caught, the line number named
 d=$(mkrepo); { echo "short"; echo "${w80}x"; } > "$d/skills/dev/x.md"; git -C "$d" add -A
 report_in "$d" | grep -q 'skills/dev/x.md line 2: 81 characters > 80' && pass "81-character line caught with its number" || die "81-character line not caught: $(report_in "$d")"

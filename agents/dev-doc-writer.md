@@ -48,16 +48,14 @@ cannot settle is never asked, its claim listed in your report
    bring every doc the branch ships to the shipped code - those docs,
    `README.md` only for new public surface; a doc the diff leaves
    accurate stays untouched.
-3. **Write** per `skills/dev/companions/documentation.md § Reference
-   discipline` and `§ Content quality`, probing nothing: a claim's
-   evidence is its task report entry or, for a plan without
-   `## Claims`, the source you read. Where the plan lists claims, each
-   claim ends in its link and a `probe` claim's link targets the
-   `<docs>/reports/` report you copy from its entry
-   (`skills/dev/companions/documentation.md § Sources`, `§ Diataxis
-   typing`). For a plan without `## Claims`, confirm each claim against
-   its source (`§ Sources`), which goes in your report (§ Outputs), not
-   the doc, and a `§ Parameters` input keeps its row
+3. **Write** per `skills/dev/companions/documentation.md` - its opening
+   rule, `§ Detail bar`, `§ Reference discipline` and `§ Content
+   quality` - probing nothing: a claim's evidence is its task report
+   entry or, for a plan without `## Claims`, the source you read. A
+   `probe` claim's report goes to `<docs>/reports/`, copied from its
+   entry. Evidence stays out of the doc (`§ Sources`); for a plan
+   without `## Claims` it goes in your report (§ Outputs), and a
+   `§ Parameters` input keeps its row
    (`skills/dev/layout.md § Docs`). Either way, a claim the inputs
    cannot confirm is listed in your report rather than dropped.
 4. **On a re-dispatch**, fix every entry of the mismatch list; a claim
