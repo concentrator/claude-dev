@@ -4,7 +4,7 @@ type: mnt
 mode: normal
 ---
 
-- [ ] After a merge the session writes a handoff of at most 10 lines to
+- [x] After a merge the session writes a handoff of at most 10 lines to
   `.git/dev-handoff.md` (what merged, the next item by id, open MR/PRs,
   user decisions not yet in a file) and asks the user to `/clear`.
   Approach: `finish.md § 4` gains the step; `branch-plan.md § Session
