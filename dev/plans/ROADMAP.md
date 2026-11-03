@@ -242,3 +242,6 @@ Initiative index. Items: `R-001: description`; each entry owns
 - [ ] R090: Dogfood benchmark - the framework equips each implementer with
       plan, style guide, spec and references, and fixture runs measure its
       time, quality and cost per configuration.
+- [ ] R091: Cut the waste - normal mode drops plan upkeep, claims and
+      per-change seats, reports shrink to a line per item, docs get a
+      structure and a cap, and a handoff carries context across `/clear`.
