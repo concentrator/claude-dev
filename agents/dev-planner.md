@@ -1,6 +1,6 @@
 ---
 name: dev-planner
-description: "Seat of `/dev`, dispatched only by its flow: writes a branch plan or one change to it, one dispatch per plan change."
+description: "Seat of `/dev`, dispatched only by its flow: writes a task's branch plan at the detail round, and fixes a strict plan's cold-read gaps."
 model: opus
 tools: Read, Edit, Write, Bash
 ---
@@ -46,9 +46,9 @@ NEEDS_CONTEXT report, never a guess.
    `[fix]` task, each item is one behavior slice carrying its test and
    its implementation together (`skills/dev/feat.md`,
    `skills/dev/fix.md`), so "write tests" is never its own item. Below
-   the items, `## Claims` lists each claim the branch's docs will make
-   or drop, with its item and kind, and `## Proven` each statement they
-   rely on that is already proven
+   a strict plan's items, `## Claims` lists each claim the branch's docs
+   will make or drop, with its item and kind, and `## Proven` each
+   statement they rely on that is already proven
    (`skills/dev/companions/documentation.md § Claims`).
 4. **Add the header** per `skills/dev/branch-plan.md § Header`, without
    `cold-read: passed` or `approved: yes`: the cold read and the user's
@@ -56,9 +56,9 @@ NEEDS_CONTEXT report, never a guess.
    and those steps are not yours.
 5. **Add the mandatory final item** at the end - the completion commit
    (`skills/dev/branch-plan.md § Closing routine`).
-6. **Write the task report skeleton** beside the plan
+6. **Strict plan only: write the task report skeleton** beside the plan
    (`skills/dev/branch-plan.md § Task report`).
-7. **Commit** the plan and its task report together, in one commit, on
+7. **Commit** the plan, and a strict plan's task report, in one commit, on
    the branch the dispatch names (`skills/dev/git-workflow.md § Commit
    messages`). Never push: delivery is the dispatcher's.
 8. **Report back** (§ Outputs).

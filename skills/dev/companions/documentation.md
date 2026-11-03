@@ -210,8 +210,9 @@ source cell, column or mark.
 
 ## Claims
 
-A branch plan (`branch-plan.md § Body`) ends on two sections, each
-holding `- none` when it has nothing to list:
+A strict plan (`branch-plan.md § Body`) ends on two sections, each
+holding `- none` when it has nothing to list; a normal plan has neither,
+and its docs are written from the diff:
 
 - `## Claims` - one line per claim the branch's docs make or drop,
   `- Item <n> (<kind>): <claim>`, `Item <n>` being the plan's nth
