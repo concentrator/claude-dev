@@ -24,9 +24,9 @@ live in git`).
 
 ## Body
 
-The header, a checkbox list, then `## Claims` and `## Proven`
-(`companions/documentation.md § Claims`), nothing else, in either
-mode: each `[ ]` = one commit, naming the change and
+The header and a checkbox list, nothing else; a strict plan then ends
+on `## Claims` and `## Proven` (`companions/documentation.md § Claims`).
+Each `[ ]` = one commit, naming the change and
 carrying the decisions its docs will need - the doc writer's to read,
 never the docs' to cite (`run.md § Seats`). Each item states what the
 commit delivers against the requirements, one or a few sentences,

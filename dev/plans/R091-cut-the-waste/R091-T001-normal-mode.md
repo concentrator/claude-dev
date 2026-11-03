@@ -15,7 +15,7 @@ mode: normal
   evidence or skeleton; strict keeps today's report. Approach:
   `branch-plan.md § Body`, `§ Commit cadence`, `§ Task report`;
   `report-template.md`; the implementer.
-- [ ] Claims and Proven belong to strict plans; in normal mode the doc
+- [x] Claims and Proven belong to strict plans; in normal mode the doc
   writer, docs verifier and code reviewer work from the diff and the plan
   items. Approach: `documentation.md § Claims`, those three seats,
   `verification-policy.md`.
