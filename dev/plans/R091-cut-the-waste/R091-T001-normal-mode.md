@@ -10,7 +10,7 @@ mode: normal
   Approach: `branch-plan.md § Plan edits`, `§ Scope changes mid-branch`,
   `§ Rails`; `plan.md § Adjusting existing plans`; `run.md`; the planner
   and implementer definitions.
-- [ ] In normal mode the task report holds one line per entry - an item's,
+- [x] In normal mode the task report holds one line per entry - an item's,
   written once it is checked, an answer, a review finding - with no claims,
   evidence or skeleton; strict keeps today's report. Approach:
   `branch-plan.md § Body`, `§ Commit cadence`, `§ Task report`;

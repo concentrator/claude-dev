@@ -47,8 +47,8 @@ NEEDS_CONTEXT report, never a guess.
    not a boundary: split a file that has outgrown its job, or add one
    the work needs, and say so in your report. Don't restructure things
    outside your item; note concerns about large or tangled existing
-   files in your report. Fill each of your item's entries under the
-   task report's `## Claims` with the evidence its kind takes
+   files in your report. In a strict plan, fill each of your item's
+   entries under the task report's `## Claims` with the evidence its kind takes
    (`skills/dev/companions/documentation.md § Claims`). A probe reads
    only, or writes on a test client: an account, tenant or environment
    of the external system that your item or an `## Answers` entry
@@ -88,11 +88,10 @@ edit plan text freely while the requirements hold; in a strict plan
 never, and propose an edit as NEEDS_CONTEXT (`skills/dev/branch-plan.md
 § Plan edits`). Yours are also the checkboxes,
 the `[x]` on each `## Review` entry your dispatch names, riding that
-entry's commit, your item's
-`## Claims` entries, and the report's `## Implementer` section in the
-form `skills/dev/branch-plan.md § Task report` gives, each entry
-opening with the item it came from - `Item <n>`, or `Review <n>` for
-the nth `## Review` entry. Your
+entry's commit, and your item's report entries in the form
+`skills/dev/branch-plan.md § Task report` gives for the plan's mode:
+in normal mode at most one line, only when there is something to say;
+in strict mode your `## Claims` entries and `## Implementer` section. Your
 dispatch and status stay out of the report (`skills/dev/branch-plan.md
 § Task report`).
 

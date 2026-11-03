@@ -79,9 +79,8 @@ reported. Checkbox marks are bookkeeping, not plan edits.
 Every pass ends the same way; `feat`/`fix`/`refactor` add their mode
 file's loop, `doc`/`test`/`mnt` run this alone:
 
-1. **Verify** - the plan `[x]`, the item's `## Claims` entries and the
-   task report's `## Implementer` section written first, since the
-   plan-text gate scans them; then
+1. **Verify** - the plan `[x]` and the item's report entries (§ Task
+   report) written first, since the plan-text gate scans them; then
    the fast tier green over the tree as the commit will carry it: lint
    plus the declared scoped subset (`companions/declarations.md
    § Declared commands`); the full suite runs once at close
@@ -91,8 +90,8 @@ file's loop, `doc`/`test`/`mnt` run this alone:
    `release-routine: yes`, `README.md` for new public surface - is the
    doc writer's, written once per branch at `run.md § Close` 3
    (`run.md § Seats`).
-3. **Commit** (`git-workflow.md § Commit messages`); the mark, the
-   claim entries and the report section ride it, never a later commit.
+3. **Commit** (`git-workflow.md § Commit messages`); the mark and the
+   report entries ride it, never a later commit.
 4. **Output** - throughout the pass a command prints only what the
    step needs: a status, a count, a range (`grep -c`, `sed -n`, a gate
    or push silenced with its exit status echoed), never a file already
@@ -135,12 +134,20 @@ smell, naming inconsistency:
 ## Task report
 
 `<task-id>-<slug>.report.md` beside the plan, a working file that lives
-as long as the R. The planner creates it with the plan, in the same
-commit, as a skeleton: the title, `## Claims` with a blank entry per
-claim the plan lists (`companions/documentation.md § Claims`), and the
-`## Implementer` and `## Review` headings; a strict plan's report opens
-with the planner's filled `## Planner` (§ Modes), `## Claims` after it.
-The seats fill the rest in this form:
+as long as the R.
+
+**Normal mode.** The report starts with its first entry, no skeleton.
+Each entry is one line, written after its item is checked, only when
+there is something to say: `- Item <n>: <divergence or finding>` under
+`## Implementer`, `- Item <n>: <answer>` under `## Answers`, and
+`- [ ] <item>: <issue> - <file:line>` under `## Review`. No claims or
+`Evidence:` lines.
+
+**Strict mode.** The planner creates the report with the plan, in the
+same commit, as a skeleton: the title, `## Claims` with a blank entry
+per claim the plan lists (`companions/documentation.md § Claims`), and
+the `## Implementer` and `## Review` headings, after the planner's
+filled `## Planner` (§ Modes). The seats fill the rest in this form:
 
     # R0NN-T00N report
 
@@ -158,35 +165,27 @@ The seats fill the rest in this form:
     - [ ] <item>: <issue> (Critical | Important | Suggestion) - <file:line>
       Evidence: observed ... | test ... | contract ...
 
-An entry records what was done, when and what came of it: `<item>`
-names its item or close step - `Item <n>` of the plan, `Review <n>` for
-the nth `## Review` entry, `Close review` - and a divergence also gives
-its result. A report holds no dispatch, status, prompt, verdict, merge
-or time: the commit that carries an entry dates it, and a run records
-its events nowhere (`run.md § Monitor`).
+An entry names its item or close step - `Item <n>`, `Review <n>`,
+`Close review`. A report holds no dispatch, status, prompt, verdict,
+merge or time (`run.md § Monitor`).
 
-The implementer appends its section and fills its item's `## Claims` entries
-in the commit that carries the code, and marks `[x]` each `## Review` entry
-its dispatch names - one for a redo, every approved entry still `[ ]` for a
-close fix - in that entry's own commit (§ Commit cadence). The reviewer is
-read-only: the runner, or the session outside a run, writes the close
-review's findings, a redo and a carried concern under `## Review` as each
-arises, and the user's answers under `## Answers` (`run.md § Question
-resolution`). At close every `[ ]` becomes `[x]` - fixed, `-> backlog`, or
-`won't fix: <reason>` - and the final commit carries the resolved report. A
-checkbox without an `Evidence:` line of one of the three types fails
-`scripts/ci/check-plan-text.sh`. Legacy `<task-id>-<slug>.findings.md` files
-are read as reports; a branch adding one fails the same gate.
+The implementer writes its entries in the commit that carries the code,
+and marks `[x]` each `## Review` entry its dispatch names in that entry's
+own commit (§ Commit cadence). The reviewer is read-only: the runner, or
+the session outside a run, writes findings, redos and concerns under
+`## Review` and answers under `## Answers` (`run.md § Question
+resolution`). At close every `[ ]` becomes `[x]` - fixed, `-> backlog`,
+or `won't fix: <reason>` - and the final commit carries the resolved
+report. A strict report's checkbox without an `Evidence:` line of the
+three types fails `scripts/ci/check-plan-text.sh`, as does a branch
+adding a legacy `*.findings.md`, which is otherwise read as a report.
 
 ## Scope changes mid-branch
 
-In normal mode a small fix mid-branch is applied by the session, or by
-the implementer still working, as a commit with its plan item added; no
-new seat starts for it. In strict mode changes needed after the final
-commit are proposed to the user (§ Plan edits): on approval during a
-run, each becomes a `## Review` entry of the task report (`run.md
-§ Dispatch per item` 2), outside a run new checkboxes plus a new final
-commit, each new item a fresh implementer.
+Normal mode: the session, or the implementer still working, commits a
+small fix with its plan item added; no new seat starts. Strict mode: a
+change is proposed to the user (§ Plan edits), approved as a `## Review`
+entry in a run (`run.md § Dispatch per item` 2), else as new checkboxes.
 
 ## Closing routine
 

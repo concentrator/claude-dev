@@ -113,8 +113,8 @@ branch per plan - and per commit checkbox:
    acceptance takes § Question resolution as NEEDS_CONTEXT does: the item's
    `[x]` stands, and the runner writes the redo the user's answer asks for
    as a `## Review` entry of the task report in the `branch-plan.md § Task
-   report` form, its `Evidence:` line citing the concern (`observed <the
-   implementer's report>`), which the next dispatch names. Any
+   report` form for the plan's mode, a strict entry's `Evidence:` line
+   citing the concern, which the next dispatch names. Any
    other concern the runner writes there as it arises, a `## Review`
    entry in the same form, which the close resolves.
    NEEDS_CONTEXT → § Question resolution. Halt triggers: `branch-plan.md § Stop
