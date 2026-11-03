@@ -2,4 +2,4 @@
 
 ## Implementer
 
-- Item 2: `install-dev.sh` `register` now replaces its own entry, since it skipped a hook already registered and an install would keep the old matcher.
+- Item 2: `install-dev.sh` `register` now replaces an entry whose matcher changed, since it skipped any hook already registered and a re-install kept the old matcher.

@@ -133,8 +133,12 @@ edit_settings() {
 # entries, and add <entries> for it when no entry of <event> runs it.
 register() {
   ship "hooks/$3" x
-  edit_settings '.hooks[$ev] = ((.hooks[$ev] // []) | unhook(.command == $old or .command == $cmd))
-    | .hooks[$ev] += $add' \
+  edit_settings '($add | map(.matcher)) as $ms
+    | .hooks[$ev] = ((.hooks[$ev] // []) | unhook(.command == $old)
+      | map(if (.matcher as $m | $ms | index([$m])) then . else ([.] | unhook(.command == $cmd))[] end))
+    | .hooks[$ev] as $now
+    | .hooks[$ev] += [$add[] | .matcher as $m
+      | select(any($now[]; .matcher == $m and any(.hooks[]?; .command == $cmd)) | not)]' \
     --arg ev "$1" --arg cmd "$hp/$3" --arg old ".claude/hooks/$3" \
     --argjson add "$(jq -cn --arg cmd "$hp/$3" "$2")"
 }
