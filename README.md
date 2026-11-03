@@ -126,7 +126,10 @@ A failing local gate stops it before the MR/PR opens. A task-scoped
 `/dev ship` enters it directly. On a compacted or resumed start, the
 SessionStart hook injects the branch, its working-tree state, its
 recent commits and the first open item of each plan the branch touched
-([`dev-session-brief.sh`](hooks/dev-session-brief.sh)). Other
+([`dev-session-brief.sh`](hooks/dev-session-brief.sh)). After a merge
+the session writes a short handoff and asks for `/clear`; the hook
+injects it into the next session, after `/clear` or a fresh launch, and
+deletes it. Other
 commands:
 
 - `/dev start` scaffolds a new project into DEV; in a repository whose
@@ -341,7 +344,7 @@ hook's entry
 | `dev-branch-guard.sh` | PreToolUse | `Write\|Edit\|NotebookEdit` and `Bash` |
 | `dev-secrets-guard.sh` | PreToolUse | `Write\|Edit\|NotebookEdit` and `Bash` |
 | `dev-branch-state.sh` | UserPromptSubmit | none |
-| `dev-session-brief.sh` | SessionStart | `compact\|resume` |
+| `dev-session-brief.sh` | SessionStart | `compact\|resume\|clear\|startup` |
 
 The installer also copies these files beside the registered hooks,
 unregistered, each used by a registered hook:

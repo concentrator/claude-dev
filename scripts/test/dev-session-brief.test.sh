@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Tests hooks/dev-session-brief.sh - the SessionStart re-brief hook.
-# Covers the hook file, the live tree state it injects,
-# the plans tree a declaration names, and every silent fail-open path.
+# Covers the hook file, the live tree state it injects, the handoff it
+# injects once on a fresh context, the plans tree a declaration names,
+# and every silent fail-open path.
 # Run: bash scripts/test/dev-session-brief.test.sh
 set -uo pipefail
 # Never inherit a git environment - see scripts/test/isolation.test.sh.
@@ -15,8 +16,7 @@ pass() { echo "ok - $1"; }
 die()  { echo "not ok - $1"; fail=1; }
 ctx_of() { printf '%s' "$1" | jq -r '.hookSpecificOutput.additionalContext // empty' 2>/dev/null; }
 
-# The mechanism exists. Its SessionStart entry for compact/resume is the
-# installer's, pinned by install-dev.test.sh.
+# The mechanism exists. Its SessionStart entry is the installer's, pinned by install-dev.test.sh.
 [ -x "$HOOK" ] && pass "hook file present and executable" || die "hook file missing"
 
 # A repo with a remote main, a work branch whose plan carries an open item,
@@ -57,6 +57,23 @@ case "$ctx" in *"archive/"*) die "archived plan leaked in" ;; *) pass "archived 
 ctx=$(ctx_of "$(printf '{"session_id":"s1","source":"resume"}' | bash "$HOOK" 2>/dev/null)")
 has "resume start injects the tree too" "- plan: dev/plans/R/T1.md line 3: - [ ] open two"
 
+# A clear or startup start injects the handoff once, with the tree, and
+# stays silent without one.
+for src in clear startup; do
+  o=$(printf '{"source":"%s"}' "$src" | bash "$HOOK" 2>/dev/null)
+  [ -z "$o" ] && pass "$src start without a handoff: silent" || die "$src start injected without a handoff: $o"
+  printf 'merged: #1\nnext: R001-T002\n' > "$R/.git/dev-handoff.md"
+  ctx=$(ctx_of "$(printf '{"source":"%s"}' "$src" | bash "$HOOK" 2>/dev/null)")
+  has "$src start injects the handoff" "next: R001-T002"
+  has "$src start injects the tree with it" "- branch: work"
+  [ ! -e "$R/.git/dev-handoff.md" ] && pass "$src start deletes the handoff" || die "$src start left the handoff"
+done
+printf 'next: R001-T003\n' > "$R/.git/dev-handoff.md"
+ctx=$(ctx_of "$(printf '{"source":"compact"}' | bash "$HOOK" 2>/dev/null)")
+case "$ctx" in *"R001-T003"*) die "compact start injected the handoff" ;; *) pass "compact start leaves the handoff out" ;; esac
+[ -e "$R/.git/dev-handoff.md" ] && pass "compact start keeps the handoff" || die "compact start deleted the handoff"
+rm -f "$R/.git/dev-handoff.md"
+
 # The project root the harness names wins over the cwd.
 ctx=$(cd / && ctx_of "$(printf '{"source":"compact"}' | CLAUDE_PROJECT_DIR="$R" bash "$HOOK" 2>/dev/null)")
 has "CLAUDE_PROJECT_DIR names the repo" "- branch: work"
@@ -86,10 +103,10 @@ rm -rf "$R/.claude"; git -C "$R" checkout -q work
 # settings already run the hook for, and injects on one their matcher misses.
 H="$D/home"; P="$D/proj/.claude/hooks"; mkdir -p "$H/.claude" "$P"
 cp "$HOOK" "$ROOT/hooks/dev-hook-once.sh" "$P/"
-jq -n '{hooks:{SessionStart:[{matcher:"compact|resume",hooks:[{type:"command",command:"~/.claude/hooks/dev-session-brief.sh"}]}]}}' > "$H/.claude/settings.json"
+jq -n '{hooks:{SessionStart:[{matcher:"compact",hooks:[{type:"command",command:"~/.claude/hooks/dev-session-brief.sh"}]}]}}' > "$H/.claude/settings.json"
 out=$(printf '{"session_id":"s1","source":"compact"}' | HOME="$H" bash "$P/dev-session-brief.sh" 2>/dev/null)
 [ -z "$out" ] && pass "project copy silent on a start the global settings run it for" || die "project copy injected beside the global hook: $out"
-ctx=$(ctx_of "$(printf '{"session_id":"s1","source":"startup"}' | HOME="$H" bash "$P/dev-session-brief.sh" 2>/dev/null)")
+ctx=$(ctx_of "$(printf '{"session_id":"s1","source":"resume"}' | HOME="$H" bash "$P/dev-session-brief.sh" 2>/dev/null)")
 has "project copy injects on a start the global matcher misses" "- branch: work"
 
 # Silent paths: each exits 0 with no output.
