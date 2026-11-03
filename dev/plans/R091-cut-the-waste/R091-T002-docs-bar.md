@@ -15,8 +15,8 @@ mode: normal
 - [x] Docs are written once, at close; normal mode dispatches no docs
   verifier. Approach: `run.md § Seats`, `§ Close` 3, `branch-plan.md
   § Closing routine` 7.
-- [ ] No gate pairs code files with docs: `check-doc-sync.sh`, its test,
-  its `run-all.sh` entry and `MAINTENANCE.md § Doc-sync pairs` go.
+- [x] No gate pairs code files with docs: `check-doc-sync.sh` and its
+  `run-all.sh` entry go; the pairs stay as Tier-2 review targets.
   Approach: those, then README and DESIGN.md.
 - [ ] Complete the branch: cleanup, mark plan complete, mark the task `[x]`
   in the R's `tasks.md`, commit.

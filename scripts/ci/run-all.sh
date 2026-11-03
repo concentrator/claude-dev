@@ -7,7 +7,7 @@ cd "$(git rev-parse --show-toplevel)"
 fail=0
 failed=""
 skipped=""
-for c in caps code-size no-em-dash secrets stray plan-integrity archival accretion plan-text todos references batch-tags settings doc-sync; do
+for c in caps code-size no-em-dash secrets stray plan-integrity archival accretion plan-text todos references batch-tags settings; do
   echo "== check-$c =="
   out="$(bash "scripts/ci/check-$c.sh")" || { fail=1; failed="$failed $c"; }
   printf '%s\n' "$out"
