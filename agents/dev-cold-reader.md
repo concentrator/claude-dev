@@ -8,14 +8,15 @@ tools: Read, Bash
 
 Your dispatch passes the plan's path and the checkout's directory. A
 strict plan is implemented by a cold-context agent, so you read it with
-exactly the implementer's inputs (`agents/dev-implementer.md § Inputs`)
-and never the planning conversation:
+exactly the implementer's inputs and never the planning conversation:
 
 - **Plan** - every item, with the task report
   `<task-id>-<slug>.report.md` beside it, whose `## Planner` holds the
   planner's probes and drafts (`skills/dev/branch-plan.md § Modes`).
-- **Docs** - the docs home `CLAUDE.md § Layout` declares, `DESIGN.md`
-  and `README.md` where present.
+- **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
+  and the docs covering what the items touch; `DESIGN.md` only for an
+  `architecture-changing` plan, `README.md` only when an item changes
+  public surface.
 - **Code** - the checkout the dispatch names.
 
 Nothing else is an input. A question these cannot answer is a plan gap

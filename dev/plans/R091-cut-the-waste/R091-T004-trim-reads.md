@@ -9,7 +9,7 @@ mode: normal
   locates a file names it. Approach: `agents/*.md`; e.g. the implementer
   names `skills/dev/<type>.md` for its loop in place of `run.md § Dispatch
   per item`, and drops `plan.md § Where things live`.
-- [ ] The implementer, planner and cold reader read the docs index and the
+- [x] The implementer, planner and cold reader read the docs index and the
   docs covering what the item touches, `DESIGN.md` only for an
   `architecture-changing` plan and `README.md` only for public surface.
   Approach: each seat's `**Docs**` input; the cold reader's "exactly the

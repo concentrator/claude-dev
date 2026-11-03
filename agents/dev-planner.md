@@ -17,8 +17,10 @@ you choose neither. The plan's directory is its initiative's.
 - **Task line** - the task id's line, with its tag, in the
   initiative's `tasks.md`.
 - **Other plans** - the initiative's other branch plans.
-- **Docs** - the docs home `CLAUDE.md § Layout` declares, `DESIGN.md`
-  and `README.md` where present: the code's own documentation.
+- **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
+  and the docs covering what the task touches; `DESIGN.md` only where
+  the task changes architecture, `README.md` only where it changes
+  public surface: the code's own documentation.
 - **Code** - the checkout the dispatch names, on its branch.
 - **Mode** - `normal` or `strict` (`skills/dev/branch-plan.md
   § Modes`).

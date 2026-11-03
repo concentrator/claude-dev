@@ -21,9 +21,11 @@ close-fix, every approved entry of that report still `[ ]`.
   under `## Answers` the user's answers, each naming its item. In a
   strict plan, the draft, probes and warnings in its `## Planner` are
   the planner's claims: check them, don't trust them.
-- **Docs** - the docs home `CLAUDE.md § Layout` declares, `DESIGN.md`
-  and `README.md` where present: the code's own documentation, an
-  input and never a target (`skills/dev/branch-plan.md § Commit
+- **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
+  and the docs covering what your item touches; `DESIGN.md` only for an
+  `architecture-changing` plan, `README.md` only when the item changes
+  public surface: the code's own documentation, an input and never a
+  target (`skills/dev/branch-plan.md § Commit
   cadence` 2).
 - **Code** - the checkout the dispatch names.
 
