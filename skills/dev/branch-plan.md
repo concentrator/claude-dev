@@ -25,7 +25,7 @@ live in git`).
 ## Body
 
 The header and a checkbox list, nothing else; a strict plan then ends
-on `## Claims` and `## Proven` (`companions/documentation.md § Claims`).
+on `## Claims` and `## Proven` (`strict.md § Planner`).
 Each `[ ]` = one commit, naming the change and
 carrying the decisions its docs will need - the doc writer's to read,
 never the docs' to cite (`run.md § Seats`). Each item states what the
@@ -40,29 +40,9 @@ happened, never intent - a commit that didn't land stays `[ ]`.
 **Normal** (default): the plan says what each item delivers and
 suggests how. The implementer probes and decides the route.
 
-**Strict**: the planner proves the plan with a throwaway draft before
-writing it (`agents/dev-planner.md § Steps` 2). What the planner ran,
-and only that, goes to the task report's `## Planner` (§ Task report),
-never the plan:
-
-    ## Planner
-    ### Probes
-    #### <surface, e.g. POST /v2/route>
-    Source: <doc path, spec URL or code the surface was read from>
-    Request: <the call that worked>
-    Response: <observed body, trimmed>
-    Errors hit: <what failed and what fixed it>
-    Trap: <behavior that would mislead an implementer>
-    ### Drafts
-    #### <the item it serves>
-    Draft: <working snippet from the draft>
-    Showed: <what its run produced, edge cases it hit included>
-
-Each draft names the probes it relies on. A cold-read gap's fix
-(`write-plan.md` step 6) lands in this section too. The implementer
-develops the draft into production code with tests and checks the
-planner's claims rather than trusting them. A strict plan needs
-`cold-read: passed` to run.
+**Strict**: the planner proves the plan with a throwaway draft, and a
+cold read passes it before it runs. Its rules are `strict.md`, which
+only a strict plan's seats and session read.
 
 ## Plan edits
 
@@ -143,27 +123,8 @@ there is something to say: `- Item <n>: <divergence or finding>` under
 `- [ ] <item>: <issue> - <file:line>` under `## Review`. No claims or
 `Evidence:` lines.
 
-**Strict mode.** The planner creates the report with the plan, in the
-same commit, as a skeleton: the title, `## Claims` with a blank entry
-per claim the plan lists (`companions/documentation.md § Claims`), and
-the `## Implementer` and `## Review` headings, after the planner's
-filled `## Planner` (§ Modes). The seats fill the rest in this form:
-
-    # R0NN-T00N report
-
-    ## Implementer
-    ### Divergences
-    - <item>: <where the code left the plan, why, and the result>
-    ### Findings
-    - [ ] <item>: <discovery outside the item's scope>
-      Evidence: observed <output> | test <failing test> | contract <spec>
-
-    ## Answers
-    - Item <n>: <the user's answer to that item's halt>
-
-    ## Review
-    - [ ] <item>: <issue> (Critical | Important | Suggestion) - <file:line>
-      Evidence: observed ... | test ... | contract ...
+**Strict mode.** The planner writes a skeleton with the plan, and the
+seats fill it in the form `strict.md § Task report` gives.
 
 An entry names its item or close step - `Item <n>`, `Review <n>`,
 `Close review`. A report holds no dispatch, status, prompt, verdict,
@@ -176,9 +137,8 @@ the session outside a run, writes findings, redos and concerns under
 `## Review` and answers under `## Answers` (`run.md § Question
 resolution`). At close every `[ ]` becomes `[x]` - fixed, `-> backlog`,
 or `won't fix: <reason>` - and the final commit carries the resolved
-report. A strict report's checkbox without an `Evidence:` line of the
-three types fails `scripts/ci/check-plan-text.sh`, as does a branch
-adding a legacy `*.findings.md`, which is otherwise read as a report.
+report. A branch adding a legacy `*.findings.md`, which is otherwise
+read as a report, fails `scripts/ci/check-plan-text.sh`.
 
 ## Scope changes mid-branch
 

@@ -18,9 +18,8 @@ close-fix, every approved entry of that report still `[ ]`.
   each its own commit, then Steps 5-6 once.
   Read the task report `<task-id>-<slug>.report.md` beside it with the
   plan: it carries the earlier items' divergences and findings, and
-  under `## Answers` the user's answers, each naming its item. In a
-  strict plan, the draft, probes and warnings in its `## Planner` are
-  the planner's claims: check them, don't trust them.
+  under `## Answers` the user's answers, each naming its item. A strict
+  plan adds `skills/dev/strict.md § Implementer`.
 - **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
   and the docs covering what your item touches; `DESIGN.md` only for an
   `architecture-changing` plan, `README.md` only when the item changes
@@ -49,17 +48,7 @@ NEEDS_CONTEXT report, never a guess.
    not a boundary: split a file that has outgrown its job, or add one
    the work needs, and say so in your report. Don't restructure things
    outside your item; note concerns about large or tangled existing
-   files in your report. In a strict plan, fill each of your item's
-   entries under the task report's `## Claims` with the evidence its kind takes
-   (`skills/dev/companions/documentation.md § Claims`). A probe reads
-   only, or writes on a test client: an account, tenant or environment
-   of the external system that your item or an `## Answers` entry
-   names for tests, by name, never by its credentials. A probe claim
-   needing a write with no test client named is a NEEDS_CONTEXT
-   report, and a `## Proven` statement is never probed. Whatever the
-   plan's `type:`, an item with a probe claim runs a probe, a failing
-   test, a second probe confirming the values the test pins, then the
-   code.
+   files in your report.
 3. **Verify** - `skills/dev/branch-plan.md § Commit cadence` 1, the
    fast tier being the project's `Test (fast)`. A red tier after the
    plan and report edits is yours to fix before the commit, never

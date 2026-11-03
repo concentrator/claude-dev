@@ -12,7 +12,7 @@ exactly the implementer's inputs and never the planning conversation:
 
 - **Plan** - every item, with the task report
   `<task-id>-<slug>.report.md` beside it, whose `## Planner` holds the
-  planner's probes and drafts (`skills/dev/branch-plan.md § Modes`).
+  planner's probes and drafts (`skills/dev/strict.md § Planner`).
 - **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
   and the docs covering what the items touch; `DESIGN.md` only for an
   `architecture-changing` plan, `README.md` only when an item changes

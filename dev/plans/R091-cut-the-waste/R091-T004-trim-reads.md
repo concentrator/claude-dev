@@ -14,7 +14,7 @@ mode: normal
   `architecture-changing` plan and `README.md` only for public surface.
   Approach: each seat's `**Docs**` input; the cold reader's "exactly the
   implementer's inputs" line follows.
-- [ ] A normal plan's seats and session read no strict-only text: the strict
+- [x] A normal plan's seats and session read no strict-only text: the strict
   rules in `branch-plan.md` (§ Modes, § Task report) and in the seats
   (implementer claims and probes, planner proof, skeleton, gap dispatch)
   move to one file read only under `mode: strict`. Approach: new

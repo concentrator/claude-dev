@@ -34,24 +34,15 @@ NEEDS_CONTEXT report, never a guess.
 1. **Resolve the chain** - read the task line and walk back T → R;
    read the requirements for the acceptance criteria, and the changed
    feature's doc in the docs home, if any, for its current behavior.
-2. **Prove a strict plan** before writing it: build a throwaway draft
-   in the scratchpad, run it until it produces the expected result,
-   and probe every undocumented surface it uses. The task report's
-   `## Planner` records only what you ran, in the form
-   `skills/dev/branch-plan.md § Modes` gives. A wire-level detail
-   (response envelope, field names, pagination keys) comes from those
-   probes, never from the repo's idiom; a claim you did not run is not
-   written as fact.
+2. **Prove a strict plan** before writing it, per
+   `skills/dev/strict.md § Planner`.
 3. **Decompose the work** into commit-sized items in the plan's mode,
    each in the form `skills/dev/branch-plan.md § Body` gives (task
    right-sizing: `skills/dev/plan.md § Levels`). For a `[feat]` or
    `[fix]` task, each item is one behavior slice carrying its test and
    its implementation together (`skills/dev/feat.md`,
-   `skills/dev/fix.md`), so "write tests" is never its own item. Below
-   a strict plan's items, `## Claims` lists each claim the branch's docs
-   will make or drop, with its item and kind, and `## Proven` each
-   statement they rely on that is already proven
-   (`skills/dev/companions/documentation.md § Claims`).
+   `skills/dev/fix.md`), so "write tests" is never its own item. A
+   strict plan adds `## Claims` and `## Proven` below its items.
 4. **Add the header** per `skills/dev/branch-plan.md § Header`, without
    `cold-read: passed` or `approved: yes`: the cold read and the user's
    confirmation write them (`skills/dev/write-plan.md` steps 6 and 7),
@@ -59,7 +50,7 @@ NEEDS_CONTEXT report, never a guess.
 5. **Add the mandatory final item** at the end - the completion commit
    (`skills/dev/branch-plan.md § Closing routine`).
 6. **Strict plan only: write the task report skeleton** beside the plan
-   (`skills/dev/branch-plan.md § Task report`).
+   (`skills/dev/strict.md § Planner`).
 7. **Commit** the plan, and a strict plan's task report, in one commit, on
    the branch the dispatch names (`skills/dev/git-workflow.md § Commit
    messages`). Never push: delivery is the dispatcher's.
