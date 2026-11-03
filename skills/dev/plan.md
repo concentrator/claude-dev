@@ -126,7 +126,7 @@ project directories.
   roadmap rewording.
 - Branch naming: `git-workflow.md § Trunk`.
 - `R<NNN>-<slug>/batches/` is created with the R's first batch
-  manifest; batches are scoped to that single R (`branch-plan.md
+  manifest; batches are scoped to that single R (`batch.md
   § Batches`).
 
 ## Where plans live in git
@@ -191,7 +191,7 @@ branch's, its closure marks riding the same MR/PR. A closure the final
 commit could not run - concurrent branches racing past the check, or
 run-dependent (later-verified) criteria - keeps the R open and ships
 later via its own plan MR/PR once verified (e.g. a batch checkpoint -
-`branch-plan.md § Batches`).
+`batch.md § Boundary verification`).
 
 ## Milestone plans
 

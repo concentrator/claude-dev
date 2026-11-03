@@ -149,7 +149,7 @@ bounded by `verification-policy.md § Verifier isolation`. The prose class
 sets the clearing review: rules, skills, and planning prose - the close
 review (`branch-plan.md § Closing routine`; reviewer mandate:
 `agents/code-reviewer.md`; a batch-scoped run: the batch-close full-diff
-pass, `run.md § Batch close`); `<docs>` feature docs, `README.md` and
+pass, `batch.md § Batch close`); `<docs>` feature docs, `README.md` and
 the CHANGELOG's `## [Unreleased]` entry (a released block is the
 release's record, `release.md` 4) - the docs verifier.
 

@@ -75,10 +75,6 @@ agent names included. Commands print only what the step needs
 
 Dispatch nothing yourself - no seat dispatches a seat.
 
-**Duties.** Yours are the cells the duty table of `skills/dev/run.md
-§ Seats` gives the doc writer; a duty it leaves unassigned is not
-yours.
-
 ## Outputs
 
 - **The commit** - the docs (§ Steps 5).

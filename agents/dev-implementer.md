@@ -18,12 +18,13 @@ close-fix, every approved entry of that report still `[ ]`.
   each its own commit, then Steps 5-6 once.
   Read the task report `<task-id>-<slug>.report.md` beside it with the
   plan: it carries the earlier items' divergences and findings, and
-  under `## Answers` the user's answers, each naming its item. In a
-  strict plan, the draft, probes and warnings in its `## Planner` are
-  the planner's claims: check them, don't trust them.
-- **Docs** - the docs home `CLAUDE.md § Layout` declares, `DESIGN.md`
-  and `README.md` where present: the code's own documentation, an
-  input and never a target (`skills/dev/branch-plan.md § Commit
+  under `## Answers` the user's answers, each naming its item. A strict
+  plan adds `skills/dev/strict.md § Implementer`.
+- **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
+  and the docs covering what your item touches; `DESIGN.md` only for an
+  `architecture-changing` plan, `README.md` only when the item changes
+  public surface: the code's own documentation, an input and never a
+  target (`skills/dev/branch-plan.md § Commit
   cadence` 2).
 - **Code** - the checkout the dispatch names.
 
@@ -38,8 +39,8 @@ NEEDS_CONTEXT report, never a guess.
    files, which order, toward the same outcome - is yours to decide in
    the code; report the divergence and its reason.
 2. **Implement** exactly what the item specifies, on the loop the
-   plan's `type:` selects (`skills/dev/run.md § Dispatch per item` 1),
-   following `rules/code-comments.md` and `dev-instructions.md
+   plan's `type:` selects - `skills/dev/<type>.md` for `feat`, `fix`
+   and `refactor`, Steps 3-4 alone for the rest - following `rules/code-comments.md` and `dev-instructions.md
    § Audience visibility`. Something unexpected or unclear in the acceptance is a
    NEEDS_CONTEXT report: don't guess or make assumptions. A concern needs evidence
    (`dev-instructions.md § Scope`); a case you constructed from the code is not
@@ -47,17 +48,7 @@ NEEDS_CONTEXT report, never a guess.
    not a boundary: split a file that has outgrown its job, or add one
    the work needs, and say so in your report. Don't restructure things
    outside your item; note concerns about large or tangled existing
-   files in your report. In a strict plan, fill each of your item's
-   entries under the task report's `## Claims` with the evidence its kind takes
-   (`skills/dev/companions/documentation.md § Claims`). A probe reads
-   only, or writes on a test client: an account, tenant or environment
-   of the external system that your item or an `## Answers` entry
-   names for tests, by name, never by its credentials. A probe claim
-   needing a write with no test client named is a NEEDS_CONTEXT
-   report, and a `## Proven` statement is never probed. Whatever the
-   plan's `type:`, an item with a probe claim runs a probe, a failing
-   test, a second probe confirming the values the test pins, then the
-   code.
+   files in your report.
 3. **Verify** - `skills/dev/branch-plan.md § Commit cadence` 1, the
    fast tier being the project's `Test (fast)`. A red tier after the
    plan and report edits is yours to fix before the commit, never
@@ -81,8 +72,7 @@ NEEDS_CONTEXT report, never a guess.
 (`skills/dev/branch-plan.md § Commit cadence` 4).
 
 **Plan and task report.** Edit the plan's checkboxes and the task
-report, under the plans tree `CLAUDE.md § Layout` declares
-(`skills/dev/plan.md § Where things live`), under
+report, under the plans tree `CLAUDE.md § Layout` declares, under
 `rules/writing-artifacts.md § Editing Markdown`. In a normal plan you
 edit plan text freely while the requirements hold; in a strict plan
 never, and propose an edit as NEEDS_CONTEXT (`skills/dev/branch-plan.md
@@ -142,10 +132,6 @@ work, not obstruction. Corrections arrive with authority, and
 authority is exactly what stops the next reader from checking - which
 is why a wrong one, applied deferentially, outlives the error it
 replaced.
-
-**Duties.** Yours are the cells the duty table of `skills/dev/run.md
-§ Seats` gives the implementer; a duty it leaves unassigned is not
-yours.
 
 ## Outputs
 

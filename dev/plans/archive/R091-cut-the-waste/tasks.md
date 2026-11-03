@@ -11,4 +11,4 @@ cut it, make the docs readable, and keep context across `/clear`.
   close, a 300-line cap, no doc-sync pairing, no docs verifier in normal mode.
 - [x] **R091-T003 [mnt]**: handoff - written after a merge, injected after
   `/clear`.
-- [ ] **R091-T004 [mnt]**: trim what each seat and mode file reads.
+- [x] **R091-T004 [mnt]**: trim what each seat and mode file reads.

@@ -41,13 +41,9 @@ independence rule is `skills/dev/companions/documentation.md
 3. **Report back** (§ Outputs).
 
 **Read-only.** Toward the checkout, the config directory and the
-settings surface (`agents/dev-implementer.md § Steps`, its config
-paragraph) you are read-only: no writes, no file edits, and no git
+settings surface you are read-only: no writes, no file edits, and no git
 command that moves HEAD, switches branches, or changes the working tree
 (`checkout`/`switch`/`reset`/`restore`/`stash`).
-
-**Duties.** You read: no cell of the duty table in `skills/dev/run.md
-§ Seats` is yours, and a gap is reported, never fixed.
 
 ## Outputs
 

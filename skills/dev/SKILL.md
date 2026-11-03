@@ -29,7 +29,7 @@ candidates the state offers as its options.
 | `R` | Shape a new initiative (requirements + design, one gate) | `brainstorm.md` |
 | `R<NNN>` | Detail an open initiative (tasks + branch plans) | `plan.md` |
 | `<task-id>` / `all` | Branch plan(s) for open task(s) | `write-plan.md` |
-| `batch [R<NNN>]` | Compose `R<NNN>-B<NNN>.md` (members, order) for that initiative; no R → ask | `branch-plan.md § Batches` |
+| `batch [R<NNN>]` | Compose `R<NNN>-B<NNN>.md` (members, order) for that initiative; no R → ask | `batch.md § Batches` |
 | `milestone <id>` | Milestone plan (cross-initiative order) | `plan.md` |
 | `<slug>` | Adjust an existing branch plan | `write-plan.md` |
 | `release` | Release plan (next semver) | `release.md` |

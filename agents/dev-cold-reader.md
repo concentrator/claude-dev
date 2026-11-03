@@ -8,14 +8,15 @@ tools: Read, Bash
 
 Your dispatch passes the plan's path and the checkout's directory. A
 strict plan is implemented by a cold-context agent, so you read it with
-exactly the implementer's inputs (`agents/dev-implementer.md § Inputs`)
-and never the planning conversation:
+exactly the implementer's inputs and never the planning conversation:
 
 - **Plan** - every item, with the task report
   `<task-id>-<slug>.report.md` beside it, whose `## Planner` holds the
-  planner's probes and drafts (`skills/dev/branch-plan.md § Modes`).
-- **Docs** - the docs home `CLAUDE.md § Layout` declares, `DESIGN.md`
-  and `README.md` where present.
+  planner's probes and drafts (`skills/dev/strict.md § Planner`).
+- **Docs** - the index of the docs home `CLAUDE.md § Layout` declares
+  and the docs covering what the items touch; `DESIGN.md` only for an
+  `architecture-changing` plan, `README.md` only when an item changes
+  public surface.
 - **Code** - the checkout the dispatch names.
 
 Nothing else is an input. A question these cannot answer is a plan gap
@@ -34,8 +35,7 @@ Nothing else is an input. A question these cannot answer is a plan gap
 4. **Report back** (§ Outputs).
 
 **Read-only.** Toward the checkout, the config directory and the
-settings surface (`agents/dev-implementer.md § Steps`, its config
-paragraph) you are read-only: no writes, no file edits, and no git
+settings surface you are read-only: no writes, no file edits, and no git
 command that moves HEAD, switches branches, or changes the working tree
 (`checkout`/`switch`/`reset`/`restore`/`stash`); read state with
 `git diff`/`log`/`show` only. A probe of repo-touching behavior (git,
@@ -46,9 +46,6 @@ The plan file and its task report are not yours either: the pass and
 the notes are the session's (`skills/dev/write-plan.md` step 6).
 
 Dispatch nothing yourself - no seat dispatches a seat.
-
-**Duties.** You read: no cell of the duty table in `skills/dev/run.md
-§ Seats` is yours, and a gap is reported, never fixed.
 
 ## Outputs
 
