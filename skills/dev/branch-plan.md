@@ -259,9 +259,8 @@ reason in plan header.
 A seat starts for one item and shuts down at its exit; only the branch
 and the plan item carry over to the next seat, and a seat outliving its
 item re-bills the finished work on every later call (`run.md § Seats`).
-The runner session's unit is the scope it runs (`run.md`): it clears at that
-boundary and re-briefs from the scope's plans, task reports, git and
-MR/PR state (`run.md § Monitor`).
+The runner session's unit is the scope it runs (`run.md`): at that
+boundary it writes the handoff and asks for `/clear` (`finish.md § 4`).
 
 Doc loading keys to the boundary: one load phase at the unit's
 start; sectional reads, not whole files; no re-reads within the

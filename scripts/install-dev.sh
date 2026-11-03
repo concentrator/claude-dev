@@ -109,7 +109,8 @@ fi
 #    "$CLAUDE_PROJECT_DIR"/.claude/hooks/<name> (the root Claude Code sets
 #    for every hook) and `~` expands anywhere; an entry in the relative
 #    form `.claude/hooks/<name>`, which resolves only from the project
-#    root, is replaced.
+#    root, is replaced, and so is an entry whose matcher the toolset has
+#    since changed.
 if [ "$scope" = global ]; then hp="~/.claude/hooks"; else hp='"$CLAUDE_PROJECT_DIR"/.claude/hooks'; fi
 settings="$target/settings.json"
 [ -f "$settings" ] || echo '{}' > "$settings"
@@ -132,8 +133,12 @@ edit_settings() {
 # entries, and add <entries> for it when no entry of <event> runs it.
 register() {
   ship "hooks/$3" x
-  edit_settings '.hooks[$ev] = ((.hooks[$ev] // []) | unhook(.command == $old))
-    | if any(.hooks[$ev][].hooks[]?; .command == $cmd) then . else .hooks[$ev] += $add end' \
+  edit_settings '($add | map(.matcher)) as $ms
+    | .hooks[$ev] = ((.hooks[$ev] // []) | unhook(.command == $old)
+      | map(if (.matcher as $m | $ms | index([$m])) then . else ([.] | unhook(.command == $cmd))[] end))
+    | .hooks[$ev] as $now
+    | .hooks[$ev] += [$add[] | .matcher as $m
+      | select(any($now[]; .matcher == $m and any(.hooks[]?; .command == $cmd)) | not)]' \
     --arg ev "$1" --arg cmd "$hp/$3" --arg old ".claude/hooks/$3" \
     --argjson add "$(jq -cn --arg cmd "$hp/$3" "$2")"
 }
@@ -143,8 +148,8 @@ register_hook() {   # $1 = hook script basename; PreToolUse, file edits and Bash
 register_state_hook() {   # $1 = hook script basename; UserPromptSubmit, no matcher
   register UserPromptSubmit '[{hooks: [{type: "command", command: $cmd}]}]' "$1"
 }
-register_brief_hook() {   # $1 = hook script basename; SessionStart, compact/resume starts
-  register SessionStart '[{matcher: "compact|resume", hooks: [{type: "command", command: $cmd}]}]' "$1"
+register_brief_hook() {   # $1 = hook script basename; SessionStart, every start the hook reads
+  register SessionStart '[{matcher: "compact|resume|clear|startup", hooks: [{type: "command", command: $cmd}]}]' "$1"
 }
 
 register_hook dev-branch-guard.sh

@@ -85,6 +85,12 @@ the merge with the user), then:
    dirty tree, where step 1 stays on it, name the branch for the user
    to delete. The merge command only merges: the project relies on its
    host to delete the merged branch on origin.
+5. When the merge ends the session's unit - a merge outside `/dev run`,
+   or a run scope's last one - write the handoff to `.git/dev-handoff.md`
+   in the clone's common git directory, at most 10 lines: what merged,
+   the next item by id, the open MR/PRs, and each user decision not yet
+   stored in a file. Then ask the user to `/clear`: the next session
+   starts with the handoff (`dev-session-brief.sh`).
 
 Bookkeeping landed with the merge (`branch-plan.md § Closing routine`;
 untracked mode: `companions/untracked-claude.md`); late closures:

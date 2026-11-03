@@ -141,8 +141,8 @@ jq -e '[.hooks.UserPromptSubmit[]?.hooks[]?.command] | any(test("dev-branch-stat
   && pass "branch-state registered on UserPromptSubmit" || die "branch-state not registered"
 jq -e '.hooks | has("Stop") or has("PreCompact") | not' "$P/.claude/settings.json" >/dev/null \
   && pass "no Stop or PreCompact hook registered" || die "a Stop or PreCompact hook registered"
-jq -e '[.hooks.SessionStart[]? | select(.matcher == "compact|resume") | .hooks[]?.command // "" | select(test("dev-session-brief"))] | length > 0' "$P/.claude/settings.json" >/dev/null \
-  && pass "session-brief registered on SessionStart (compact|resume)" || die "session-brief not registered"
+jq -e '[.hooks.SessionStart[]? | select(.matcher == "compact|resume|clear|startup") | .hooks[]?.command // "" | select(test("dev-session-brief"))] | length > 0' "$P/.claude/settings.json" >/dev/null \
+  && pass "session-brief registered on SessionStart (compact|resume|clear|startup)" || die "session-brief not registered"
 jq -e '.model == "x"' "$P/.claude/settings.json" >/dev/null && pass "pre-existing setting survives" || die "clobbered model"
 jq -e '.hooks.PostToolUse[0].matcher == "Skill"' "$P/.claude/settings.json" >/dev/null && pass "pre-existing PostToolUse survives" || die "clobbered PostToolUse"
 
@@ -180,6 +180,8 @@ n=$(jq '[.hooks.PreToolUse[]?.hooks[]?.command] | length' "$O/.claude/settings.j
 [ "$n" = "4" ] && pass "one PreToolUse entry per hook and matcher after re-install" || die "PreToolUse holds $n entries after re-install"
 n=$(jq '[.hooks.UserPromptSubmit[]?.hooks[]?.command] | length' "$O/.claude/settings.json")
 [ "$n" = "1" ] && pass "one UserPromptSubmit entry after re-install" || die "UserPromptSubmit holds $n entries after re-install"
+m=$(jq -c '[.hooks.SessionStart[]? | .matcher]' "$O/.claude/settings.json")
+[ "$m" = '["compact|resume|clear|startup"]' ] && pass "an old SessionStart matcher is replaced on re-install" || die "SessionStart matchers after re-install: $m"
 rm -rf "$O"
 
 # --- the registered command fires from a subdirectory: a trunk write is

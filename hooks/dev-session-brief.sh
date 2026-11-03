@@ -2,13 +2,14 @@
 # dev-session-brief.sh - SessionStart hook. Compaction keeps the
 # conversation's summary but not the tree's exact state, so a session
 # resuming mid-branch would rediscover what is committed, what is not and
-# where the plan stands. On a compact or resume start (the settings
-# matcher filters the reason) this hook reads the tree at that moment and
-# injects it as additionalContext: repo, branch, status, recent commits
-# and the first open item of each plan the branch touched. Subagent starts
-# carry agent_id and need no re-brief. A reminder's delivery, never a
-# gate: outside a git repo or on any read failure it exits 0 silent
-# (fail open).
+# where the plan stands. On a compact or resume start this hook reads the
+# tree at that moment and injects it as additionalContext: repo, branch,
+# status, recent commits and the first open item of each plan the branch
+# touched. On a clear or startup start it injects the handoff a session
+# wrote after a merge (.git/dev-handoff.md, finish.md § 4), then deletes
+# it; with no handoff it stays silent. Subagent starts carry agent_id and
+# need no re-brief. A reminder's delivery, never a gate: outside a git
+# repo or on any read failure it exits 0 silent (fail open).
 set -uo pipefail
 
 command -v jq >/dev/null 2>&1 || exit 0
@@ -24,6 +25,16 @@ start_source=$(printf '%s' "$input" | jq -r '.source // ""' 2>/dev/null)
 root=${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}
 [ -n "$root" ] || exit 0
 git -C "$root" rev-parse --show-toplevel >/dev/null 2>&1 || exit 0
+
+# A fresh context reads the handoff once; none means nothing to resume.
+handoff=
+case $start_source in
+  clear|startup)
+    hf=$(git -C "$root" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/dev-handoff.md
+    [ -f "$hf" ] || exit 0
+    handoff=$(cat "$hf" 2>/dev/null) && rm -f "$hf"
+    [ -n "$handoff" ] || exit 0 ;;
+esac
 
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD 2>/dev/null)
 status=$(git -C "$root" status --porcelain 2>/dev/null | paste -sd ';' - | sed 's/;/; /g')
@@ -47,6 +58,7 @@ plans=$(git -C "$root" diff --name-only "$base" HEAD 2>/dev/null \
     done)
 
 brief=$(
+  [ -z "$handoff" ] || printf 'handoff from the last session:\n%s\n\n' "$handoff"
   printf 'tree state read at this start:\n'
   printf -- '- repo: %s\n' "$root"
   printf -- '- branch: %s\n' "${branch:-unknown}"
