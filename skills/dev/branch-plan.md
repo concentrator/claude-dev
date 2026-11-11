@@ -31,7 +31,10 @@ carrying the decisions its docs will need - the doc writer's to read,
 never the docs' to cite (`run.md § Seats`). Each item states what the
 commit delivers against the requirements, one or a few sentences,
 followed by an `Approach:` run-in with the suggested files and order.
-An item, with its indented continuation, is at most 6 lines;
+An item carries a tier tag, `(sonnet)` or `(fable)`, only with a
+one-clause reason in the item saying why the tier fits
+(`companions/verification-policy.md § Models`); an untagged item runs
+on Opus. An item, with its indented continuation, is at most 6 lines;
 `scripts/ci/check-plan-text.sh` fails a longer one. Marks record what
 happened, never intent - a commit that didn't land stays `[ ]`.
 

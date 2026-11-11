@@ -11,7 +11,7 @@ approved: yes
   rise to fable on the user's yes, then halts (outcomes 2-4, 6-8). Approach:
   `verification-policy.md § Models`, deleting § Mechanical commits; R-007's
   `(judgment-heavy)` names `(fable)`; R089 backlogs T006's own criterion.
-- [ ] The planner tags an item `(sonnet)` or `(fable)` only with a
+- [x] The planner tags an item `(sonnet)` or `(fable)` only with a
   one-clause reason in the item, and at confirmation the session asks the
   user to approve each `(fable)` item, dropping a declined tag from the plan
   it delivers (outcomes 2, 5). Approach: `branch-plan.md § Body`,
