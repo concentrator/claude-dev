@@ -265,5 +265,6 @@ A batch's composition, close and refs are `batch.md`.
 | Planner reports BLOCKED or NEEDS_CONTEXT on its re-dispatch | Halt, report |
 | Doc writer reports BLOCKED | Halt, report |
 | A review's fix round leaves findings open (`run.md § Seats`, loop bound) | Report to the user |
-| Tests/lint not green after the implementer's fix attempt | Halt, report |
+| Tests/lint not green after the implementer's fix attempt | Rerun once a tier up (`run.md § Dispatch per item` 2); a rise to `fable` halts the item, ask the user |
+| Tests/lint not green after that rerun, or a `fable` item's | Halt, report |
 | Non-blocker discovery | task report (§ Task report), continue |

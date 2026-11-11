@@ -16,7 +16,7 @@ approved: yes
   user to approve each `(fable)` item, dropping a declined tag from the plan
   it delivers (outcomes 2, 5). Approach: `branch-plan.md § Body`,
   `agents/dev-planner.md § Steps` 3, `write-plan.md` step 7.
-- [ ] The runner sets each implementer dispatch's model per
+- [x] The runner sets each implementer dispatch's model per
   `verification-policy.md § Models`; an item red after its fix attempt
   reruns one tier up, a rise to fable halting the item for the user, and
   halts once that rerun is red (outcome 6). Approach: `run.md § Dispatch
