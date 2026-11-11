@@ -2,14 +2,15 @@
 task: R092-T001
 type: mnt
 mode: normal
+approved: yes
 ---
 
 - [ ] The implementer's model follows its item's tag - `(sonnet)` sonnet,
   `(fable)` fable, untagged opus, each fitting as outcomes 3-4 say - and
   sets no effort; a red item reruns once a tier up from its last commit, a
   rise to fable on the user's yes, then halts (outcomes 2-4, 6-8). Approach:
-  `verification-policy.md § Models`, deleting § Mechanical commits; the
-  R-007 stub's two `(judgment-heavy)` mentions name the `(fable)` tag.
+  `verification-policy.md § Models`, deleting § Mechanical commits; R-007's
+  `(judgment-heavy)` names `(fable)`; R089 backlogs T006's own criterion.
 - [ ] The planner tags an item `(sonnet)` or `(fable)` only with a
   one-clause reason in the item, and at confirmation the session asks the
   user to approve each `(fable)` item, dropping a declined tag from the plan
