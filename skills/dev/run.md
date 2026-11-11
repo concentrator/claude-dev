@@ -105,8 +105,9 @@ branch per plan - and per commit checkbox:
 1. Dispatch a fresh implementer naming the plan file - the item it
    works is the first `[ ]`, the one `## Review` entry of the task report
    a redo's dispatch names (2), or every entry a close-fix dispatch names
-   (§ Close 2, `batch.md § Batch close` 2). Its loop is the plan's
-   `type:` mode file
+   (§ Close 2, `batch.md § Batch close` 2) - on the model
+   `companions/verification-policy.md § Models` selects. Its
+   loop is the plan's `type:` mode file
    (`feat.md`, `fix.md`, `refactor.md`); `doc`/`test`/`mnt` run
    `branch-plan.md § Commit cadence` alone.
 2. DONE → next item. DONE_WITH_CONCERNS → a concern that changes an item's
@@ -117,8 +118,9 @@ branch per plan - and per commit checkbox:
    citing the concern, which the next dispatch names. Any
    other concern the runner writes there as it arises, a `## Review`
    entry in the same form, which the close resolves.
-   NEEDS_CONTEXT → § Question resolution. Halt triggers: `branch-plan.md § Stop
-   conditions`.
+   NEEDS_CONTEXT → § Question resolution. An item still red after its
+   fix attempt takes `companions/verification-policy.md § Models`
+   escalation. Halt triggers: `branch-plan.md § Stop conditions`.
 3. The implementer marks `[x]` in its commit (`branch-plan.md § Commit cadence`
    3); the runner confirms the mark landed before the next dispatch. The
    branch's check against its plan is the close review (§ Close 1).

@@ -18,21 +18,6 @@ is why the implementer's tier and the review's cost are the dispatch's
 inherits the session's - `effortLevel` the default rather than the
 ceiling.
 
-## Mechanical commits
-
-A commit item is **mechanical** if and only if both conditions hold,
-evaluated from the plan-item text alone, before dispatch:
-
-1. **File set ≤ 2, explicitly named** - the item text names at most two
-   files to touch (by path or filename). Unnamed, implied, or
-   wildcard-described files do not count toward the limit and void the
-   classification.
-2. **Complete spec** - the item states a testable outcome and contains
-   no unresolved design choices. A testable outcome means a reader can
-   write a failing check before seeing the implementation. An unresolved
-   design choice is any decision the implementer must make that the item
-   text does not settle.
-
 ## Close folding
 
 A branch is **small** iff its committed plan file satisfies all three
@@ -123,12 +108,27 @@ again, and the header records `cold-read: passed` (`branch-plan.md
 A seat's model is its definition's (`run.md § Seats`); the rules a
 definition cannot hold stay here.
 
-**Implementer tier.** The runner picks the implementer's model and
-effort deterministically and sets both on the dispatch - mechanical
-predicate true (§ Mechanical commits) → `sonnet` at `effort: low`; plan
-item explicitly tagged `(judgment-heavy)` → `fable`; otherwise the
-model `agents/dev-implementer.md` pins. No predicate
-infers `(judgment-heavy)`; only the tag in the plan-item text does.
+**Implementer tier.** The implementer's model follows its plan item's
+tag, read from the item's text, and the runner sets it on the dispatch:
+`(sonnet)` → `sonnet`, `(fable)` → `fable`, untagged → `opus`, the
+model `agents/dev-implementer.md` pins. No predicate infers a tag, and
+no tier sets the implementer's effort.
+
+- `(sonnet)` fits a fully specified, local item: named files, a
+  testable outcome, no design choice left.
+- `(fable)` fits an item where a wrong result costs more than the price
+  gap: concurrency or state, security or data integrity, a cross-module
+  design choice the plan leaves open, a bug of unknown cause.
+
+**Escalation.** An item still red after its fix attempt reruns once:
+the runner drops its uncommitted edits as `run.md § Question
+resolution` does, and a fresh implementer on the next tier up -
+`sonnet` to `opus`, `opus` to `fable` - starts from the branch's last
+commit. A rise to `fable` waits for the user's yes. A red rerun, a
+declined rise or a red `fable` item halts.
+
+A redo takes the tag of the item its `## Review` entry names; a
+close-fix dispatch, which can span items, runs on `opus`.
 
 **Review cost.** The project sets it with a `review: <model> <effort>`
 line in `CLAUDE.md § Conventions` - `review: opus high`, say - and the

@@ -48,9 +48,12 @@ text itself.
    records `cold-read: passed`. The session commits that header edit on
    the branch carrying the plan. A plan whose `depends-on` names an
    unmerged task is read at its start instead.
-7. **Confirm with user**. Under `release-routine: yes` the session
-   then adds the plan's branch to the open release plan, if one exists,
-   as the `templates.md § Release plan` entry the closing routine marks,
+7. **Confirm with user**, who also approves each `(fable)` item
+   (`branch-plan.md § Body`): the session drops a declined item's tag
+   from the plan, committed on the branch carrying it, so that item
+   runs on Opus. Under `release-routine: yes` the session then adds
+   the plan's branch to the open release plan, if one exists, as the
+   `templates.md § Release plan` entry the closing routine marks,
    committed on the branch carrying the plan. It delivers the committed
    plan through `finish.md § 3`: its short-lived plan MR/PR
    (`plan.md § Where plans live in git`) takes the decision any branch

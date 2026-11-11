@@ -42,7 +42,8 @@ NEEDS_CONTEXT report, never a guess.
    `[fix]` task, each item is one behavior slice carrying its test and
    its implementation together (`skills/dev/feat.md`,
    `skills/dev/fix.md`), so "write tests" is never its own item. A
-   strict plan adds `## Claims` and `## Proven` below its items.
+   strict plan adds `## Claims` and `## Proven` below its items. Tier
+   tags follow `skills/dev/branch-plan.md § Body`.
 4. **Add the header** per `skills/dev/branch-plan.md § Header`, without
    `cold-read: passed` or `approved: yes`: the cold read and the user's
    confirmation write them (`skills/dev/write-plan.md` steps 6 and 7),
