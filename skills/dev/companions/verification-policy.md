@@ -120,11 +120,15 @@ no tier sets the implementer's effort.
   gap: concurrency or state, security or data integrity, a cross-module
   design choice the plan leaves open, a bug of unknown cause.
 
-**Escalation.** An item still red after its fix attempt reruns once, a
-fresh implementer on the next tier up - `sonnet` to `opus`, `opus` to
-`fable` - from the branch's last commit. A rise to `fable` waits for
-the user's yes. A red rerun, a declined rise or a red `fable` item
-halts.
+**Escalation.** An item still red after its fix attempt reruns once:
+the runner drops its uncommitted edits as `run.md § Question
+resolution` does, and a fresh implementer on the next tier up -
+`sonnet` to `opus`, `opus` to `fable` - starts from the branch's last
+commit. A rise to `fable` waits for the user's yes. A red rerun, a
+declined rise or a red `fable` item halts.
+
+A redo takes the tag of the item its `## Review` entry names; a
+close-fix dispatch, which can span items, runs on `opus`.
 
 **Review cost.** The project sets it with a `review: <model> <effort>`
 line in `CLAUDE.md § Conventions` - `review: opus high`, say - and the
