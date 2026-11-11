@@ -5,7 +5,7 @@ mode: normal
 approved: yes
 ---
 
-- [ ] The implementer's model follows its item's tag - `(sonnet)` sonnet,
+- [x] The implementer's model follows its item's tag - `(sonnet)` sonnet,
   `(fable)` fable, untagged opus, each fitting as outcomes 3-4 say - and
   sets no effort; a red item reruns once a tier up from its last commit, a
   rise to fable on the user's yes, then halts (outcomes 2-4, 6-8). Approach:

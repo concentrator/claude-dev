@@ -41,3 +41,4 @@ Why: a cloud session under `auto` with no human answering stalls or pays twice w
   their behavior.
 
 - The runner's call to `preflight-permissions.sh` is in no declared rule set.
+- R089-T006 needs its own criterion for a mechanical review fix: the `verification-policy.md § Mechanical commits` it cites is gone.
