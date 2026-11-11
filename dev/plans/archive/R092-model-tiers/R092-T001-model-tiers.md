@@ -21,6 +21,6 @@ approved: yes
   reruns one tier up, a rise to fable halting the item for the user, and
   halts once that rerun is red (outcome 6). Approach: `run.md § Dispatch
   per item` 1-2, then `branch-plan.md § Stop conditions`.
-- [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
+- [x] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
   commit, the resolved task report included.

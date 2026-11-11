@@ -245,6 +245,6 @@ Initiative index. Items: `R-001: description`; each entry owns
 - [x] R091: Cut the waste - normal mode drops plan upkeep, claims and
       per-change seats, reports shrink to a line per item, docs get a
       structure and a cap, and a handoff carries context across `/clear`.
-- [ ] R092: Implementer model tiers - the planner tags an item Sonnet or
+- [x] R092: Implementer model tiers - the planner tags an item Sonnet or
       Fable when the tier pays, Opus otherwise; Fable needs the user's
       approval and a red item escalates one tier.
