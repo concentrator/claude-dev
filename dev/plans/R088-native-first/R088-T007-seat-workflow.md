@@ -44,10 +44,6 @@ mode: normal
   definition cites the sections its steps need, never a whole file. Approach:
   the line (Read's offset and limit from the heading's line, say), the
   whole-file cites in `agents/`, then `branch-plan.md § Session boundary`.
-- [ ] (sonnet) `check-caps.sh` holds `skills/dev/companions/*.md` to the mode
-  files' cap, 350 lines and 80-character added lines, which each companion
-  meets; a named one-arm change. Approach: the case arm and its comment, case
-  6 of `check-caps.test.sh`, `rules/skills.md § Size`.
 - [ ] `DESIGN.md` says a saved workflow runs the seats and a seat lives until
   its follow-ups are answered. Approach: `§ Git & delivery model`, then
   `§ Invariants` where it names the loop bound.
