@@ -44,8 +44,8 @@ Why: rules that override Claude Code's defaults cost turns, dispatches and token
   `autoMode` entries, a gate on session trailers, the `attribution` setting.
 
 - [ ] **R088-T012 [mnt]**: gates and remaining text - MR/PR numbers in plan
-  text, README in the doc-sync check, one full test run, asks through
-  AskUserQuestion, `Agent(...)` examples, the batch-close queue, the README.
+  text, one full test run, asks through AskUserQuestion, `Agent(...)`
+  examples, the batch-close queue, the README.
 
 ## Backlog
 
@@ -64,7 +64,6 @@ Why: rules that override Claude Code's defaults cost turns, dispatches and token
 - `CLAUDE.local.md` has no `permissions.ask` rule, so its rule keeps a propose-and-wait step.
 - No allow rule covers the `sleep` the CI-wait retry runs.
 - The pre-flight counts a user-tier `Bash(*)` as covering every declared Bash rule under `auto`, which drops it.
-- No `autoMode` allow entry lets an AI supervisor merge, the classifier seeing no CI result or head sha.
 - The `autoMode` soft_deny entries name no visible DEV-run trigger or must-name slot, nor presume an unseen MR diff.
 - No gate stops a `Claude-Session` trailer before push.
 - The install does not write the `attribution` setting that the no-trailer intent relies on.
@@ -72,7 +71,6 @@ Why: rules that override Claude Code's defaults cost turns, dispatches and token
 ### R088-T012
 
 - The durable-id rule allows citing an MR/PR number, but the plan-text gate still rejects `#NNN` in ROADMAP and `tasks.md`.
-- `check-doc-sync.sh` needs README edits in an item's commit, while `branch-plan.md` gives README to the doc writer at close.
 - The full test tier runs locally right before CI runs it.
 - Brainstorm's approach choice, start's clarifying and quality questions, and finish's no-host merge confirmation still ask in plain text, not through AskUserQuestion.
 - The dispatching-parallel-agents skill still shows `Task(...)` examples; the tool is Agent.
