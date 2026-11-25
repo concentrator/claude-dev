@@ -35,26 +35,51 @@ Why: rules that override Claude Code's defaults cost turns, dispatches and token
   found close: release steps, release plan entries, CHANGELOG seed, plan header
   fence, committer value, batch-close fix seat, attribution precedence.
 
-- `/dev migrate` does not add the `comments:` convention line to an existing project's `CLAUDE.md § Conventions`.
-- The durable-id rule allows citing an MR/PR number, but the plan-text gate still rejects `#NNN` in ROADMAP and `tasks.md`.
-- Brainstorm's approach choice, start's clarifying and quality questions, and finish's no-host merge confirmation still ask in plain text, not through AskUserQuestion.
-- The dispatching-parallel-agents skill still shows `Task(...)` examples; the tool is Agent.
-- `CLAUDE.local.md` has no `permissions.ask` rule, so its rule keeps a propose-and-wait step.
-- The README keeps inline comma-runs the docs gate did not list: its opening and several layout rows.
-- The README no longer says what the guards block.
-- The full test tier runs locally right before CI runs it.
-- No allow rule covers the `sleep` the CI-wait retry runs.
-- `run.md § Batch close` 2 queues judgment calls without naming where.
-- No command starts a remote runner, and `supervisor-runbook.md` Variant B omits pulling the host's `~/.claude` first.
-- The pre-flight counts a user-tier `Bash(*)` as covering every declared Bash rule under `auto`, which drops it.
-- No `autoMode` allow entry lets an AI supervisor merge, the classifier seeing no CI result or head sha.
-- No gate stops a `Claude-Session` trailer before push.
-- The `autoMode` soft_deny entries name no visible DEV-run trigger or must-name slot, nor presume an unseen MR diff.
-- `check-doc-sync.sh` needs README edits in an item's commit, while `branch-plan.md` gives README to the doc writer at close.
+- [ ] **R088-T010 [doc]**: release and migrate text agree - one tag message,
+  the release branch, the plan's archive move, release marking, a step that
+  writes the release plan; migrate adds `comments:` and `## [Unreleased]`.
+
+- [ ] **R088-T011 [mnt]**: permissions and attribution - rules for
+  `CLAUDE.local.md` and the CI-wait `sleep`, the pre-flight under `auto`, the
+  `autoMode` entries, a gate on session trailers, the `attribution` setting.
+
+- [ ] **R088-T012 [mnt]**: gates and remaining text - MR/PR numbers in plan
+  text, README in the doc-sync check, one full test run, asks through
+  AskUserQuestion, `Agent(...)` examples, the batch-close queue, the README.
+
+## Backlog
+
+### R088-T010
+
 - `release.md` step 8 tags with `-m "<short>"`, `git-workflow.md § Releases` with `-m "X.Y.Z"`.
 - `git-workflow.md § Releases` says "No release branch", while `release.md` step 3 cuts `release/vX.Y.Z`.
 - `release.md` step 10 offers the release plan's archive move after the merge, a commit on the default branch.
 - `branch-plan.md § Batches` routes release marking to the close-out MR/PR, while `release.md` step 1 has it ride each branch's final commit.
 - `/dev plan release` routes to `release.md`, which has no step that writes a release plan.
+- `/dev migrate` does not add the `comments:` convention line to an existing project's `CLAUDE.md § Conventions`.
 - `/dev migrate` does not add `## [Unreleased]` to an existing project's CHANGELOG.
+
+### R088-T011
+
+- `CLAUDE.local.md` has no `permissions.ask` rule, so its rule keeps a propose-and-wait step.
+- No allow rule covers the `sleep` the CI-wait retry runs.
+- The pre-flight counts a user-tier `Bash(*)` as covering every declared Bash rule under `auto`, which drops it.
+- No `autoMode` allow entry lets an AI supervisor merge, the classifier seeing no CI result or head sha.
+- The `autoMode` soft_deny entries name no visible DEV-run trigger or must-name slot, nor presume an unseen MR diff.
+- No gate stops a `Claude-Session` trailer before push.
 - The install does not write the `attribution` setting that the no-trailer intent relies on.
+
+### R088-T012
+
+- The durable-id rule allows citing an MR/PR number, but the plan-text gate still rejects `#NNN` in ROADMAP and `tasks.md`.
+- `check-doc-sync.sh` needs README edits in an item's commit, while `branch-plan.md` gives README to the doc writer at close.
+- The full test tier runs locally right before CI runs it.
+- Brainstorm's approach choice, start's clarifying and quality questions, and finish's no-host merge confirmation still ask in plain text, not through AskUserQuestion.
+- The dispatching-parallel-agents skill still shows `Task(...)` examples; the tool is Agent.
+- `run.md § Batch close` 2 queues judgment calls without naming where.
+- The README keeps inline comma-runs the docs gate did not list: its opening and several layout rows.
+- The README no longer says what the guards block.
+
+### Unassigned
+
+- No command starts a remote runner, and `supervisor-runbook.md` Variant B omits pulling the host's `~/.claude` first.
