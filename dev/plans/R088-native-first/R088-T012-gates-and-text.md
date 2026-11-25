@@ -43,7 +43,6 @@ mode: normal
   § Installing the toolset elsewhere`, from each hook's header comment.
 - [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
   mark the task `[x]` in the R's `tasks.md` plus any release-plan entry,
-  delete the `### R088-T012` backlog block, its `check-doc-sync.sh` line
-  included, which R091-T002 settled by deleting that script, commit, the
-  resolved task report included. (Batch members: the task mark rides the
+  delete the `### R088-T012` backlog block, commit, the resolved task report
+  included. (Batch members: the task mark rides the
   batch branch.)

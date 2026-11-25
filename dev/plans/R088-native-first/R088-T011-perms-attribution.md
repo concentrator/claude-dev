@@ -36,11 +36,6 @@ mode: normal
   template, `seat-permissions.md § Auto-mode template`, `declarations.md
   § Supervisor bounds` where the mirror moves; the user loads the entries
   into the user tier, and `claude auto-mode critique` finds none on them.
-- [ ] An `autoMode` allow entry passes a `Supervisor: AI` runner's declared
-  merge that no allow rule matches, on what the transcript shows - the
-  declared CI wait called on the same MR/PR first - not a CI result or head
-  sha the classifier cannot read. Approach: the template's `allow`, then
-  `seat-permissions.md § Auto-mode template`; critique as in item 6.
 - [ ] Complete the branch: cleanup (stale/temp data), mark plan complete,
   delete the `### R088-T011` backlog lines, mark the task `[x]` in the R's
   `tasks.md` plus any release-plan entry, commit, the resolved task report

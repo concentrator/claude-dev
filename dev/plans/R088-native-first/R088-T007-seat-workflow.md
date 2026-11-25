@@ -16,7 +16,7 @@ mode: normal
   the doc writer, returning to the runner at each step that needs the user or
   git, with the seat's report and the id that continues it. Approach:
   `docs/reports/workflow-seats.md` from item 1's answer, the script and its
-  test, `LAYOUT.md` and the rows `check-doc-sync.sh` needs.
+  test, then `LAYOUT.md`.
 - [ ] An install ships the saved workflows to `<target>/workflows/`, and the
   permission set declares what starting one needs in each mode. Approach:
   `install-dev.sh` and `install-manifest.sh` with the three install tests,
